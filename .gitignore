@@ -1,3 +1,7 @@
+#Saved searches
+populate-database/saved-descriptions/
+populate-database/saved-searches/
+
 # Logs
 logs
 *.log
