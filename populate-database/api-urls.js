@@ -1,15 +1,14 @@
-const axios = require('axios');
-const { saveToFile, loadFromFile } = require('./store-json');
-const pLimit = require('p-limit');
-
-require('dotenv').config({ path: __dirname + '../../.env' });
+const axios = require('axios');                                 //Promise based HTTP requests
+const { saveToFile, loadFromFile } = require('./store-json');   //Helper functions for saving and loading
+const pLimit = require('p-limit');                              //'Pooling' for get requests - only a few requests at a time
+require('dotenv').config({ path: __dirname + '../../.env' });   //dotenv - used for API_KEY (reed API key)
 
 main('software engineer', 'software');
 
 async function main(searchTerm, saveWord) {
   const limit = pLimit(5); // Limit the number of concurrent search promises to 5
 
-  let saveObj = loadFromFile(saveWord);//Find if we've worked on this search term before
+  let saveObj = loadFromFile(saveWord); //Returns past search results (or an empty object if one doesn't exist) 
 
   //If a new file is loaded, create a default save object with metadata and results
   if (saveObj.meta === undefined) {
@@ -21,11 +20,11 @@ async function main(searchTerm, saveWord) {
   }
 
 
-  //Figure out how many results we have > how many pages to search over
+  //Figure out how many results we have -> how many pages to search (results/100)
   let searchLength;
   try {
-    const resultsForPage0 = await resultsForPage(0, searchTerm);
-    searchLength = resultsForPage0.response.data.totalResults;
+    const pageZeroRes = await resultsForPage(0, searchTerm);
+    searchLength = pageZeroRes.response.data.totalResults;
     console.log(searchLength);
   } catch {
     console.log("couldn't fetch page 0");
@@ -56,7 +55,7 @@ async function main(searchTerm, saveWord) {
       if (saveObj.results[jobId] === undefined) {
         saveObj.results[jobId] = curObj[key];
       } else {
-        saveObj.results[jobId].search[searchTerm] = true;
+        saveObj.results[jobId].searchTerms[searchTerm] = true;
       }
     }
   }
@@ -64,6 +63,8 @@ async function main(searchTerm, saveWord) {
   saveToFile(saveObj, saveWord);
 }
 
+//Returns a list (of 100) job listings at pageNum for a given searchTerm
+//Resolved as a promise in main()
 async function resultsForPage(pageNum, searchTerm){
     const qry = {
         versionNum: '1.0',

@@ -1,0 +1,29 @@
+require('dotenv').config({ path: __dirname + '../../.env' });
+const { Client } = require('pg');
+
+main('react');
+
+async function main(searchTerm){
+    const client = new Client();
+    try {
+        await client.connect();
+        console.log("Connected to db.")
+    } catch (err) {
+        console.log("Error connectint to db.", err)
+    }
+
+    const searchQuery = `SELECT job_title, ts_rank(search_vector, websearch_to_tsquery('${searchTerm}')) as rank
+    FROM job_listing
+    ORDER BY rank DESC;`
+
+    try {
+        const res = await client.query(searchQuery);
+        console.log(res);
+        console.log('Successful query!')
+    } catch (err) {
+        console.error(err)
+        console.log('Query error!')
+    }
+
+    await client.end();
+}

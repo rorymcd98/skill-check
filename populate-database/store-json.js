@@ -1,9 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-function saveToFile(obj, saveWord){
-    // const date = new Date();
-    // const dateString = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString();    
+function saveToFile(obj, saveWord){ 
     const fileName = saveWord + '.json'
     const savePath = path.resolve(__dirname, 'saved-searches', fileName);
     
