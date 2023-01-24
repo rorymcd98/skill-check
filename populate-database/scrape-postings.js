@@ -32,15 +32,16 @@ async function scrapeDescription(url, id) {
 async function main(loadWord){
   let listings = loadFromFile(loadWord);
   console.log(Object.keys(listings))
-  const saveWord = "description " + loadWord;
+  const saveWord = loadWord;
 
   let saveObj = loadFromFile(saveWord);
   if(saveObj.meta === undefined){
-      saveObj = {
-        results: {},
-        meta: {descriptionSeen: {}}
+    saveObj.meta = {
+      searchTerm: loadWord,
+      descriptionSeen: {}
     }
   }
+  
 
   const scrapeUrls = [];
   for (jobId in listings.results){
@@ -50,7 +51,7 @@ async function main(loadWord){
     scrapeUrls.push(promiseData);
   }
 
-  const limit = pLimit(2);
+  const limit = pLimit(1);
   let scrapePromises = scrapeUrls.map((scrapeObj)=>{
     return limit(()=> scrapeDescription(scrapeObj.listingUrl, scrapeObj.jobId))
   })

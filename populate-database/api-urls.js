@@ -6,7 +6,6 @@ require('dotenv').config({ path: __dirname + '../../.env' });   //dotenv - used 
 main('software engineer', 'software');
 
 async function main(searchTerm, saveWord) {
-  const limit = pLimit(5); // Limit the number of concurrent search promises to 5
 
   let saveObj = loadFromFile(saveWord); //Returns past search results (or an empty object if one doesn't exist) 
 
@@ -15,7 +14,7 @@ async function main(searchTerm, saveWord) {
     saveObj.results = {}
     saveObj.meta = {
       searchTerm,
-      seen: {},
+      seenDescription: {},
     };
   }
 
@@ -25,20 +24,20 @@ async function main(searchTerm, saveWord) {
   try {
     const pageZeroRes = await resultsForPage(0, searchTerm);
     searchLength = pageZeroRes.response.data.totalResults;
-    console.log(searchLength);
+    console.log("Number of listings: ", searchLength, "\nAdding new listings...");
   } catch {
     console.log("couldn't fetch page 0");
     return;
   }
 
-  //Create the page promises (limited to 5 promises at a time)
+  //Create the page promises (limited to 10 promises at a time)
+  const limit = pLimit(10);
   const pagePromises = [];
+
   for(let i = 0; i<searchLength/100; i++){
-    if (i in Object.keys(saveObj.meta.seen)) {//Skip the promise if it's already in the save object
-      continue;
-    }
     pagePromises.push(limit(() => resultsForPage(i, searchTerm))); // Use p-limit to limit the number of concurrent search promises
   }
+
 
   let pageResults = [];
   pageResults = await Promise.all(pagePromises);
@@ -48,8 +47,7 @@ async function main(searchTerm, saveWord) {
     const pageResult = pageResults[i];
     if (pageResult === undefined) continue;
     const curObj = pageResult.response.data.results;
-    const pageNum = pageResults[i].pageNum;
-    saveObj.meta.seen[pageNum] = true;
+
     for (const key in curObj) {
       const jobId = curObj[key].jobId;
       if (saveObj.results[jobId] === undefined) {
@@ -64,7 +62,6 @@ async function main(searchTerm, saveWord) {
 }
 
 //Returns a list (of 100) job listings at pageNum for a given searchTerm
-//Resolved as a promise in main()
 async function resultsForPage(pageNum, searchTerm){
     const qry = {
         versionNum: '1.0',
