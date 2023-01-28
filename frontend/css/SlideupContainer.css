@@ -1,0 +1,70 @@
+
+
+.SlideupContainer {
+    position: absolute;
+    height: 100%;
+    right: 0%;
+    background-color: black;
+}
+
+.SlideupButton {
+  position: relative;
+  color: white;
+
+  background-color: blue;
+  border-radius: 5px;
+  padding: 5px;  
+
+  top: 0%;
+  top: 50%;
+  height: 10vh;
+
+  transform: translateX(-50%);
+}
+
+.SkillElementContainer{
+  background-color: grey;
+  /* padding-bottom: 1vh; */
+  display: flex;
+  flex-wrap: wrap;  
+}
+
+#SlideupMenu{
+  --size: 10vh;
+  height: var(--size);
+}
+
+.SkillElement{
+  position: relative;
+  height: calc(0.95*var(--size));
+  width: calc(0.95*var(--size));
+  margin-inline: 2vw;
+}
+
+.SkillElementImage{
+  position: relative;
+  max-height: 75%;
+  max-width: 95%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.SkillElementText{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}
+
+
+.noselect {
+
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+      -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+}

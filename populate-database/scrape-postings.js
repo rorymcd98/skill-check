@@ -63,8 +63,10 @@ async function main(loadWord){
   for (let i = 0; i < scrapeResults.length; i++) {
       const scrapeResult = scrapeResults[i];
       if(scrapeResult === undefined) continue;
+      
       const jobId = scrapeResult.id;
-      const newObj = listings[jobId];
+      const newObj = listings.results[jobId];
+
       newObj.jobDescription = scrapeResult.description;
       
       saveObj.results[jobId] = newObj; 
