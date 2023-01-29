@@ -2,16 +2,18 @@ import { useState } from 'react'
 import '../css/App.css'
 import Chart from './components/Chart'
 import SearchInput from './components/SearchInput'
-import SlideupContainer from './components/SlideupContainer'
+import SkillElementPanel from './components/SkillElementPanel'
 
 function App() {
 
   return (
-    <span id={'main-container'}>
-      <Chart ></Chart>
-      <SearchInput/>
-      <SlideupContainer>Test</SlideupContainer>
-    </span>
+    <div id={'MainContainer'}>
+      <span id = 'ChartPanel'>
+        <Chart ></Chart>
+        <SearchInput/>
+      </span>
+      <SkillElementPanel>Test</SkillElementPanel>
+    </div>
   )
 }
 

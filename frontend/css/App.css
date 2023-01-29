@@ -3,11 +3,17 @@ body{
   width: 100%;
 }
 
-#main-container{
+#MainContainer{
   position: absolute;
   top: 0%;
   bottom: 0%;
   width: 1500px;
   left: 50%;
   transform: translate(-50%);
+
+}
+
+#ChartPanel{
+  position: relative;
+  display: inline-block;
 }

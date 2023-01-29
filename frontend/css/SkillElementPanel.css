@@ -1,0 +1,53 @@
+
+:root{
+  --size: 10vw;
+}
+
+.SkillElementPanel {
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    right: 0%;
+    height: 100%;
+
+    background-color: black;
+    display: inline-flex;
+}
+
+.SkillElementContainer{
+  background-color: grey;
+  display: flex;
+  flex-wrap: wrap;  
+  width: var(--size);
+  position: relative;
+  top: 0%;
+  bottom: 0%;
+  height: 100%;
+  margin-inline: 4PX;
+  overflow: auto;
+}
+
+
+.SkillElement{
+  position: relative;
+  height: calc(0.95*var(--size));
+  width: calc(0.95*var(--size));
+  margin-inline: 2vw;
+  cursor: pointer;
+}
+
+.SkillElementImage{
+  position: relative;
+  max-height: 75%;
+  max-width: 95%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.SkillElementText{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+}

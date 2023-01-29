@@ -52,7 +52,7 @@ export const data = {
 };
 
 export default function Chart() {
-  return (<div style={{position: 'relative', width: "61vh"}}>
+  return (<div className = 'Chart' style={{position: 'relative', width: "61vh"}}>
      <Bar options={options} data={data}/>
   </div>)
   ;
