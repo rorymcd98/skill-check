@@ -1,6 +1,6 @@
 
 :root{
-  --size: 10vw;
+  --size: 15vh;
 }
 
 .SkillElementPanel {
@@ -18,7 +18,10 @@
   background-color: grey;
   display: flex;
   flex-wrap: wrap;  
-  width: var(--size);
+  justify-content: flex-start;
+  flex-direction: column;
+
+  width: calc(1.5*var(--size));
   position: relative;
   top: 0%;
   bottom: 0%;
@@ -30,24 +33,52 @@
 
 .SkillElement{
   position: relative;
-  height: calc(0.95*var(--size));
-  width: calc(0.95*var(--size));
-  margin-inline: 2vw;
+  height: calc(var(--size)/3);
+  width: 100%;
+  
   cursor: pointer;
+  display: inline-flex;
+  align-items: stretch;
+  background-color: black;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.SkillElementImageContainer{
+  position: relative;
+  left: 2.5%;
+  height: calc(0.9*var(--size)/3);
+  width: calc(0.9*var(--size)/3);
+  background: grey;
+  border-radius: 5px;
 }
 
 .SkillElementImage{
   position: relative;
-  max-height: 75%;
-  max-width: 95%;
-  top: 40%;
+  max-height: 85%;
+  max-width: 85%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
 }
+
 .SkillElementText{
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  margin: 0;
+  
+  display: inline-block;
+  width: 100%;
+
+  height: calc(0.9*var(--size)/3);
+  background: grey;
+  border-radius: 5px;
+
+  font-size: larger;
+}
+
+.SkillElementText p{
+  position: relative;
+  left: 5%;
 }

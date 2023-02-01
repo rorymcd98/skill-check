@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../css/App.css'
 import Chart from './components/Chart'
-import SearchInput from './components/SearchInput'
+import SearchForm from './components/SearchForm'
 import SkillElementPanel from './components/SkillElementPanel'
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
         <Chart ></Chart>
-        <SearchInput/>
+        <SearchForm/>
       </span>
       <SkillElementPanel>Test</SkillElementPanel>
     </div>
