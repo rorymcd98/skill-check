@@ -27,7 +27,8 @@
   bottom: 0%;
   height: 100%;
   margin-inline: 4PX;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 
@@ -77,8 +78,41 @@
 
   font-size: larger;
 }
-
 .SkillElementText p{
   position: relative;
   left: 5%;
+}
+
+
+button {
+  border-radius: 5px;
+  border: 3px solid transparent;
+  font-size: 1em;
+  font-weight: bolder;
+  color: white;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  height: 20px;
+  width: 20px;
+}
+button:hover {
+  border-color: #ffc964;
+}
+button:focus,
+button:focus-visible {
+  outline: 1px auto orange;
+}
+
+.SelectAllButton{
+  position: absolute;
+  bottom: 7px;
+  right: 3px;
+}
+
+.SelectAllButton p{
+  position: absolute;
+  top: -60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
