@@ -16,25 +16,29 @@
 
 .SkillElementContainer{
   background-color: grey;
-  display: flex;
-  flex-wrap: wrap;  
+  display: flex;  
   justify-content: flex-start;
   flex-direction: column;
 
   width: calc(1.5*var(--size));
+  max-width: calc(1.5*var(--size));
+
   position: relative;
   top: 0%;
   bottom: 0%;
-  height: 100%;
+  
   margin-inline: 4PX;
-  overflow-y: auto;
+  overflow: scroll;
   overflow-x: hidden;
 }
 
-
 .SkillElement{
   position: relative;
-  height: calc(var(--size)/3);
+  width: 100%;
+}
+.SkillElementHead{
+  position: relative;
+  min-height: calc(var(--size)/3);
   width: 100%;
   
   cursor: pointer;
@@ -44,16 +48,18 @@
   align-items: center;
   margin-bottom: 3px;
 }
-
 .SkillElementImageContainer{
   position: relative;
   left: 2.5%;
+  
   height: calc(0.9*var(--size)/3);
   width: calc(0.9*var(--size)/3);
+  min-height: calc(0.9*var(--size)/3);
+  min-width: calc(0.9*var(--size)/3);
+
   background: grey;
   border-radius: 5px;
 }
-
 .SkillElementImage{
   position: relative;
   max-height: 85%;
@@ -62,7 +68,6 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
 .SkillElementText{
   position: relative;
   bottom: 0;
@@ -82,8 +87,12 @@
   position: relative;
   left: 5%;
 }
+.SkillElementArrow{
+  position: relative;
+  right: 20%;
+}
 
-
+/* SkillElement nuttons (and SubSkillDropDownContainer) */
 button {
   border-radius: 5px;
   border: 3px solid transparent;
@@ -103,16 +112,38 @@ button:focus,
 button:focus-visible {
   outline: 1px auto orange;
 }
-
 .SelectAllButton{
   position: absolute;
   bottom: 7px;
   right: 3px;
 }
-
 .SelectAllButton p{
   position: absolute;
   top: -60%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* SubSkillDropDown */
+.SubSkillDropDownContainer{
+  position: relative;
+  background-color: #1a1a1a;
+  width: 100%;
+
+}
+.SubSkill:hover {
+  background-color: #ffc964;
+}
+.SubSkillButton{
+  position: relative;
+  left: 0px;
+  top: -4px;
+  background-color: rgb(9, 49, 83);
+  z-index: 1;
+}
+.SubSkillButton p{
+  position: absolute;
+  top: -17px;
+  left: 2.5px;
+  z-index: -1;
 }

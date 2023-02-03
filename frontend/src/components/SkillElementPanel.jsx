@@ -4,116 +4,171 @@ import '../../css/SkillElementPanel.css';
 import SkillElementContainer from './SkillElementContainer';
 import SkillElement from './SkillElement';
 
-export default function SkillElementPanel() {
 
 
-  const [skillElementObject, setSkillElementObject] = useState({
+export default function SkillElementPanel() {    
+
+	const initialSkills = {
     'c': {
         'name': 'C',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'cpp': {
         'name': 'C++',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'csharp': {
         'name': 'C#',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'css': {
         'name': 'CSS',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'go': {
         'name': 'Go',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'go-old': {
         'name': 'Go (Old)',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'haskell': {
         'name': 'Haskell',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'html': {
         'name': 'HTML',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'java': {
         'name': 'Java',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'javascript': {
         'name': 'JavaScript',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'kotlin': {
         'name': 'Kotlin',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'lua': {
         'name': 'Lua',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'php': {
         'name': 'PHP',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'python': {
         'name': 'Python',
-        'selected': false,
-        'children': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas']
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': [],
     },
     'r': {
         'name': 'R',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'ruby': {
         'name': 'Ruby',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'swift': {
         'name': 'Swift',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     },
     'typescript': {
         'name': 'TypeScript',
-        'selected': false
+        'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+        'selectedSubSkills': []
     }
-  })   
-
-
-  //Create eventHandlers for the SkillElements
-    function clickHandler(e){
-        const id = e.currentTarget.id.split('-')[0];
-
-        const newSkillElementObject = {...skillElementObject};
-        newSkillElementObject[id].selected = !newSkillElementObject[id].selected;
-        setSkillElementObject(newSkillElementObject);
-    }
-
-  //Assemble the object into a list of children - pass this to each SkillElementContainer
-  function skillObjectToList(skillElementObject, selectedBool){
-    const skillElementList = [];
-    Object.keys(skillElementObject).map((skillId)=>{
-        const skill = skillElementObject[skillId];
-        if (skill.selected != selectedBool){
-          return;
-        }
-         skillElementList.push(<SkillElement key={skillId} id={skillId} name={skill.name} skillElementObject={skillElementObject} onClick={clickHandler}/>)
-      })
-
-    return skillElementList;
   }
+
+  const [skillElementObject, setSkillElementObject] = useState(structuredClone(initialSkills))   
+    
+
+    //Toggles all the sub skills of an Element
+    function createToggleAll(skillId, selectAllBool){
+
+        function toggleAll(){
+            const newSkillElementObject = structuredClone(skillElementObject);
+            newSkillElementObject[skillId].deselectedSubSkills = !selectAllBool ? [...initialSkills[skillId].deselectedSubSkills] : [];
+            newSkillElementObject[skillId].selectedSubSkills = selectAllBool ? [...initialSkills[skillId].deselectedSubSkills] : [];
+            
+            setSkillElementObject(newSkillElementObject);
+        }
+
+        return toggleAll;
+    }
+
+    function createToggleSubSkill(skillId, subSkillName, selectBool){
+
+        function toggleSubSkill(){
+            const newSkillElementObject = structuredClone(skillElementObject);
+            const deselectedSubSkills = newSkillElementObject[skillId].deselectedSubSkills;
+            const selectedSubSkills = newSkillElementObject[skillId].selectedSubSkills;
+
+            const swapElement = (arr1, arr2)=>{
+                const subSkillIndex = arr1.indexOf(subSkillName);
+                arr1.splice(subSkillIndex,1);
+                arr2.push(subSkillName);
+            }
+
+            if(selectBool){
+                swapElement(deselectedSubSkills, selectedSubSkills);
+            } else {
+                swapElement(selectedSubSkills, deselectedSubSkills);
+            }
+                
+            setSkillElementObject(newSkillElementObject);
+        }
+        
+        return toggleSubSkill;
+    }
+
+
+    //Assemble the object into a list of SkillElement chidlren - this is passed to each SkillElementContainer
+    function objectToSkillList(skillElementObject, selectedBool){
+        const skillElementList = [];
+        Object.keys(skillElementObject).map((skillId)=>{
+            const skill = skillElementObject[skillId];
+
+            const areSelectedSkills = skill.selectedSubSkills.length > 0 && selectedBool;
+            const aredeselectedSkills = skill.deselectedSubSkills.length > 0 && !selectedBool;
+
+            //If nothing relevant is selected, don't render this element
+            if (!(areSelectedSkills || aredeselectedSkills)) return;
+
+            skillElementList.push(<SkillElement key={skillId} skillId={skillId} name={skill.name} onClick={createToggleAll(skillId, !selectedBool)} skillElementObject={skillElementObject} createToggleSubSkill={createToggleSubSkill} selectedBool={selectedBool}/>)
+        })
+
+        return skillElementList;
+    }
 
   const idSelected = 'SkillSelected';
   const idMenu = 'SkillMenu';
 
   return (
     <span className='SkillElementPanel'>
-      <SkillElementContainer  key = {idSelected} id={idSelected} children={skillObjectToList(skillElementObject, true)} />
-      <SkillElementContainer  key = {idMenu} id={idMenu} children={skillObjectToList(skillElementObject, false)}/>
+      <SkillElementContainer  key = {idSelected} id={idSelected} children={objectToSkillList(skillElementObject, true)} />
+      <SkillElementContainer  key = {idMenu} id={idMenu} children={objectToSkillList(skillElementObject, false)}/>
     </span>
   )
 }
