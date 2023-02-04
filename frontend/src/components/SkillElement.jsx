@@ -15,7 +15,7 @@ export default function SkillElement(props) {
     const skillId = props.skillId
 
     subSkillList.map((subSkillName)=>{
-          subSkillElementList.push(<SubSkillElement key = {`${skillId}-${subSkillName}-key`} skillId={skillId} subSkillName={subSkillName} onClick={props.createToggleSubSkill(skillId, subSkillName, !selectedBool)}/>)
+          subSkillElementList.push(<SubSkillElement key = {`${skillId}-${subSkillName}-key`} skillId={skillId} subSkillName={subSkillName} onClick={props.createToggleSubSkill(skillId, subSkillName, !selectedBool)} selectedBool={selectedBool}/>)
     })
 
     return subSkillElementList;
@@ -34,10 +34,10 @@ export default function SkillElement(props) {
             <p>{props.name}</p>
           </span>
           <span className='SkillElementArrow'>
-            <p>{display === 'none' ? '▲' : '▼'}</p>
+            <p>{display === 'none' ? 'ᐳ' : 'ᐯ'}</p>
           </span>
           <button className='SelectAllButton' id = {props.skillId + '-button'} onClick={props.onClick}>
-            <p>+</p>
+            <p>{props.selectedBool ? '-' : '+'}</p>
           </button>
         </div>
         <SubSkillDropDownContainer display={display} id = {props.skillId} children={subSkillChildren}/>

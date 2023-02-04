@@ -1,12 +1,11 @@
 import React from 'react'
 
-export default function SubSkillElement({skillId, subSkillName, onClick}) {
-  // console.log(skillId, subSkillName)
+export default function SubSkillElement({skillId, subSkillName, onClick, selectedBool}) {
 
   return (
-      <div className='SubSkill' key = {`${skillId}-${subSkillName}-key`} >
+      <div className='SubSkill' >
           <button className='SubSkillButton' id = {`${skillId}-${subSkillName}-button`} onClick={onClick}>
-              <p>+</p>
+              <p>{selectedBool ? '-' : '+'}</p>
           </button>
         {subSkillName}
       </div>

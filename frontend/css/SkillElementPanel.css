@@ -89,7 +89,8 @@
 }
 .SkillElementArrow{
   position: relative;
-  right: 20%;
+  right: 9%;
+  bottom: -19px;
 }
 
 /* SkillElement nuttons (and SubSkillDropDownContainer) */

@@ -3,15 +3,25 @@ import { useState } from 'react';
 
 
 export default function SearchForm() {
-  const placeholder = "Search for a skill...";
+
+  function handleSubmit(e){
+    e.preventDefault();
+    
+  }
+
   const [search, setSearch] = useState("");
+
   return (
-    <input
-      type="text"
-      placeholder = {placeholder} 
-      value={search}
-      id="search-input"
-      onChange={(e)=>setSearch(e.target.value)}
-    />
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder = {"Search for a skill..."} 
+        value={search}
+        id="search-input"
+        onChange={(e)=>setSearch(e.target.value)}
+      />
+      <input type="submit"/>
+    </form>
+
   )
 }
