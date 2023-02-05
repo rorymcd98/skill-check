@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import '../css/App.css'
 import Chart from './components/Chart'
-import SearchForm from './components/SearchForm'
 import SkillElementPanel from './components/SkillElementPanel'
 
 function App() {
@@ -10,7 +9,7 @@ function App() {
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
         <Chart ></Chart>
-        <SearchForm/>
+        <button className='AnalyzeSkillsButton'>Eventually I get clicked</button>
       </span>
       <SkillElementPanel>Test</SkillElementPanel>
     </div>

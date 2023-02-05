@@ -17,3 +17,12 @@ body{
   position: relative;
   display: inline-block;
 }
+
+.AnalyzeSkillsButton{
+  position: relative;
+  background-color: red;
+  width: auto;
+  height: 30px;
+  top: 10px;
+  left: 50%;
+}
