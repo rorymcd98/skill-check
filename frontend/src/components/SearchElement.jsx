@@ -3,21 +3,10 @@ import { useEffect } from 'react';
 import SearchElementForm from './SearchElementForm';
 import SubSkillDropDownContainer from './SubSkillDropDownContainer';
 
-export default function SearchElement(props) {
+export default function SearchElement({skillId, searchList, setSearchList}) {
   //Controls display of 'SubSkillDropDownContainer' and the drop down arrow
   const [display, setDisplay] = useState('block');
   const elementText = 'Custom search'
-
-  //Load local storage if available
-  const localSearchList = localStorage.getItem("storedSearchList");
-  let initialSearchList =  localSearchList ? JSON.parse(localSearchList) : [""];
-
-  const [searchList, setSearchList] = useState(initialSearchList);
-  
-  //Set local storage when new search terms are made
-  useEffect(()=>{
-    localStorage.setItem("storedSearchList", JSON.stringify(searchList))
-  }, [searchList])
 
   function generateSearchChildren(){
     const list = searchList;
@@ -34,7 +23,7 @@ export default function SearchElement(props) {
   const searchElementChildren = searchTermList.length > 0 ? searchTermList : defaultSearchTerm;
 
   return (
-    <div className='SearchElement' id = {props.skillId} >
+    <div className='SearchElement' id = {skillId} >
         <div className='SkillElementHead' onClick={()=>{setDisplay(display === 'block' ? 'none' : 'block')}}>
           <span className='SkillElementImageContainer'>
             <img className ='SkillElementImage' alt={elementText} src={`./skill-icon-small.png`}/>
@@ -47,7 +36,7 @@ export default function SearchElement(props) {
           </span>
         </div>
 
-        <SubSkillDropDownContainer display={display} id = {props.skillId} children={searchElementChildren}/>
+        <SubSkillDropDownContainer display={display} id = {skillId} children={searchElementChildren}/>
     </div>
   )
 }

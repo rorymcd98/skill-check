@@ -7,19 +7,7 @@ import SearchElement from './SearchElement';
 import initialSkills from '../../public/initialSkills';
 
 
-export default function SkillElementPanel() {   
-    //Load local storage if available
-    const localSkillElementObject = localStorage.getItem("storedSkillElementObject");
-    let initialSkillElementObject =  localSkillElementObject ? JSON.parse(localSkillElementObject) : initialSkills;
-
-    const [skillElementObject, setSkillElementObject] = useState(initialSkillElementObject)  
-
-    //Set local storage when skills are selected
-    useEffect(()=>{
-    localStorage.setItem("storedSkillElementObject", JSON.stringify(skillElementObject))
-    }, [skillElementObject])
-
-
+export default function SkillElementPanel({skillElementObject, setSkillElementObject, searchList, setSearchList}) {   
 
     //Toggles all the sub skills of an Element
     function createToggleAll(skillId, selectAllBool){
@@ -80,7 +68,7 @@ export default function SkillElementPanel() {
     }
 
     const idSearchElement = 'search-element';
-    const searchElement = [<SearchElement key = {idSearchElement} id = {idSearchElement}/>];
+    const searchElement = [<SearchElement key = {idSearchElement} id = {idSearchElement} searchList={searchList} setSearchList={setSearchList}/>];
 
   const idSelected = 'SkillSelected';
   const idDeselected = 'SkillDeselected';
