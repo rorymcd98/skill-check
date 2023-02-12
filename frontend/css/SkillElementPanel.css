@@ -4,11 +4,13 @@
 }
 
 .SkillElementPanel {
-    position: absolute;
+    position: relative;
     top: 0%;
     bottom: 0%;
     right: 0%;
+    width: 35%;
     height: 100%;
+
 
     background-color: black;
     display: inline-flex;
@@ -20,8 +22,8 @@
   justify-content: flex-start;
   flex-direction: column;
 
-  width: calc(1.5*var(--size));
-  max-width: calc(1.5*var(--size));
+  width: 50%;
+  max-width: 50%;
 
   position: relative;
   top: 0%;

@@ -6,21 +6,34 @@ import initialSkills from '../public/initialSkills'
 import axios from 'axios'
 // axios.defaults.baseURL = 'http://localhost:3001';
 
-function App() {
-  const list = ['python', 'javascript' , 'c++'];
+function App() {  
+  //On mount check if we're accessing the API
   useEffect(() => {
     axios
       .get('/api/v1')
       .then(res => {
-        //console.log(res.data);
+        //Confirm connection
+        console.log(res.data);
       })
       .catch(error => {
         console.error(error);
       });
   }, []);
 
+  const initialChartData = {
+    'salaryHistograms' : {
+      'histogramLabels' : ['0k', '5k', '10k', '15k', '20k', '25k', '30k', '35k', '40k', '45k', '50k', '55k', '60k', '65k', '70k', '75k'],
+      'histograms' : {'' : []}
+    }
+  }
 
-  const fun = ()=>axios.get('/api/v1/data').then((res)=>console.log(res.data));
+  //chartData state passed to Chart component
+  const [chartData, setChartData] = useState(initialChartData);
+
+  const buttonClickFunction = ()=>axios.get('/api/v1/data', {'params': ['python', 'javascript' , 'c++']})
+    .then((res)=>{
+      setChartData(res.data);
+    });
 
   //De/selected skill state
   //Load local storage if available
@@ -34,6 +47,9 @@ function App() {
   localStorage.setItem("storedSkillElementObject", JSON.stringify(skillElementObject))
   }, [skillElementObject])
 
+
+
+
   //Custom search list state
   //Load local storage if available
   const localSearchList = localStorage.getItem("storedSearchList");
@@ -46,11 +62,14 @@ function App() {
     localStorage.setItem("storedSearchList", JSON.stringify(searchList))
   }, [searchList])
 
+
+
+
   return (
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
-        <Chart ></Chart>
-        <button className='AnalyzeSkillsButton' onClick={fun}>Eventually I get clicked</button>
+        <Chart chartData={chartData}></Chart>
+        <button className='AnalyzeSkillsButton' onClick={buttonClickFunction}>Eventually I get clicked</button>
       </span>
       <SkillElementPanel 
       skillElementObject={skillElementObject} 
