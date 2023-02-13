@@ -2,9 +2,9 @@ import { useState, useEffect} from 'react'
 import '../css/App.css'
 import Chart from './components/Chart'
 import SkillElementPanel from './components/SkillElementPanel'
-import initialSkills from '../public/initialSkills'
+import initialSkills from './components/component-resources/initialSkills'
 import axios from 'axios'
-// axios.defaults.baseURL = 'http://localhost:3001';
+import Timeseries from './components/Timeseries'
 
 function App() {  
   //On mount check if we're accessing the API
@@ -24,16 +24,45 @@ function App() {
     'salaryHistograms' : {
       'histogramLabels' : ['0k', '5k', '10k', '15k', '20k', '25k', '30k', '35k', '40k', '45k', '50k', '55k', '60k', '65k', '70k', '75k'],
       'histograms' : {'' : []}
+    }, 
+    'salaryTimeSeries' : {
+      '[No data]' : {'scatterPoints': [], 'averageLine': [],}
     }
   }
 
   //chartData state passed to Chart component
   const [chartData, setChartData] = useState(initialChartData);
 
-  const buttonClickFunction = ()=>axios.get('/api/v1/data', {'params': ['python', 'javascript' , 'c++']})
-    .then((res)=>{
-      setChartData(res.data);
-    });
+  const buttonClickFunction = ()=>{
+    const queriesArray = [];
+
+    //Add the custom search list to the query
+    if(searchList.length > 0) queriesArray.push(searchList);
+
+    //Iterate through the skillElementObject for selected sub-skills
+    for(let skill in skillElementObject){
+      const curSkill = skillElementObject[skill];
+      const skillArray = [];
+      
+      curSkill.selectedSubSkills.forEach((subSkill)=>{
+        skillArray.push(subSkill);
+      })
+
+      if(skillArray.length > 0) queriesArray.push(skillArray);
+    }
+
+    
+    console.log(queriesArray)
+
+    axios.get('/api/v1/data', {'params': queriesArray})
+      .then((res)=>{
+        if(Object.keys(res.data).length == 0) {console.error('Empty object returned from API!'); return}
+        if(Object.keys(res.data.salaryHistograms.histograms).length == 0) {console.error('No histograms returned from API!'); return}
+        if(Object.keys(res.data.salaryTimeSeries).length == 0) {console.error('No timeseries returned from API!'); return}
+        setChartData(res.data);
+      })
+    };
+  
 
   //De/selected skill state
   //Load local storage if available
@@ -69,6 +98,7 @@ function App() {
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
         <Chart chartData={chartData}></Chart>
+        <Timeseries chartData={chartData}></Timeseries>
         <button className='AnalyzeSkillsButton' onClick={buttonClickFunction}>Eventually I get clicked</button>
       </span>
       <SkillElementPanel 

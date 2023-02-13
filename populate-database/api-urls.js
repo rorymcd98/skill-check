@@ -46,15 +46,24 @@ async function main(searchTerm, saveWord) {
   for (let i = 0; i < pageResults.length; i++) {
     const pageResult = pageResults[i];
     if (pageResult === undefined) continue;
+
+    //curObj - 100 job listings which need to be stored
     const curObj = pageResult.response.data.results;
 
     for (const key in curObj) {
       const jobId = curObj[key].jobId;
+
+      //If the job listing hasn't been saved before, save it
       if (saveObj.results[jobId] === undefined) {
         saveObj.results[jobId] = curObj[key];
-      } else {
-        saveObj.results[jobId].searchTerms[searchTerm] = true;
       }
+
+      //Add a search terms object if it doesn't exist (stores all searches to see if another search generated this listing)
+      if (saveObj.results[jobId].searchTerms === undefined) {
+        saveObj.results[jobId].searchTerms = {};
+      }
+
+      saveObj.results[jobId].searchTerms[searchTerm] = true;
     }
   }
 

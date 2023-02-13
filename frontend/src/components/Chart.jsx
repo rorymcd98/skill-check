@@ -11,6 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import MultiRangeSlider from "multi-range-slider-react";
 import '../../css/ChartPanel.css'
+import backgroundColorSelection from './component-resources/chart-colours';
 
 export default function Chart({chartData}) {
   const salaryHistograms = chartData.salaryHistograms;
@@ -34,24 +35,9 @@ export default function Chart({chartData}) {
   const minHistogramIndex = Math.ceil(minValue/blockSize);
   const maxHistogramIndex = Math.floor(maxValue/blockSize)+1;
 
-  const backgroundColorSelection = [
-    'rgba(255, 99, 132, 0.5)',
-    'rgba(54, 162, 235, 0.5)',
-    'rgba(255, 206, 86, 0.5)',
-    'rgba(75, 192, 192, 0.5)',
-    'rgba(153, 102, 255, 0.5)',
-    'rgba(255, 159, 64, 0.5)',
-    'rgba(255, 99, 132, 0.5)',
-    'rgba(54, 162, 235, 0.5)',
-    'rgba(255, 206, 86, 0.5)',
-    'rgba(75, 192, 192, 0.5)',
-    'rgba(153, 102, 255, 0.5)',
-    'rgba(255, 159, 64, 0.5)'
-  ];
-
   const displayLabels = labels.slice(minHistogramIndex, maxHistogramIndex)
 
-  //Format the object to be rendered
+  //Format the dataset object to be rendered
   const datasets = [];
   let colorIndex = 0;
   Object.keys(histograms).forEach((searchTerm) => {
@@ -65,8 +51,6 @@ export default function Chart({chartData}) {
       colorIndex++;
   });
 
-  console.log('here')
-
 
   //Data passed to the chart component
   const data = {
@@ -74,18 +58,25 @@ export default function Chart({chartData}) {
     datasets: datasets
   };
 
-  //Update histogram sliders when new data is input
-  useEffect(()=>{
-    setMax(initialMax)
-    setMinValue(initialMin)
-    setMaxValue(initialMax)
-  }, [chartData])
 
   //Handle histogram sliding
   const handleInput = (e) => {
-    setMinValue(e.minValue);
-    setMaxValue(e.maxValue);
+    setTimeout(()=>{
+      setMinValue(e.minValue);
+      setMaxValue(e.maxValue);
+    }, 50)
   };
+
+  
+
+    //Update histogram sliders when new data is input to truncate / remove outliers
+    useEffect(()=>{
+      setTimeout(()=>{
+        setMax(initialMax)
+        setMinValue(initialMin)
+        setMaxValue(Math.min(initialMax,150000))
+      }, 100)
+    }, [chartData])
 
   const sliderLabels = [labels[0],,,,,,,,,labels[labels.length-1]]
 

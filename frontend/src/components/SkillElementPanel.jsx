@@ -4,7 +4,7 @@ import '../../css/SkillElementPanel.css';
 import SkillElementContainer from './SkillElementContainer';
 import SkillElement from './SkillElement';
 import SearchElement from './SearchElement';
-import initialSkills from '../../public/initialSkills';
+import initialSkills from './component-resources/initialSkills';
 
 
 export default function SkillElementPanel({skillElementObject, setSkillElementObject, searchList, setSearchList}) {   

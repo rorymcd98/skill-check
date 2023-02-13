@@ -1,8 +1,6 @@
-//Creates a histograms based on the salary
-//jobs - jobs object from the PostgresQL database
-//splitPoint - interpolation point for (minimum_salary, maximum_salary)
-
-//blockSize - determines number of histograms block sizes
+//Creates histograms based on the salary
+//jobQueries - Array of jobs query objects from the PostgresQL database
+//blockSize - Determines number of histograms block sizes (£)
 function createSalaryHistograms(jobQueries, blockSize = 5000){
 
   //Create the block lists for each search
