@@ -28,7 +28,7 @@ export default function SkillElement(props) {
     <div className='SkillElement' id = {props.skillId + '-key'} >
         <div className='SkillElementHead' onClick={()=>{setDisplay(display === 'block' ? 'none' : 'block')}}>
           <span className='SkillElementImageContainer'>
-            <img className ='SkillElementImage' alt={props.alt} src={`./src/${props.skillId}/${props.skillId}.svg`}/>
+            <img className ='SkillElementImage' alt={props.alt} src={`./skillIcons/${props.skillId}/${props.skillId}.svg`}/>
           </span>
           <span className='SkillElementText'>
             <p>{props.name}</p>

@@ -15,14 +15,6 @@ body{
   
 }
 
-#ChartPanel{
-  position: relative;
-  display: inline-block;
-  width: 75%;
-  top: 0%;
-  bottom: 0%;
-}
-
 .AnalyzeSkillsButton{
   position: relative;
   background-color: red;

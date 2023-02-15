@@ -5,6 +5,7 @@ import SkillElementPanel from './components/SkillElementPanel'
 import initialSkills from './components/component-resources/initialSkills'
 import axios from 'axios'
 import Timeseries from './components/Timeseries'
+import LineChart from './components/Line'
 
 function App() {  
   //On mount check if we're accessing the API
@@ -51,20 +52,18 @@ function App() {
       if(skillArray.length > 0) queriesArray.push(skillArray);
     }
 
-    
-    console.log(queriesArray)
 
     axios.get('/api/v1/data', {'params': queriesArray})
       .then((res)=>{
-        if(Object.keys(res.data).length == 0) {console.error('Empty object returned from API!'); return}
-        if(Object.keys(res.data.salaryHistograms.histograms).length == 0) {console.error('No histograms returned from API!'); return}
-        if(Object.keys(res.data.salaryTimeSeries).length == 0) {console.error('No timeseries returned from API!'); return}
+        if(!(Object.keys(res.data).length) > 0) {console.error('Empty object returned from API'); return}
+        if(!(Object.keys(res.data.salaryHistograms.histogramLabels).length) > 0) {console.error('No histogram data found from API'); return}
+        if(!(Object.keys(res.data.salaryTimeSeries).length) > 0) {console.error('No timeseries returned from API'); return}
         setChartData(res.data);
       })
     };
   
 
-  //De/selected skill state
+  //---De/selected skill state---
   //Load local storage if available
   const localSkillElementObject = localStorage.getItem("storedSkillElementObject");
   let initialSkillElementObject =  localSkillElementObject ? JSON.parse(localSkillElementObject) : initialSkills;
@@ -76,10 +75,7 @@ function App() {
   localStorage.setItem("storedSkillElementObject", JSON.stringify(skillElementObject))
   }, [skillElementObject])
 
-
-
-
-  //Custom search list state
+  //---Custom search list state---
   //Load local storage if available
   const localSearchList = localStorage.getItem("storedSearchList");
   let initialSearchList =  localSearchList ? JSON.parse(localSearchList) : [""];
@@ -91,15 +87,23 @@ function App() {
     localStorage.setItem("storedSearchList", JSON.stringify(searchList))
   }, [searchList])
 
+  //Reset the skill states and the local storage
+  function resetSkills(){
+    localStorage.setItem("storedSkillElementObject", JSON.stringify(initialSkillElementObject))
+    localStorage.setItem("storedSearchList", JSON.stringify(initialSearchList))
 
-
-
+    setSkillElementObject(initialSkillElementObject);
+    setSearchList(initialSearchList);
+  }
+  
   return (
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
         <Chart chartData={chartData}></Chart>
         <Timeseries chartData={chartData}></Timeseries>
+        <LineChart chartData={chartData}></LineChart>
         <button className='AnalyzeSkillsButton' onClick={buttonClickFunction}>Eventually I get clicked</button>
+        <button className='ResetSkillsButton' onClick={resetSkills}></button>
       </span>
       <SkillElementPanel 
       skillElementObject={skillElementObject} 

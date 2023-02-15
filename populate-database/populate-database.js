@@ -56,10 +56,7 @@ async function main(loadWord){
     for (jobId in listings){
         const lst = listings[jobId];
 
-
-        
         let {employerName, jobTitle, locationName, minimumSalary, maximumSalary, currency, date, jobDescription, applications, jobUrl } = lst;
-    
 
         //Treat edge cases 
         //Turn empty salaries into integers (-1)
@@ -76,8 +73,6 @@ async function main(loadWord){
         // Use template literals to build the INSERT statement
         const insertSqlQuery = `INSERT INTO job_listing (job_id, employer_name, job_title, location_name, minimum_salary, maximum_salary, currency, published_date, job_description, applications, job_url) VALUES (${parseInt(jobId)}, '${employerName}', '${jobTitle}', '${locationName}', ${minimumSalary}, ${maximumSalary}, '${currency}', '${date}', '${jobDescription}', ${applications}, '${jobUrl}') ON CONFLICT (job_id) DO UPDATE SET employer_name='${employerName}', job_title='${jobTitle}', location_name='${locationName}', minimum_salary=${minimumSalary}, maximum_salary=${maximumSalary}, currency='${currency}', published_date='${date}', job_description='${jobDescription}', applications=${applications}, job_url='${jobUrl}'; `;
         sqlQuery += insertSqlQuery;
-
-        break;
     }
     
     try {

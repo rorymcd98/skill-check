@@ -27,8 +27,16 @@ function createSalaryHistograms(jobQueries, blockSize = 5000){
 
     maximumLength = Math.max(maximumLength, blockList.length)
 
+    //Normalize the histogram by the total number of jobs searched (turning it into a 'distribution')
+    for(i in blockList){
+      blockList[i] /= queryList.length;
+    }
+
     resultObject['histograms'][jobQuery] = blockList;
   }
+
+  
+  
 
   //Generate the labels
   const histogramLabels = [];

@@ -53,8 +53,8 @@ export default function SkillElementPanel({skillElementObject, setSkillElementOb
     function objectToSkillList(skillElementObject, selectedBool){
             const skillElementList = [];
             Object.keys(skillElementObject).map((skillId)=>{
+                    
                     const skill = skillElementObject[skillId];
-
                     const areSelectedSkills = skill.selectedSubSkills.length > 0 && selectedBool;
                     const aredeselectedSkills = skill.deselectedSubSkills.length > 0 && !selectedBool;
 

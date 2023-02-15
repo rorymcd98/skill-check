@@ -1,82 +1,77 @@
 export default {
   'c': {
       'name': 'C',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['C','GCC', 'OpenSSL', 'APR', 'GLib', 'Quake', 'ccv', 'libarchive'],
       'selectedSubSkills': []
   },
   'cpp': {
       'name': 'C++',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['C++', 'GCC', 'Boost', 'Poco', 'OpenSSL', 'Dear ImGui', 'Eclipse Mosquitto', 'OpenCV', 'Tensorflow'],
       'selectedSubSkills': []
   },
   'csharp': {
       'name': 'C#',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['C#', '.NET', 'Microservices', 'Azure', 'Web API 2', 'Unity', 'WPF'],
       'selectedSubSkills': []
   },
   'css': {
       'name': 'CSS',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['CSS'],
       'selectedSubSkills': []
   },
   'go': {
       'name': 'Go',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
-      'selectedSubSkills': []
-  },
-  'go-old': {
-      'name': 'Go (Old)',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Golang', 'Kubernetes', 'Goroutines', 'GORM'],
       'selectedSubSkills': []
   },
   'haskell': {
       'name': 'Haskell',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Haskell', 'Scala', 'GHC', 'Cabal', 'Stack', 'QuickCheck', 'Lens'],
       'selectedSubSkills': []
   },
   'html': {
       'name': 'HTML',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['HTML', 'HTML5', 'Bootstrap', 'Foundation'],
       'selectedSubSkills': []
   },
   'java': {
       'name': 'Java',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Java', 'Spring', 'Hibernate', 'Google Web Toolkit', 'Struts', 'Play', 'Grails', 'Vaadin', 'Wicket'],
       'selectedSubSkills': []
   },
   'javascript': {
       'name': 'JavaScript',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['JavaScript', 'Node', 'React', 'Angular', 'Vite', 'jQuery', 'D3', 'Lodash', 'express', 'Axios', 'Webpack', 'Bootstrap', 'Socket.IO'],
       'selectedSubSkills': []
   },
   'kotlin': {
       'name': 'Kotlin',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Kotlin'],
       'selectedSubSkills': []
   },
   'lua': {
       'name': 'Lua',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Lua'],
       'selectedSubSkills': []
   },
   'php': {
       'name': 'PHP',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['PHP'],
       'selectedSubSkills': []
   },
   'python': {
       'name': 'Python',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas', 'OpenCV', 'Pillow', 'Keras', 'PyTorch', 'Matplotlib', 'Theano', 'Requests', 'TensorFlow', 'Pygame', 'SciPy', 'Tkinter'],
       'selectedSubSkills': [],
   },
   'r': {
       'name': 'R',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['R programmer', 'Dplyr', 'tidyverse', 'dplyr', 'shiny', 'data.table', 'ggplot2'],
       'selectedSubSkills': []
   },
   'ruby': {
       'name': 'Ruby',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Ruby'],
       'selectedSubSkills': []
   },
   'swift': {
@@ -86,7 +81,12 @@ export default {
   },
   'typescript': {
       'name': 'TypeScript',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas'],
+      'deselectedSubSkills': ['Typescript'],
       'selectedSubSkills': []
+  },
+  'database':{
+    'name': 'Database',
+    'deselectedSubSkills': ['SQL', 'PostgresQL', 'MySQL', 'MongoDB', 'Oracle Database'],
+    'selectedSubSkills': []
   }
 }
