@@ -2,7 +2,7 @@ require('dotenv').config({ path: __dirname + '../../.env' });
 const { Client } = require('pg');
 
 //Searches for the UNION of all searchTerms 
-async function searchDatabase(searchTerms){
+async function searchDatabaseUnion(searchTerms){
     const client = new Client();
     try {
         await client.connect();
@@ -35,6 +35,7 @@ function assembleQuery(searchTerms){
 
     const subQueryArray = [];
 
+    //Iterate through the search terms, create a SELECT query for each
     for (i in searchTerms){
         let searchTerm = searchTerms[i];
         searchTerm = searchTerm.trim();
@@ -52,22 +53,15 @@ function assembleQuery(searchTerms){
 
     if(subQueryArray.length == 0) {console.error('No valid search terms. (search-database.js)'); return null}
 
+    //Join queries with UNION
     const joinedQueries = subQueryArray.join(') UNION (');
-
+    
+    //Sort by published_date
     const searchQuery = '(' + joinedQueries + ') ORDER BY published_date ASC;'
 
-    // const searchTerm = searchTerms[0];
-
-    // const searchQuery = `SELECT job_title, minimum_salary, maximum_salary, published_date,
-    // ts_rank(search_vector, websearch_to_tsquery('${searchTerm}')) as rank,
-    // (minimum_salary + maximum_salary) / 2 as avg_salary
-    // FROM job_listing
-    // WHERE ts_rank(search_vector, websearch_to_tsquery('${searchTerm}')) >= ${rankThreshold}
-    // AND (minimum_salary + maximum_salary) / 2 BETWEEN ${minSalaryLimit} AND ${maxSalaryLimit}
-    // ORDER BY published_date ASC;`
-    return searchQuery
+    return searchQuery;
 
 }
 
 
-module.exports = {searchDatabase};
+module.exports = {searchDatabaseUnion};

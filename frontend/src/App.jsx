@@ -1,11 +1,13 @@
 import { useState, useEffect} from 'react'
 import '../css/App.css'
-import Chart from './components/Chart'
-import SkillElementPanel from './components/SkillElementPanel'
-import initialSkills from './components/component-resources/initialSkills'
 import axios from 'axios'
-import Timeseries from './components/Timeseries'
-import LineChart from './components/Line'
+
+//Components
+import SalaryTimeseriesChart from './components/SalaryTimeseriesChart'
+import SalaryDistributionChart from './components/SalaryDistributionChart'
+import SkillElementPanel from './components/SkillElementPanel'
+
+import initialSkills from './components/component-resources/initialSkills'
 
 function App() {  
   //On mount check if we're accessing the API
@@ -99,9 +101,9 @@ function App() {
   return (
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
-        <Chart chartData={chartData}></Chart>
-        <Timeseries chartData={chartData}></Timeseries>
-        <LineChart chartData={chartData}></LineChart>
+        <SalaryDistributionChart chartData={chartData}></SalaryDistributionChart>
+        <SalaryTimeseriesChart chartData={chartData}></SalaryTimeseriesChart>
+
         <button className='AnalyzeSkillsButton' onClick={buttonClickFunction}>Eventually I get clicked</button>
         <button className='ResetSkillsButton' onClick={resetSkills}></button>
       </span>

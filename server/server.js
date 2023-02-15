@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 const PORT = process.env.PORT || 3001;
-const {searchDatabase} = require('./search-database.js');
+const {searchDatabaseUnion} = require('./search-database-union.js');
+const {searchDatabaseEach} = require('./search-database-each.js');
 const {createSalaryHistograms} = require('./create-salary-histograms.js')
 const {createTimeSeries} = require('./create-time-series.js')
 
@@ -27,8 +28,8 @@ app.get('/api/v1/data', (req, res)=>{
 
   collectQueries(queries).then((jobQueries)=>{
     //Create salary a salary histograms
-    const salaryHistograms = createSalaryHistograms(jobQueries, 5000);
-    const salaryTimeSeries = createTimeSeries(jobQueries, 1);
+    const salaryHistograms = createSalaryHistograms(jobQueries.unions, 5000);
+    const salaryTimeSeries = createTimeSeries(jobQueries.unions, 1);
 
     //Send the collected data (becomes chartData when received by front end)
     res.send({
@@ -40,13 +41,14 @@ app.get('/api/v1/data', (req, res)=>{
 })
 
 async function collectQueries(termsList) {
-  const jobQueries = {};
+  const jobQueries = {'unions': {},
+                      'eaches': {}};
 
   if (!(termsList instanceof Array)) return []; 
 
   for (terms of termsList) {
-    const dbRes = await searchDatabase(terms);
-    jobQueries[`${terms[0]}${terms.length>1 ? ` (+${terms.length -1})` : ''}`] = dbRes.rows;
+    const dbUnion = await searchDatabaseUnion(terms);
+    jobQueries['unions'][`${terms[0]}${terms.length>1 ? ` (+${terms.length -1})` : ''}`] = dbUnion.rows;
   }
 
   return jobQueries;

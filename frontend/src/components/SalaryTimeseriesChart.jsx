@@ -22,12 +22,13 @@ ChartJS.register(
   Title,
   );
 
-export default function Timeseries({chartData}) {
+export default function SalaryTimeseriesChart({chartData}) {
   const salaryTimeSeries = chartData.salaryTimeSeries;
 
-  //Format the dataset object to be rendered
+  //Create the dataset object for chart JS
   const datasets = [];
   let colorIndex = 0;
+
   Object.keys(salaryTimeSeries).forEach((jobQuery) => {
     //Push the scatter points datset
     datasets.push(

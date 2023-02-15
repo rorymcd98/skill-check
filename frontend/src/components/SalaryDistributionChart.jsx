@@ -7,13 +7,44 @@ import {
   Title,
   Tooltip,
   Legend,
+  PointElement,
+  LineElement,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
 import MultiRangeSlider from "multi-range-slider-react";
 import '../../css/ChartPanel.css'
 import backgroundColorSelection from './component-resources/chart-colours';
 
-export default function Chart({chartData}) {
+//Chart JS backend
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top'
+    },
+    title: {
+      display: true,
+      text: 'Chart.js Bar Chart',
+    },
+    maintainAspectRatio : true
+  },
+};
+
+
+import { Line } from 'react-chartjs-2';
+
+
+export default function SalaryDistributionChart({chartData}) {
   const salaryHistograms = chartData.salaryHistograms;
   const labels = salaryHistograms.histogramLabels;
   const histograms = salaryHistograms.histograms;
@@ -49,8 +80,9 @@ export default function Chart({chartData}) {
           data: histograms[searchTerm].slice(minHistogramIndex, maxHistogramIndex),
           backgroundColor: backgroundColorSelection[colorIndex],
           showLine: true,
-          borderColor: backgroundColorSelection[colorIndex], 
-          
+          borderColor: backgroundColorSelection[colorIndex],
+          cubicInterpolationMode: 'monotone',
+          spanGaps: true
         }
       )
       colorIndex++;
@@ -74,19 +106,19 @@ export default function Chart({chartData}) {
 
   
 
-    //Update histogram sliders when new data is input to truncate / remove outliers
-    useEffect(()=>{
-      setTimeout(()=>{
-        setMax(initialMax)
-        setMinValue(initialMin)
-        setMaxValue(Math.min(initialMax,150000))
-      }, 100)
-    }, [chartData])
+  //Update histogram sliders when new data is input to truncate / remove outliers
+  useEffect(()=>{
+    setTimeout(()=>{
+      setMax(initialMax)
+      setMinValue(initialMin)
+      setMaxValue(Math.min(initialMax,150000))
+    }, 100)
+  }, [chartData])
 
   const sliderLabels = [labels[0],,,,,,,,,labels[labels.length-1]]
 
   return (<div className = 'Chart' style={{position: 'relative', width: "62vh"}}>
-     <Bar options={options} data={data}/>
+     <Line options={options} data={data}/>
      <MultiRangeSlider
 			min={0}
 			max={max}
@@ -103,26 +135,3 @@ export default function Chart({chartData}) {
   </div>);
 }
 
-//Chart JS backend
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top'
-    },
-    title: {
-      display: true,
-      text: 'Chart.js Bar Chart',
-    },
-    maintainAspectRatio : true
-  },
-};
