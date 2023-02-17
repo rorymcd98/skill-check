@@ -48,16 +48,15 @@ export default function SalaryDistributionChart({chartData, chartSettings, salar
   const labels = salaryDistributions.distributionLabels;
   const distributions = salaryDistributions.distributions;
 
-  const minValue = sliderProps.minValue;
-  const maxValue = sliderProps.maxValue;
+  const minSalary = sliderProps.minSalary;
+  const maxSalary = sliderProps.maxSalary;
 
 
-  //Determine which labels we should use based on slider 'minValue' 'maxValue'
-  const minDistributionIndex = Math.ceil(minValue/salaryBlockSize);
-  const maxDistributionIndex = Math.floor(maxValue/salaryBlockSize)+1;
+  //Determine which labels we should use based on slider 'minSalary' 'maxSalary'
+  const minDistributionIndex = Math.ceil(minSalary/salaryBlockSize);
+  const maxDistributionIndex = Math.floor(maxSalary/salaryBlockSize)+1;
 
-
-  const displayLabels = labels.slice(minDistributionIndex, maxDistributionIndex)
+  const displayLabels = labels.slice(minDistributionIndex, maxDistributionIndex);
 
   //Format the dataset object to be rendered
   const datasets = [];

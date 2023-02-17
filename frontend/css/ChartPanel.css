@@ -6,56 +6,6 @@
   bottom: 0%;
 }
 
-/* The multi slider */
-
-.WindowSlider{
-  position: relative;
-  background-color: black;
-
-  top: 10px;
-  left: 15px;
-  height: 75px;
-  width: 400px;
-
-  padding-inline: 5px;
-}
-
-.SliderHandle{
-  position: absolute;
-  background-color: grey;
-  border-radius: 5px;
-
-  width: 10px;
-  height: 40px;
-
-  top: 50%;
-  transform: translateY(-50%);
-
-  cursor: grab;
-  -webkit-user-drag: none;
-}
-
-#LeftSliderHandle{
-  left: 5px;
-}
-#RightSliderHandle{
-  right: 5px;
-}
-
-
-.label{
-  color: white;
-}
-
-#left-label{
-  position: absolute;
-  left: 10px
-}
-
-#right-label{
-  position: absolute;
-  right: 10px
-}
 
 /* Skill frequency chart */
 
@@ -95,3 +45,12 @@
   display: inline-flex;
   width: '80%';
 }
+
+/* Time series chart */
+
+.SalaryTimeSeries{
+  position: relative;
+  height: 400px;
+}
+
+/* The multi slider */

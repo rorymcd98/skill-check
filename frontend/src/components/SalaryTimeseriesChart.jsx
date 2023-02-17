@@ -26,6 +26,29 @@ ChartJS.register(
   TimeScale
   );
 
+///---Helpers---
+//Helper function to make the dots more transparent
+function changeColorTransparency(color, transparency) {
+  // Split the color string into its individual RGBA components
+  var rgba = color.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*(\d*\.\d+|\d+)\)$/);
+  var r = rgba[1];
+  var g = rgba[2];
+  var b = rgba[3];
+  // Convert the transparency value to a decimal number between 0 and 1
+  var a = transparency / 100;
+  // Create a new color string with the updated transparency
+  var newColor = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+  return newColor;
+}
+
+//Turns a float (from the slider) back into a date
+function floatToDate(float){
+  const year = Math.floor(float);
+  const month = Math.floor(12*(float%1));
+  return new Date(year, month, 28)
+}
+
+
 export default function SalaryTimeseriesChart({chartData, chartSettings, salaryBlockSize, sliderProps}) {
   const salaryTimeSeries = chartData.salaryTimeSeries;
 
@@ -39,12 +62,8 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
       {
         label: `${jobQuery} points`,
         data: salaryTimeSeries[jobQuery].scatterPoints,
-        backgroundColor: backgroundColorSelection[colorIndex],
+        backgroundColor: changeColorTransparency(backgroundColorSelection[colorIndex], 30),
         showLine: false,
-        ticks: {
-          min: 50000,
-          max: 100000
-        }
       }
     )
     //Push the average line dataset
@@ -70,12 +89,13 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
     type: 'scatter',
     scales: {
       y: {
-          min: sliderProps.min,
-          max: sliderProps.max
+          min: sliderProps.minSalary,
+          max: sliderProps.maxSalary
       },
       x: {
-        beginAtZero: false,
-        type: 'time'
+        type: 'time',
+        min: floatToDate(sliderProps.minDate),
+        max: floatToDate(sliderProps.maxDate),
       },
     },
     //On click open a scatter point job in a URL (the first of many if a cluster is chosen)

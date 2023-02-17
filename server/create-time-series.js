@@ -1,6 +1,7 @@
 //Creates time series based on the salary
 //jobQueriesUnions - Array of jobs query objects from the PostgresQL database
-function createTimeSeries(jobQueriesUnions){
+//skip - Skip every scatter
+function createTimeSeries(jobQueriesUnions, skip=7){
   //Stores scatter points, and average lines for each job query
   const resultObject = {};
 
@@ -13,6 +14,10 @@ function createTimeSeries(jobQueriesUnions){
     const scatterPoints = [];
     const averageLine = [];
 
+
+    //Track a job when the skip counter is a multiple of skip
+    let skipCounter = 0;
+
     for(jobId in queryList){
       const job = queryList[jobId];
       
@@ -22,8 +27,12 @@ function createTimeSeries(jobQueriesUnions){
       const jobTitle = job['job_title'];
       const url = job['job_url'];
 
-      scatterPoints.push({x: jobDate, y:jobAverage, label:jobTitle, url})
-      
+
+      if(skipCounter%skip == 0){
+        scatterPoints.push({x: jobDate, y:jobAverage, label:jobTitle, url})
+      }
+      skipCounter++;
+
       //Store the average line
       const roundedDate = roundDateToMonth(jobDate);
       const dateKey = roundedDate.toString();

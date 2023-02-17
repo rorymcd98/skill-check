@@ -29,7 +29,7 @@ app.get('/api/v1/data', (req, res)=>{
   collectQueries(queries).then((jobQueries)=>{
     //Create salary a salary distributions
     const salaryDistributions = createSalaryDistributions(jobQueries.unions, 5000);
-    const salaryTimeSeries = createTimeSeries(jobQueries.unions, 1);
+    const salaryTimeSeries = createTimeSeries(jobQueries.unions);
     const skillsFrequencies = createSkillsFrequency(jobQueries.eaches, jobQueries.unions);
 
     //Send the collected data (becomes chartData when received by front end)

@@ -11,6 +11,16 @@ import MultiRangeSlider from "multi-range-slider-react";
 
 import initialSkills from './components/component-resources/initialSkills'
 
+//---Helper functions---
+//Returns a float for a given Date object (e.g. -> 2022.958)
+function dateToFloat(date){
+  return date.getFullYear() + date.getMonth()/12 + date.getDate()/365;
+}
+
+function dateToLabel(date){
+  return date.toLocaleString('en-us', { month: 'short', year: 'numeric' });
+}
+
 
 function App() {  
   //On mount check if we're accessing the API
@@ -28,7 +38,7 @@ function App() {
 
   const initialChartData = {
     'salaryDistributions' : {
-      'distributionLabels' : ['0k', '5k', '10k', '15k', '20k', '25k', '30k', '35k', '40k', '45k', '50k', '55k', '60k', '65k', '70k', '75k'],
+      'distributionLabels' : ["£0k","£5k","£10k","£15k","£20k","£25k","£30k","£35k","£40k","£45k","£50k","£55k","£60k","£65k","£70k","£75k","£80k","£85k","£90k","£95k","£100k","£105k","£110k","£115k","£120k","£125k","£130k","£135k","£140k","£145k","£150k"],
       'distributions' : {'[No data]' : []}
     }, 
     'salaryTimeSeries' : {
@@ -117,29 +127,53 @@ function App() {
 
   //---Salary Slider---
   const salaryDistributions = chartData.salaryDistributions;
-  const labels = salaryDistributions.distributionLabels;
-  const sliderLabels = [labels[0],,,,,,,,,labels[labels.length-1]]
+  const salarylabels = salaryDistributions.distributionLabels;
+  const salarySliderLabels = [salarylabels[0],,,,,,,,,salarylabels[salarylabels.length-1]]
 
   //Initial boundaries for distribution slider
-  const initialMin = 15000;
-  const initialMax = (labels.length-1)*salaryBlockSize;
+  const initialMinSalary = 15000;
+  const initialMaxSalary = (salarylabels.length-1)*salaryBlockSize;
 
   //States for distribution slider
-  const [minValue, setMinValue] = useState(initialMin);
-  const [maxValue, setMaxValue] = useState(initialMax);
+  const [minSalary, setMinSalary] = useState(initialMinSalary);
+  const [maxSalary, setMaxSalary] = useState(initialMaxSalary);
 
   //Handle distribution sliding
-  const handleInput = (e) => {
-    setTimeout(()=>{
-      setMinValue(e.minValue);
-      setMaxValue(e.maxValue);
-    }, 1000)
+  const handleInputSalary = (e) => {
+      setMinSalary(e.minValue);
+      setMaxSalary(e.maxValue);
   };
 
+  //---Date Slider---
+  //Initial boundaries for distribution slider
+  const initialMinDate = dateToFloat(new Date(2022, 0, 0));
+  const initialMaxDate = dateToFloat(new Date());
+
+  const initialMinDateLabel = dateToLabel(new Date(2020, 0, 1));
+  const initialMaxDateLabel = dateToLabel(new Date());
+
+  const dateSliderLabels = [initialMinDateLabel,,,,,,,,,,,,,,initialMaxDateLabel]
+
+  //States for distribution slider
+  const [minDate, setMinDate] = useState(initialMinDate);
+  const [maxDate, setMaxDate] = useState(initialMaxDate);
+
+  //Handle distribution sliding
+  const handleInputDate = (e) => {
+    setMinDate(e.minValue);
+    setMaxDate(e.maxValue);
+  };
+
+
+
   const sliderProps = {
-    minValue,
-    maxValue,
-    handleInput
+    minSalary,
+    maxSalary,
+    handleInputSalary,
+
+    minDate,
+    maxDate,
+    handleInputDate
   }
 
   return (
@@ -154,31 +188,34 @@ function App() {
 
         <span id= 'slider-panel' style={{display : 'inline-flex'}}>
           <MultiRangeSlider
+            key='salary-slider'
+            id='salary-slider'
             min={0}
-            max={initialMax}
+            max={initialMaxSalary}
             step={salaryBlockSize}
-            minValue={minValue}
-            maxValue={maxValue}
+            minValue={minSalary}
+            maxValue={maxSalary}
             label={true}
-            labels={sliderLabels}
+            labels={salarySliderLabels}
             onChange={(e) => {
-              handleInput(e);
+              handleInputSalary(e);
             }}
             style={{width: chartSettings.topChartWidth}}
           />
         <MultiRangeSlider
-          min={0}
-          max={initialMax}
-          step={salaryBlockSize}
-          minValue={minValue}
-          maxValue={maxValue}
+          key='date-slider'
+          id='date-slider'
+          min={2020}
+          max={initialMaxDate}
+          step={0.0001}
+          minValue={minDate}
+          maxValue={maxDate}
           label={true}
-          labels={sliderLabels}
-          key={'different'}
+          labels={dateSliderLabels}
           style={{width: chartSettings.topChartWidth}}
-          // onChange={(e) => {
-          //   handleInput(e);
-          // }}
+          onChange={(e) => {
+            handleInputDate(e);
+          }}
 	    	/>
         </span>
 

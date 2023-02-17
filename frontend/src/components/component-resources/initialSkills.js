@@ -85,7 +85,7 @@ export default {
       'selectedSubSkills': []
   },
   'database':{
-    'name': 'database',
+    'name': 'Database',
     'deselectedSubSkills': ['SQL', 'PostgresQL', 'MySQL', 'MongoDB', 'Oracle Database'],
     'selectedSubSkills': []
   }
