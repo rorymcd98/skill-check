@@ -16,14 +16,15 @@ async function searchDatabaseUnion(searchTerms){
     try {
         const res = await client.query(searchQuery).then(console.log('Successful query!'));
         
+        await client.end();        
         return res;
     } catch (err) {
         console.error(err)
         console.log('Query error!')
+
+        await client.end();
         return {'rows': []}
     }
-
-    await client.end();
 }
 
 //Accepts an array of search terms, and returns a query which selects the UNION of all the search terms
@@ -41,7 +42,8 @@ function assembleQuery(searchTerms){
         searchTerm = searchTerm.trim();
         if(searchTerm.length == 0) continue;
 
-        const subQuery = `SELECT job_title, minimum_salary, maximum_salary, published_date,
+        //Select all job posts where a search term matches the job description and title (represented in search_vector) 
+        const subQuery = `SELECT job_title, job_url, minimum_salary, maximum_salary, published_date,
         ts_rank(search_vector, websearch_to_tsquery('${searchTerm}')) as rank,
         (minimum_salary + maximum_salary) / 2 as avg_salary
         FROM job_listing

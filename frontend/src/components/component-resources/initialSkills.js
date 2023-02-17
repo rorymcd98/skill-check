@@ -61,7 +61,7 @@ export default {
   },
   'python': {
       'name': 'Python',
-      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas', 'OpenCV', 'Pillow', 'Keras', 'PyTorch', 'Matplotlib', 'Theano', 'Requests', 'TensorFlow', 'Pygame', 'SciPy', 'Tkinter'],
+      'deselectedSubSkills': ['Python', 'Python 2', 'Python 3', 'NumPy', 'Pandas', 'OpenCV', 'Pillow', 'Keras', 'PyTorch', 'Matplotlib', 'Theano', 'TensorFlow', 'Pygame', 'SciPy', 'Tkinter'],
       'selectedSubSkills': [],
   },
   'r': {
@@ -85,7 +85,7 @@ export default {
       'selectedSubSkills': []
   },
   'database':{
-    'name': 'Database',
+    'name': 'database',
     'deselectedSubSkills': ['SQL', 'PostgresQL', 'MySQL', 'MongoDB', 'Oracle Database'],
     'selectedSubSkills': []
   }

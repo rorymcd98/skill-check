@@ -8,9 +8,12 @@ import {
   Legend,
   CategoryScale,
   Title,
+  TimeScale
 } from 'chart.js';
-import { Scatter, Line } from 'react-chartjs-2';
+import { Scatter} from 'react-chartjs-2';
 import backgroundColorSelection from './component-resources/chart-colours';
+
+import 'chartjs-adapter-moment';
 
 ChartJS.register(
   LinearScale, 
@@ -20,9 +23,10 @@ ChartJS.register(
   Legend,   
   CategoryScale,
   Title,
+  TimeScale
   );
 
-export default function SalaryTimeseriesChart({chartData}) {
+export default function SalaryTimeseriesChart({chartData, chartSettings, salaryBlockSize, sliderProps}) {
   const salaryTimeSeries = chartData.salaryTimeSeries;
 
   //Create the dataset object for chart JS
@@ -36,7 +40,11 @@ export default function SalaryTimeseriesChart({chartData}) {
         label: `${jobQuery} points`,
         data: salaryTimeSeries[jobQuery].scatterPoints,
         backgroundColor: backgroundColorSelection[colorIndex],
-        showLine: false
+        showLine: false,
+        ticks: {
+          min: 50000,
+          max: 100000
+        }
       }
     )
     //Push the average line dataset
@@ -59,26 +67,43 @@ export default function SalaryTimeseriesChart({chartData}) {
   };
   
   const options = {
+    type: 'scatter',
     scales: {
       y: {
-        beginAtZero: true,
-        ticks: {
-          min: 0,
-          max: 100
-        }
+          min: sliderProps.min,
+          max: sliderProps.max
       },
       x: {
         beginAtZero: false,
-        ticks: {
-          min: 0,
-          max: 100
+        type: 'time'
+      },
+    },
+    //On click open a scatter point job in a URL (the first of many if a cluster is chosen)
+    onClick: (chart, point)=>{
+      const firstKey = Object.keys(point)[0];
+      const firstPoint = point[firstKey];
+      const url = firstPoint.element.$context.raw.url;
+
+      window.open(url, '_blank', 'noreferrer');
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const jobTitle = context.dataset.data[context.dataIndex].label || '';
+
+            const label = `${jobTitle} - £${context.parsed.y/1000}k \n (${context.dataset.label.split(' ')[0]})`;
+            return label;
+          }
         }
       }
-    },
+    }
   };
 
+
+
   return (
-    <div>
+    <div className='SalaryTimeSeries' id='salary-time-series'>
       <Scatter options={options} data={data} />
     </div>
 

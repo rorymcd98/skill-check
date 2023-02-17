@@ -3,8 +3,9 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const {searchDatabaseUnion} = require('./search-database-union.js');
 const {searchDatabaseEach} = require('./search-database-each.js');
-const {createSalaryHistograms} = require('./create-salary-histograms.js')
+const {createSalaryDistributions} = require('./create-salary-distributions.js')
 const {createTimeSeries} = require('./create-time-series.js')
+const {createSkillsFrequency} = require('./create-skill-frequency')
 
 console.log(createTimeSeries)
 
@@ -19,7 +20,6 @@ app.get('/api/v1', (req, res) => {
 
 app.get('/api/v1/data', (req, res)=>{
   //Collect queries from the SQL database and parse the results
-  console.log(req.query)
   const queries = [];
   for(q in req.query){
     queries.push(req.query[q]);
@@ -27,14 +27,16 @@ app.get('/api/v1/data', (req, res)=>{
 
 
   collectQueries(queries).then((jobQueries)=>{
-    //Create salary a salary histograms
-    const salaryHistograms = createSalaryHistograms(jobQueries.unions, 5000);
+    //Create salary a salary distributions
+    const salaryDistributions = createSalaryDistributions(jobQueries.unions, 5000);
     const salaryTimeSeries = createTimeSeries(jobQueries.unions, 1);
+    const skillsFrequencies = createSkillsFrequency(jobQueries.eaches, jobQueries.unions);
 
     //Send the collected data (becomes chartData when received by front end)
     res.send({
-      salaryHistograms,
-      salaryTimeSeries
+      salaryDistributions,
+      salaryTimeSeries,
+      skillsFrequencies
     });
 
   })
@@ -47,8 +49,16 @@ async function collectQueries(termsList) {
   if (!(termsList instanceof Array)) return []; 
 
   for (terms of termsList) {
+    //Search name e.g. 'Javascript (+5)'
+    const searchName = `${terms[0]}${terms.length>1 ? ` (+${terms.length -1})` : ''}`
+
+    //Union queries e.g. [Javascript UNION React UNION ...]
     const dbUnion = await searchDatabaseUnion(terms);
-    jobQueries['unions'][`${terms[0]}${terms.length>1 ? ` (+${terms.length -1})` : ''}`] = dbUnion.rows;
+    jobQueries['unions'][searchName] = dbUnion.rows;
+
+    //Each queries e.g. [Javascript, react, ...]
+    const dbEach = await searchDatabaseEach(terms);
+    jobQueries['eaches'][searchName] = dbEach;
   }
 
   return jobQueries;

@@ -10,7 +10,6 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
-import MultiRangeSlider from "multi-range-slider-react";
 import '../../css/ChartPanel.css'
 import backgroundColorSelection from './component-resources/chart-colours';
 
@@ -35,49 +34,39 @@ const options = {
     title: {
       display: true,
       text: 'Chart.js Bar Chart',
-    },
-    maintainAspectRatio : true
+    }
   },
+  maintainAspectRatio: false
 };
 
 
 import { Line } from 'react-chartjs-2';
 
 
-export default function SalaryDistributionChart({chartData}) {
-  const salaryHistograms = chartData.salaryHistograms;
-  const labels = salaryHistograms.histogramLabels;
-  const histograms = salaryHistograms.histograms;
+export default function SalaryDistributionChart({chartData, chartSettings, salaryBlockSize, sliderProps}) {
+  const salaryDistributions = chartData.salaryDistributions;
+  const labels = salaryDistributions.distributionLabels;
+  const distributions = salaryDistributions.distributions;
 
-  //---slider variables---
-  //Histogram block size
-  const blockSize = 5000;
+  const minValue = sliderProps.minValue;
+  const maxValue = sliderProps.maxValue;
 
-  //Initial boundaries for histogram slider
-  const initialMin = 15000;
-  const initialMax = (labels.length-1)*blockSize;
-  
-  const [max, setMax] = useState(initialMax);
-
-  //States for histogram slider
-  const [minValue, setMinValue] = useState(initialMin);
-  const [maxValue, setMaxValue] = useState(initialMax);
 
   //Determine which labels we should use based on slider 'minValue' 'maxValue'
-  const minHistogramIndex = Math.ceil(minValue/blockSize);
-  const maxHistogramIndex = Math.floor(maxValue/blockSize)+1;
+  const minDistributionIndex = Math.ceil(minValue/salaryBlockSize);
+  const maxDistributionIndex = Math.floor(maxValue/salaryBlockSize)+1;
 
 
-  const displayLabels = labels.slice(minHistogramIndex, maxHistogramIndex)
+  const displayLabels = labels.slice(minDistributionIndex, maxDistributionIndex)
 
   //Format the dataset object to be rendered
   const datasets = [];
   let colorIndex = 0;
-  Object.keys(histograms).forEach((searchTerm) => {
+  Object.keys(distributions).forEach((searchTerm) => {
       datasets.push(
         {
           label: searchTerm,
-          data: histograms[searchTerm].slice(minHistogramIndex, maxHistogramIndex),
+          data: distributions[searchTerm].slice(minDistributionIndex, maxDistributionIndex),
           backgroundColor: backgroundColorSelection[colorIndex],
           showLine: true,
           borderColor: backgroundColorSelection[colorIndex],
@@ -96,42 +85,9 @@ export default function SalaryDistributionChart({chartData}) {
   };
 
 
-  //Handle histogram sliding
-  const handleInput = (e) => {
-    setTimeout(()=>{
-      setMinValue(e.minValue);
-      setMaxValue(e.maxValue);
-    }, 50)
-  };
-
-  
-
-  //Update histogram sliders when new data is input to truncate / remove outliers
-  useEffect(()=>{
-    setTimeout(()=>{
-      setMax(initialMax)
-      setMinValue(initialMin)
-      setMaxValue(Math.min(initialMax,150000))
-    }, 100)
-  }, [chartData])
-
-  const sliderLabels = [labels[0],,,,,,,,,labels[labels.length-1]]
-
-  return (<div className = 'Chart' style={{position: 'relative', width: "62vh"}}>
-     <Line options={options} data={data}/>
-     <MultiRangeSlider
-			min={0}
-			max={max}
-			step={blockSize}
-			minValue={minValue}
-			maxValue={maxValue}
-      label={true}
-      labels={sliderLabels}
-			onChange={(e) => {
-				handleInput(e);
-			}}
-		/>
-
+  return (
+  <div className = 'SalaryDistributionChart' style={{position: 'relative', width: chartSettings.topChartWidth}}>
+     <Line options={options} data={data} style={{position: 'relative', height: chartSettings.topChartHeight}}/>
   </div>);
 }
 

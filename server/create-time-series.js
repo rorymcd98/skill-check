@@ -1,45 +1,38 @@
 //Creates time series based on the salary
-//jobQueries - Array of jobs query objects from the PostgresQL database
-//kernelSize - 1D kernel size in months for averaging results to provide smoothing
-
-function createTimeSeries(jobQueries, kernelSize = 2){
+//jobQueriesUnions - Array of jobs query objects from the PostgresQL database
+function createTimeSeries(jobQueriesUnions){
   //Stores scatter points, and average lines for each job query
   const resultObject = {};
 
-  //Iterate through each query -> then each job -> sort into histogram blocks
-  for (jobQuery in jobQueries){
-    const queryList = jobQueries[jobQuery];
+  //Iterate through each query -> then each job -> sort into distribution blocks
+  for (jobQuery in jobQueriesUnions){
+    const queryList = jobQueriesUnions[jobQuery];
     const averageLineCounter = {}; //Stores the total and the count for a given kernel (to calculate the representative line)
     
     //Plotted data
     const scatterPoints = [];
     const averageLine = [];
 
-
     for(jobId in queryList){
       const job = queryList[jobId];
-
-      const jobAverage = job['avg_salary'];
-
-      //Turn the date into a float (e.g. 2021.91)
+      
+      //Add relevant info to scatter points
       const jobDate = job['published_date'];
-      const jobDateFloat = dateToFloat(jobDate);
-      
-      //If there's no associated date then skip
-      if (jobDateFloat == null) continue; 
+      const jobAverage = job['avg_salary'];
+      const jobTitle = job['job_title'];
+      const url = job['job_url'];
 
-      //Otherwise push a scatter point
-      scatterPoints.push({x: jobDateFloat, y:jobAverage})
-
-      //Assign the jobDateFloat to the nearest kernel that it belongs to
-      const kernel = (12/kernelSize);
-      const jobDateKernel = Math.round(jobDateFloat*kernel)/kernel;
+      scatterPoints.push({x: jobDate, y:jobAverage, label:jobTitle, url})
       
-      if(averageLineCounter[jobDateKernel]){
-        averageLineCounter[jobDateKernel].counter++;
-        averageLineCounter[jobDateKernel].total+=jobAverage;
+      //Store the average line
+      const roundedDate = roundDateToMonth(jobDate);
+      const dateKey = roundedDate.toString();
+      if(averageLineCounter[dateKey]){
+        averageLineCounter[dateKey].counter++;
+        averageLineCounter[dateKey].total+=jobAverage;
+        averageLineCounter[dateKey].dateObject = roundedDate;
       } else {
-        averageLineCounter[jobDateKernel] = {
+        averageLineCounter[dateKey] = {
           counter: 1,
           total: jobAverage
         }
@@ -47,38 +40,31 @@ function createTimeSeries(jobQueries, kernelSize = 2){
     }
 
     //Turn the averageLineCounter into a line
-    for(dateKernel in averageLineCounter){
-      const kernelVal = averageLineCounter[dateKernel];
-      const lineValue = kernelVal.total/kernelVal.counter;
-      averageLine.push({x: dateKernel, y:lineValue})
+    for(dateKey in averageLineCounter){
+      const month = averageLineCounter[dateKey];
+      const linePointVal = month.total/month.counter;
+
+      averageLine.push({x: averageLineCounter[dateKey].dateObject, y:linePointVal})
     }
 
-    resultObject[jobQuery] = {
-      scatterPoints,
-      averageLine
+    if(scatterPoints.length > 0){
+      resultObject[jobQuery] = {
+        scatterPoints,
+        averageLine
+      }
     }
-
   }
 
   return resultObject;
 }
 
-//Converts date from ISO 8601 to a float based on the year
-//date format: 2022-11-21T00:00:00.000Z
-//dateFloat format: 2022.916666
-function dateToFloat(date){
+//Returns a date object to nearest month
+function roundDateToMonth(date){
   if(!(date instanceof Date)) return null;
 
-  const dateFloat = date.getFullYear() + date.getMonth()/12 + date.getDay()/365;
+  const roundedDate = new Date(date.getFullYear(), date.getMonth(), 0);
 
-  return dateFloat;
+  return roundedDate;
 }
 
-
 module.exports = {createTimeSeries};
-
-// Should return:
-  // average timeseries
-  // max timeseries
-  // min timeseries
-  // scatter dots
