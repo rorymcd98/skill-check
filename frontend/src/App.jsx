@@ -43,14 +43,14 @@ function App() {
   const initialChartData = {
     'salaryDistributions' : {
       'distributionLabels' : ["£0k","£5k","£10k","£15k","£20k","£25k","£30k","£35k","£40k","£45k","£50k","£55k","£60k","£65k","£70k","£75k","£80k","£85k","£90k","£95k","£100k","£105k","£110k","£115k","£120k","£125k","£130k","£135k","£140k","£145k","£150k"],
-      'distributions' : {'[No data]' : []}
+      'distributions' : {'[No-data]' : []}
     }, 
     'salaryTimeSeries' : {
-      '[No data]' : {'scatterPoints': [], 'averageLine': [],}
+      '[No-data]' : {'scatterPoints': [], 'averageLine': [],}
     },
     'skillsFrequencies' :{
-      'counts' : {'[No data]' : []},
-      'labels' : {'[No data]': []}
+      'counts' : {'[No-data]' : []},
+      'labels' : {'[No-data]': []}
     }
   }
 
@@ -61,9 +61,10 @@ function App() {
     const queriesArray = [];
 
     //Add the custom search list to the query
-    
+    searchLists.map((searchList)=>{
       if(searchList.length > 0) queriesArray.push(searchList);
-
+    })
+      
     //Iterate through the skillElementObject for selected sub-skills
     for(let skill in skillElementObject){
       const curSkill = skillElementObject[skill];
@@ -100,24 +101,24 @@ function App() {
 
   //---Custom search list state---
   //Load local storage if available
-  const localSearchList = localStorage.getItem("storedSearchList");
-  let initialSearchList =  localSearchList ? JSON.parse(localSearchList) : [""];
+  const localSearchLists = localStorage.getItem("storedSearchLists");
+  let initialSearchLists =  localSearchLists ? JSON.parse(localSearchLists) : [[""] , [""]];
 
-  const [searchList, setSearchList] = useState(structuredClone(initialSearchList));
+  const [searchLists, setSearchLists] = useState(structuredClone(initialSearchLists));
   
   //Set local storage when new search terms are made
   useEffect(()=>{
-    localStorage.setItem("storedSearchList", JSON.stringify(searchList))
-  }, [searchList])
+    localStorage.setItem("storedSearchLists", JSON.stringify(searchLists))
+  }, [searchLists])
 
   //Reset the skill states and the local storage
   function resetSkills(){
     
     setSkillElementObject(structuredClone(initialSkills));
-    setSearchList([""]);
+    setSearchLists(structuredClone(initialSearchLists));
 
     localStorage.removeItem("storedSkillElementObject")
-    localStorage.removeItem("storedSearchList")
+    localStorage.removeItem("storedSearchLists")
   }
   
   //---Block Size--- (granularity of the salary ranges e.g. 5k, 10k, 15k vs 1k, 2k, 3k)
@@ -237,8 +238,8 @@ function App() {
       <SkillElementPanel 
         skillElementObject={skillElementObject} 
         setSkillElementObject={setSkillElementObject}
-        searchList={searchList} 
-        setSearchList={setSearchList}>
+        searchLists={searchLists} 
+        setSearchLists={setSearchLists}>
       </SkillElementPanel>
     </div>
   )

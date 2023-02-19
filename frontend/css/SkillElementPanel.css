@@ -130,7 +130,7 @@
   background-color: var(--add-green) !important;
 }
 
-#SkillSelected .SelectAllButtonContainer{
+#SkillSelected .HeaderButtonContainer{
   font-size: medium;
 }
 
@@ -138,7 +138,7 @@
   border-color: #f5e3c1;
 }
 
-.SelectAllButtonContainer{
+.HeaderButtonContainer{
   position: relative;
   height: 20px;
   bottom: 25%;
@@ -148,6 +148,30 @@
   transform: translate(-50%, -55%);
   font-weight: bolder;
 }
+
+.AddCustomSearch{
+  background-color: var(--add-green) !important;
+}
+.AddCustomSearch div{
+  position: absolute;
+  transform: translate(-50%, -55%);
+  font-weight: bolder;
+}
+
+.SearchButtons{
+  position: absolute;
+  display: block;
+  
+  right: 5%;
+  top: -6px;
+  bottom: 5%;
+}
+
+.SearchButtonContainer{
+  height: 20px;
+  margin-bottom: 2px;
+}
+
 
 /* SubSkillDropDown */
 .SubSkillDropDownContainer{

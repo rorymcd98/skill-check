@@ -2,7 +2,7 @@ require('dotenv').config({ path: __dirname + '../../.env' });
 const { Client } = require('pg');
 
 //Searches for the COUNT of each individual searchTerm
-async function searchDatabaseEach(searchTerms){
+async function searchDatabaseEach(searchTerms, rankThreshold, minSalaryLimit, maxSalaryLimit){
     const client = new Client();
     try {
         await client.connect();
@@ -11,7 +11,7 @@ async function searchDatabaseEach(searchTerms){
         console.log("Error connectint to db.", err)
     }
 
-    const searchQuery = assembleQuery(searchTerms);
+    const searchQuery = assembleQuery(searchTerms, rankThreshold, minSalaryLimit, maxSalaryLimit);
 
     try {
         const res = await client.query(searchQuery).then(console.log('Successful query!'));
@@ -28,11 +28,7 @@ async function searchDatabaseEach(searchTerms){
 }
 
 //Accepts an array of search terms, and returns a query which selects the UNION of all the search terms
-function assembleQuery(searchTerms){
-    const rankThreshold = '0.2'; //Search relevance threshold
-    const minSalaryLimit = '15000'; //Minimum salary limit (£15 thousand)
-    const maxSalaryLimit = '450000'; //Maximum salary limit (£450 thousand)
-
+function assembleQuery(searchTerms, rankThreshold, minSalaryLimit, maxSalaryLimit){
     const subQueryArray = [];
 
     for (i in searchTerms){

@@ -7,7 +7,7 @@ import SearchElement from './SearchElement';
 import initialSkills from '../component-resources/initialSkills';
 
 
-export default function SkillElementPanel({skillElementObject, setSkillElementObject, searchList, setSearchList}) {   
+export default function SkillElementPanel({skillElementObject, setSkillElementObject, searchLists, setSearchLists}) {   
 
     //Toggles all the sub skills of an Element
     function createToggleAll(skillId, selectAllBool){
@@ -67,12 +67,20 @@ export default function SkillElementPanel({skillElementObject, setSkillElementOb
             return skillElementList;
     }
 
-    const idSearchElement = 'search-element';
-    const searchElement = [<SearchElement key = {idSearchElement} id = {idSearchElement} searchList={searchList} setSearchList={setSearchList}/>];
+    //Iterate through the searchLists adding a custom search element for each
+    const searchElements = [];
+    searchLists.map((searchList, idx)=>{
+
+        const idSearchElement = 'search-element-' + idx;
+        searchElements.push(<SearchElement key = {idSearchElement} id = {idSearchElement} idx = {idx} searchLists={searchLists} setSearchLists={setSearchLists}/>);
+    })
+            
+
+    
 
   const idSelected = 'SkillSelected';
   const idDeselected = 'SkillDeselected';
-	const selectedChildren = searchElement.concat(objectToSkillList(skillElementObject, true));
+	const selectedChildren = searchElements.concat(objectToSkillList(skillElementObject, true));
 	const deselectedChildren = objectToSkillList(skillElementObject, false);
 
 

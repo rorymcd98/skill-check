@@ -38,7 +38,7 @@ export default function SkillElement(props) {
               <div className='SkillElementArrow'>
                 {display === 'none' ? 'ᐳ' : 'ᐯ'}
               </div>
-              <div className='SelectAllButtonContainer'>
+              <div className='HeaderButtonContainer'>
                 <button className='SelectAllButton' id = {props.skillId + '-button'} onClick={props.onClick}>
                   <div>{props.selectedBool ? '-' : '+'}</div>
                 </button>

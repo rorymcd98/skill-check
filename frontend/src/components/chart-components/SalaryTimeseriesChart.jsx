@@ -128,6 +128,7 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
       }, 
       legend: {
         position: 'top',
+        display: false
 
       },
       title: {

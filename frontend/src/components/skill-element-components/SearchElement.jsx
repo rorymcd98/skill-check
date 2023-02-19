@@ -3,24 +3,50 @@ import { useEffect } from 'react';
 import SearchElementForm from './SearchElementForm';
 import SubSkillDropDownContainer from './SubSkillDropDownContainer';
 
-export default function SearchElement({skillId, searchList, setSearchList}) {
+export default function SearchElement({skillId, searchLists, setSearchLists, idx}) {
   //Controls display of 'SubSkillDropDownContainer' and the drop down arrow
   const [display, setDisplay] = useState('block');
-  const elementText = 'Search'
+  const elementText = 'Custom Search ' + (searchLists.length > 0 ? "" : idx);
 
   function generateSearchChildren(){
-    const list = searchList;
+    const list = searchLists[idx];
     const searchChildren = [];
-    list.map((searchTerm , i)=>{
-      searchChildren.push(<SearchElementForm key={i} idx = {i} searchTerm = {searchTerm} searchList = {searchList} setSearchList={setSearchList}/>);
+    list.map((searchTerm , j)=>{
+      searchChildren.push(<SearchElementForm key={j} idx = {idx} j= {j} searchTerm = {searchTerm} searchLists = {searchLists} setSearchLists={setSearchLists}/>);
     })
     return searchChildren;
   }
 
   const searchTermList = generateSearchChildren();
-  const defaultSearchTerm = <SearchElementForm key={0} idx = {0} searchTerm = {""} searchList = {searchList} setSearchList={setSearchList}/>
+  const defaultSearchTerm = <SearchElementForm key={0} idx = {idx} j = {0} searchTerm = {""} searchLists = {searchLists} setSearchLists={setSearchLists}/>
 
   const searchElementChildren = searchTermList.length > 0 ? searchTermList : defaultSearchTerm;
+
+  //Event to add a blank searchList to searchLists
+  const createNewSearchList = (e) =>{
+    e.stopPropagation();
+
+    let newSearchLists = structuredClone(searchLists);
+    newSearchLists.push([""]);
+    setSearchLists(newSearchLists);
+  }
+
+  //Event to delete the search and remove it from the searchLists
+  const scrapSearch = (e) => {
+    e.stopPropagation();
+
+    let newSearchLists = structuredClone(searchLists);
+
+    //Handle edge case of removing the final custom search
+    if(searchLists.length === 1){
+      newSearchLists = [[""]];
+    } else {
+      //Otherwise, in our normal case we remove the current element
+      newSearchLists = searchLists.filter((_, index) => index !== idx);
+    }
+
+    setSearchLists(newSearchLists);
+  }
 
   return (
     <div className='SearchElement' id = {skillId} >
@@ -32,15 +58,20 @@ export default function SearchElement({skillId, searchList, setSearchList}) {
             <span className='SkillElementTextSpan'>
               {elementText}
             </span>
-            <span className='ArrowAndButtonContainer'>
-              <div className='SkillElementArrow'>
-                {display === 'none' ? 'ᐳ' : 'ᐯ'}
+            <span className='SearchButtons'>
+              
+              <div className='SearchButtonContainer'>
+                <button className='AddCustomSearch' onClick={createNewSearchList}>
+                  <div>{'+'}</div>
+                </button>
               </div>
-              <div className='SelectAllButtonContainer'>
-                <button className='SelectAllButton' onClick={(e)=>{e.stopPropagation() ; setSearchList([''])}}>
+
+              <div className='SearchButtonContainer' >
+                <button className='SelectAllButton' onClick={scrapSearch}>
                   <div>{'🗑'}</div>
                 </button>
               </div>
+              
             </span>
           </span>
         </div>
