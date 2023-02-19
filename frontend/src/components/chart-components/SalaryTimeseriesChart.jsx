@@ -11,7 +11,7 @@ import {
   TimeScale
 } from 'chart.js';
 import { Scatter} from 'react-chartjs-2';
-import backgroundColorSelection from './component-resources/chart-colours';
+import backgroundColorSelection from '../component-resources/chart-colours';
 
 import 'chartjs-adapter-moment';
 
@@ -73,7 +73,8 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
         data: salaryTimeSeries[jobQuery].averageLine,
         backgroundColor: 'rgba(255, 99, 0, 0)',
         borderColor: backgroundColorSelection[colorIndex],
-        showLine: true
+        showLine: true,
+        spanGaps: true
       }
     )
 
@@ -90,7 +91,11 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
     scales: {
       y: {
           min: sliderProps.minSalary,
-          max: sliderProps.maxSalary
+          max: sliderProps.maxSalary,
+          'title' : {
+            'display' : true,
+            'text' : 'Salary (£)'
+          }
       },
       x: {
         type: 'time',
@@ -98,6 +103,8 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
         max: floatToDate(sliderProps.maxDate),
       },
     },
+    maintainAspectRatio: false,
+
     //On click open a scatter point job in a URL (the first of many if a cluster is chosen)
     onClick: (chart, point)=>{
       const firstKey = Object.keys(point)[0];
@@ -106,6 +113,8 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
 
       window.open(url, '_blank', 'noreferrer');
     },
+
+    //Configure the plugins
     plugins: {
       tooltip: {
         callbacks: {
@@ -116,14 +125,28 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
             return label;
           }
         }
-      }
-    }
+      }, 
+      legend: {
+        position: 'top',
+
+      },
+      title: {
+        display: true,
+        text: 'Salary Timeseries',
+        position: 'top',
+        align: 'start',
+        fullSize: true,
+        font : {weight: 'bold', size: '20vh'},
+        color: '#d1d1d1',
+      },
+    },
+
   };
 
 
 
   return (
-    <div className='SalaryTimeSeries' id='salary-time-series'>
+    <div className='SalaryTimeSeries' id='salary-time-series' style={{width : chartSettings.timeseriesChartWidth, height : chartSettings.timeseriesChartHeight}}>
       <Scatter options={options} data={data} />
     </div>
 

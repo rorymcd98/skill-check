@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import '../../css/SkillElementPanel.css';
+import '../../../css/SkillElementPanel.css';
 import SkillElementContainer from './SkillElementContainer';
 import SkillElement from './SkillElement';
 import SearchElement from './SearchElement';
-import initialSkills from './component-resources/initialSkills';
+import initialSkills from '../component-resources/initialSkills';
 
 
 export default function SkillElementPanel({skillElementObject, setSkillElementObject, searchList, setSearchList}) {   

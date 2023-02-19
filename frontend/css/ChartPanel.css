@@ -1,7 +1,10 @@
 #ChartPanel{
   position: relative;
   display: inline-block;
-  width: 75%;
+  
+  width: auto;
+  min-width: 50vh;
+  max-width: 70vw;
   top: 0%;
   bottom: 0%;
 }
@@ -27,16 +30,21 @@
   z-index: 1;
 }
 
+.SkillFrequencyChartArrow:hover{
+  border-color: transparent;
+}
+
 .SkillFrequencyChartArrow#left-arrow{
   top: 48%;
-  border-right: 20px solid rgb(77, 77, 77)
-  
+  border-right: 20px solid rgb(77, 77, 77);
+  border-left: transparent; 
 }
 
 .SkillFrequencyChartArrow#right-arrow{
   top: -53.5%;
   right: -100%;
-  border-left: 20px solid rgb(77, 77, 77)
+  border-left: 20px solid rgb(77, 77, 77);
+  border-right: transparent; 
 }
 
 .BarComponentContainer{
@@ -50,7 +58,6 @@
 
 .SalaryTimeSeries{
   position: relative;
-  height: 400px;
+  height: 380px;
 }
 
-/* The multi slider */

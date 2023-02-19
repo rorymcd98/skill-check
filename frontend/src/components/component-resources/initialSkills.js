@@ -21,7 +21,7 @@ export default {
   },
   'go': {
       'name': 'Go',
-      'deselectedSubSkills': ['Golang', 'Kubernetes', 'Goroutines', 'GORM'],
+      'deselectedSubSkills': ['Golang', 'Goroutines', 'GORM'],
       'selectedSubSkills': []
   },
   'haskell': {

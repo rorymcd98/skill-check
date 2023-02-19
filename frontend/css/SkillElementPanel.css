@@ -1,35 +1,34 @@
-
-:root{
-  --size: 15vh;
-}
-
 .SkillElementPanel {
-    position: relative;
-    top: 0%;
-    bottom: 0%;
-    right: 0%;
-    width: 35%;
-    height: 100%;
+  --size: 150px;
 
+  position: relative;
+  top: 0%;
+  bottom: 0%;
+  right: 0%;
+  min-width: 40vh;
+  max-width: 55vh;
+  height: 100%;
 
-    background-color: black;
-    display: inline-flex;
+  display: inline-flex;
+
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .SkillElementContainer{
-  background-color: grey;
+  background-color: rgb(48, 48, 48);
   display: flex;  
   justify-content: flex-start;
   flex-direction: column;
 
-  width: 50%;
-  max-width: 50%;
+  min-width: 13vw;
+  width: 30vh;
+
 
   position: relative;
   top: 0%;
   bottom: 0%;
   
-  margin-inline: 4PX;
+  margin-inline: 0px;
   overflow: scroll;
   overflow-x: hidden;
 }
@@ -44,15 +43,15 @@
   width: 100%;
   
   cursor: pointer;
-  display: inline-flex;
-  align-items: stretch;
-  background-color: black;
+  display: flex;
   align-items: center;
-  margin-bottom: 3px;
+  margin-top: 0.1vh;
+  margin-bottom: 0.1vh;
 }
+
 .SkillElementImageContainer{
   position: relative;
-  left: 2.5%;
+  left: 0.1vh;
   
   height: calc(0.9*var(--size)/3);
   width: calc(0.9*var(--size)/3);
@@ -70,88 +69,127 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
 .SkillElementText{
   position: relative;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  
-  display: inline-block;
-  width: 100%;
+  left: 0.5vh;
 
+  display: block;
+
+  width: 50vh;
   height: calc(0.9*var(--size)/3);
+
   background: grey;
-  border-radius: 5px;
+  border-radius: 5px 0px 0px 5px;
 
   font-size: larger;
 }
-.SkillElementText p{
+.SkillElementTextSpan{
   position: relative;
-  left: 5%;
-}
-.SkillElementArrow{
-  position: relative;
-  right: 9%;
-  bottom: -19px;
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 3%;
 }
 
-/* SkillElement nuttons (and SubSkillDropDownContainer) */
-button {
+/* Button references select all button */
+.ArrowAndButtonContainer{
+  position: absolute;
+  display: block;
+  
+  right: 5%;
+  top: 5%;
+  bottom: 5%;
+}
+
+.SkillElementArrow{
+  position: relative;
+  display: block;
+  top: -10%;
+  right: -5%;
+}
+
+/* SkillElement buttons (and SubSkillDropDownContainer) */
+.SkillElementPanel button {
   border-radius: 5px;
   border: 3px solid transparent;
   font-size: 1em;
   font-weight: bolder;
   color: white;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  height: 18px;
+  width: 18px;
+}
+
+#SkillSelected button{
+  background-color: var(--remove-red);
+}
+#SkillDeselected button{
+  background-color: var(--add-green) !important;
+}
+
+#SkillSelected .SelectAllButtonContainer{
+  font-size: medium;
+}
+
+.SkillElementPanel button:hover {
+  border-color: #f5e3c1;
+}
+
+.SelectAllButtonContainer{
+  position: relative;
   height: 20px;
-  width: 20px;
+  bottom: 25%;
 }
-button:hover {
-  border-color: #ffc964;
-}
-button:focus,
-button:focus-visible {
-  outline: 1px auto orange;
-}
-.SelectAllButton{
+.SelectAllButton div{
   position: absolute;
-  bottom: 7px;
-  right: 3px;
-}
-.SelectAllButton p{
-  position: absolute;
-  top: -60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -55%);
+  font-weight: bolder;
 }
 
 /* SubSkillDropDown */
 .SubSkillDropDownContainer{
   position: relative;
-  background-color: #1a1a1a;
   width: 100%;
 }
-.SubSkill:hover {
-  background-color: #ffc964;
+.SubSkill{
+  background-color: #505050;
+  border-top: solid #1a1a1a 1px;
+  transition: background-color 0.2s
 }
+.SubSkill:hover {
+  background-color: #dda234;
+}
+
+.SubSkillText{
+  position: relative;
+  left: 0.5vh;
+}
+
 .SubSkillButton{
   position: relative;
-  left: 0px;
+  left: 0.2vh;
   top: -4px;
-  background-color: rgb(9, 49, 83);
   z-index: 1;
 }
-.SubSkillButton p{
+#SkillSelected .SubSkillButton p{
   position: absolute;
-  top: -17px;
-  left: 2.5px;
+  top: -23px;
+  left: 4px;
   z-index: -1;
+  font-weight: bolder;
+}
+#SkillDeselected .SubSkillButton p{
+  position: absolute;
+  top: -22px;
+  left: 1px;
+  z-index: -1;
+  font-weight: bolder;  
 }
 
 /* Search element */
-
 .SearchElementForm{
   display: flex;
   align-items: center;
@@ -169,7 +207,6 @@ button:focus-visible {
 
 .SearchElementButton{
   position: relative;
-  background-color: rgba(204, 100, 100, 0.747);
   transition: opacity 0.25s;
   top: 1px;
   opacity: 50%;

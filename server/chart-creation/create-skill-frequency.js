@@ -12,7 +12,7 @@ function createSkillsFrequency(jobQueriesEaches, jobQueriesUnions){
     
     //Create the total (first) element of the results
     const totalCount = [Object.keys(unionResult).length];
-    const totalLabel = ['Total'];
+    const totalLabel = ['All'];
 
     //Only add to the results if a query has been found
     if(queryResult.rows.length > 0){

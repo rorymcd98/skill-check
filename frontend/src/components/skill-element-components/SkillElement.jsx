@@ -31,14 +31,21 @@ export default function SkillElement(props) {
             <img className ='SkillElementImage' alt={props.alt} src={`./skillIcons/${props.skillId}/${props.skillId}.svg`}/>
           </span>
           <span className='SkillElementText'>
-            <p>{props.name}</p>
+            <span className='SkillElementTextSpan'>
+              {props.name}
+            </span>
+            <span className='ArrowAndButtonContainer'>
+              <div className='SkillElementArrow'>
+                {display === 'none' ? 'ᐳ' : 'ᐯ'}
+              </div>
+              <div className='SelectAllButtonContainer'>
+                <button className='SelectAllButton' id = {props.skillId + '-button'} onClick={props.onClick}>
+                  <div>{props.selectedBool ? '-' : '+'}</div>
+                </button>
+              </div>
+            </span>
           </span>
-          <span className='SkillElementArrow'>
-            <p>{display === 'none' ? 'ᐳ' : 'ᐯ'}</p>
-          </span>
-          <button className='SelectAllButton' id = {props.skillId + '-button'} onClick={props.onClick}>
-            <p>{props.selectedBool ? '-' : '+'}</p>
-          </button>
+          
         </div>
         <SubSkillDropDownContainer display={display} id = {props.skillId} children={subSkillChildren}/>
     </div>

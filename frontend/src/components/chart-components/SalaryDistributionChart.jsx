@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +10,8 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
-import '../../css/ChartPanel.css'
-import backgroundColorSelection from './component-resources/chart-colours';
+import '../../../css/ChartPanel.css'
+import backgroundColorSelection from '../component-resources/chart-colours';
 
 //Chart JS backend
 ChartJS.register(
@@ -25,15 +25,20 @@ ChartJS.register(
   Legend
 );
 
+//Chart JS options
 const options = {
-  responsive: true,
   plugins: {
     legend: {
       position: 'top'
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart',
+      text: 'Salary Distributions',
+      position: 'top',
+      align: 'start',
+      fullSize: true,
+      font : {weight: 'bold', size: '20vh'},
+      color: '#d1d1d1',
     }
   },
   maintainAspectRatio: false
@@ -85,7 +90,7 @@ export default function SalaryDistributionChart({chartData, chartSettings, salar
 
 
   return (
-  <div className = 'SalaryDistributionChart' style={{position: 'relative', width: chartSettings.topChartWidth}}>
+  <div className = 'SalaryDistributionChart' style={{position: 'relative', width: chartSettings.topChartWidth, maxWidth: chartSettings.topChartMaxWidth}}>
      <Line options={options} data={data} style={{position: 'relative', height: chartSettings.topChartHeight}}/>
   </div>);
 }

@@ -3,9 +3,9 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const {searchDatabaseUnion} = require('./search-database-union.js');
 const {searchDatabaseEach} = require('./search-database-each.js');
-const {createSalaryDistributions} = require('./create-salary-distributions.js')
-const {createTimeSeries} = require('./create-time-series.js')
-const {createSkillsFrequency} = require('./create-skill-frequency')
+const {createSalaryDistributions} = require('./chart-creation/create-salary-distributions.js')
+const {createTimeSeries} = require('./chart-creation/create-time-series.js')
+const {createSkillsFrequency} = require('./chart-creation/create-skill-frequency')
 
 console.log(createTimeSeries)
 
@@ -43,6 +43,11 @@ app.get('/api/v1/data', (req, res)=>{
 })
 
 async function collectQueries(termsList) {
+  //Parameters for the search
+  const rankThreshold = '0.2'; //Search relevance threshold
+  const minSalaryLimit = '15000'; //Minimum salary limit (£15 thousand)
+  const maxSalaryLimit = '450000'; //Maximum salary limit (£450 thousand)
+
   const jobQueries = {'unions': {},
                       'eaches': {}};
 
@@ -52,12 +57,16 @@ async function collectQueries(termsList) {
     //Search name e.g. 'Javascript (+5)'
     const searchName = `${terms[0]}${terms.length>1 ? ` (+${terms.length -1})` : ''}`
 
+    //Filter out all the empty terms -> if the array is empty then don't search the database
+    terms = terms.filter((term)=>{return term.length>0});
+    if(terms.length == 0) continue;
+
     //Union queries e.g. [Javascript UNION React UNION ...]
-    const dbUnion = await searchDatabaseUnion(terms);
+    const dbUnion = await searchDatabaseUnion(terms, rankThreshold, minSalaryLimit, maxSalaryLimit);
     jobQueries['unions'][searchName] = dbUnion.rows;
 
     //Each queries e.g. [Javascript, react, ...]
-    const dbEach = await searchDatabaseEach(terms);
+    const dbEach = await searchDatabaseEach(terms, rankThreshold, minSalaryLimit, maxSalaryLimit);
     jobQueries['eaches'][searchName] = dbEach;
   }
 

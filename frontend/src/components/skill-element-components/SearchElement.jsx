@@ -6,7 +6,7 @@ import SubSkillDropDownContainer from './SubSkillDropDownContainer';
 export default function SearchElement({skillId, searchList, setSearchList}) {
   //Controls display of 'SubSkillDropDownContainer' and the drop down arrow
   const [display, setDisplay] = useState('block');
-  const elementText = 'Custom search'
+  const elementText = 'Search'
 
   function generateSearchChildren(){
     const list = searchList;
@@ -29,10 +29,19 @@ export default function SearchElement({skillId, searchList, setSearchList}) {
             <img className ='SkillElementImage' alt={elementText} src={`./skill-icon-small.png`}/>
           </span>
           <span className='SkillElementText'>
-            <p>{elementText}</p>
-          </span>
-          <span className='SkillElementArrow'>
-            <p>{display === 'none' ? 'ᐳ' : 'ᐯ'}</p>
+            <span className='SkillElementTextSpan'>
+              {elementText}
+            </span>
+            <span className='ArrowAndButtonContainer'>
+              <div className='SkillElementArrow'>
+                {display === 'none' ? 'ᐳ' : 'ᐯ'}
+              </div>
+              <div className='SelectAllButtonContainer'>
+                <button className='SelectAllButton' onClick={(e)=>{e.stopPropagation() ; setSearchList([''])}}>
+                  <div>{'🗑'}</div>
+                </button>
+              </div>
+            </span>
           </span>
         </div>
 

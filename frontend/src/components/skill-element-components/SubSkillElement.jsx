@@ -7,7 +7,7 @@ export default function SubSkillElement({skillId, subSkillName, onClick, selecte
           <button className='SubSkillButton' id = {`${skillId}-${subSkillName}-button`} onClick={onClick}>
               <p>{selectedBool ? '-' : '+'}</p>
           </button>
-        {subSkillName}
+        <span className='SubSkillText'>{subSkillName}</span>
       </div>
   )
 }

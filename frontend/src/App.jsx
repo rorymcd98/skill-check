@@ -1,12 +1,16 @@
 import { useState, useEffect} from 'react'
 import '../css/App.css'
 import axios from 'axios'
+import {Chart as ChartJS} from 'chart.js'
+
+//Globally change the color for chart text
+ChartJS.defaults.color = '#8f8f8f'
 
 //Components
-import SalaryTimeseriesChart from './components/SalaryTimeseriesChart'
-import SalaryDistributionChart from './components/SalaryDistributionChart'
-import SkillElementPanel from './components/SkillElementPanel'
-import SkillFrequencyChart from './components/SkillFrequencyChart'
+import SalaryTimeseriesChart from './components/chart-components/SalaryTimeseriesChart'
+import SalaryDistributionChart from './components/chart-components/SalaryDistributionChart'
+import SkillElementPanel from './components/skill-element-components/SkillElementPanel'
+import SkillFrequencyChart from './components/chart-components/SkillFrequencyChart'
 import MultiRangeSlider from "multi-range-slider-react";
 
 import initialSkills from './components/component-resources/initialSkills'
@@ -57,7 +61,8 @@ function App() {
     const queriesArray = [];
 
     //Add the custom search list to the query
-    if(searchList.length > 0) queriesArray.push(searchList);
+    
+      if(searchList.length > 0) queriesArray.push(searchList);
 
     //Iterate through the skillElementObject for selected sub-skills
     for(let skill in skillElementObject){
@@ -115,12 +120,6 @@ function App() {
     localStorage.removeItem("storedSearchList")
   }
   
-  const chartSettings = {
-    'topChartWidth' : '575px',
-    'topChartHeight' : '450px',
-    'skillFrequencyChartWidth' : '90%' 
-  }
-
   //---Block Size--- (granularity of the salary ranges e.g. 5k, 10k, 15k vs 1k, 2k, 3k)
   //Salary block size
   const [salaryBlockSize, setSalaryBlockSize] = useState(5000);
@@ -140,8 +139,8 @@ function App() {
 
   //Handle distribution sliding
   const handleInputSalary = (e) => {
-      setMinSalary(e.minValue);
-      setMaxSalary(e.maxValue);
+    setMinSalary(e.minValue);
+    setMaxSalary(e.maxValue);
   };
 
   //---Date Slider---
@@ -158,14 +157,13 @@ function App() {
   const [minDate, setMinDate] = useState(initialMinDate);
   const [maxDate, setMaxDate] = useState(initialMaxDate);
 
-  //Handle distribution sliding
+  //Handle date slider
   const handleInputDate = (e) => {
     setMinDate(e.minValue);
     setMaxDate(e.maxValue);
   };
 
-
-
+  //Determine the axes for the timeseries and the salary distribution
   const sliderProps = {
     minSalary,
     maxSalary,
@@ -174,6 +172,20 @@ function App() {
     minDate,
     maxDate,
     handleInputDate
+  }
+
+  //Styling settings for charts
+  const chartSettings = {
+    'topChartWidth' : '60vh',
+    'topChartHeight' : '49vh',
+    'topChartMaxWidth' : '30vw',
+
+    'skillFrequencyChartWidth' : '55vh',
+    'skillFrequencyChartMaxWidth' : '28vw', 
+    
+    'timeseriesChartHeight' : '40vh',
+    'timeseriesChartWidth' : '126vh',
+    'timeseriesChartMaxWidth' : '126vh',//Unused
   }
 
   return (
@@ -186,7 +198,7 @@ function App() {
         
         <SalaryTimeseriesChart chartData={chartData} chartSettings={chartSettings} salaryBlockSize={salaryBlockSize} sliderProps={sliderProps}></SalaryTimeseriesChart>
 
-        <span id= 'slider-panel' style={{display : 'inline-flex'}}>
+        <span id= 'slider-panel' >
           <MultiRangeSlider
             key='salary-slider'
             id='salary-slider'
@@ -200,28 +212,27 @@ function App() {
             onChange={(e) => {
               handleInputSalary(e);
             }}
-            style={{width: chartSettings.topChartWidth}}
           />
-        <MultiRangeSlider
-          key='date-slider'
-          id='date-slider'
-          min={2020}
-          max={initialMaxDate}
-          step={0.0001}
-          minValue={minDate}
-          maxValue={maxDate}
-          label={true}
-          labels={dateSliderLabels}
-          style={{width: chartSettings.topChartWidth}}
-          onChange={(e) => {
-            handleInputDate(e);
-          }}
-	    	/>
+          <MultiRangeSlider
+            key='date-slider'
+            id='date-slider'
+            min={2020}
+            max={initialMaxDate}
+            step={0.0001}
+            minValue={minDate}
+            maxValue={maxDate}
+            label={true}
+            labels={dateSliderLabels}
+            onChange={(e) => {
+              handleInputDate(e);
+            }}
+          />
+          <span id='control-buttons-container'>
+            <button className='control-skills-buttons' id='analyze-skills-button' onClick={fetchApiOnClick}>Analyze 🔍</button>
+            <button className='control-skills-buttons' id='reset-skills-button' onClick={resetSkills}>Reset ↺</button>
+          </span>
         </span>
 
-
-        <button className='AnalyzeSkillsButton' onClick={fetchApiOnClick}>Eventually I get clicked</button>
-        <button className='ResetSkillsButton' onClick={resetSkills}>Reset Skills</button>
       </span>
       <SkillElementPanel 
         skillElementObject={skillElementObject} 
