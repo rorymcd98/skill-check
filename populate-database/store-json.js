@@ -22,6 +22,7 @@ function loadFromFile(loadWord){
     try{
         const jsonString = fs.readFileSync(loadPath, 'utf8');
         obj = JSON.parse(jsonString);
+        console.log('Loaded file: ' + loadPath)
     } catch {
         console.log("There was an error, returning empty object.")
     }

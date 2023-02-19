@@ -9,7 +9,7 @@ main("software")
 
 async function scrapeDescription(url, id) {
   try {
-    console.log(id)
+    console.log('Scraping Job ID: ' + id)
     // Make a GET request to the job listing URL
     const response = await axios.get(url);
 
@@ -31,8 +31,9 @@ async function scrapeDescription(url, id) {
 
 async function main(loadWord){
   let listings = loadFromFile(loadWord);
-  console.log(Object.keys(listings))
   const saveWord = loadWord;
+
+  console.log('Existing listings: ' + Object.keys(listings.results).length)
 
   let saveObj = loadFromFile(saveWord);
   if(saveObj.meta === undefined){
