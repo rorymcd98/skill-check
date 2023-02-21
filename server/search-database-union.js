@@ -2,18 +2,9 @@ require('dotenv').config({ path: __dirname + '../../.env' });
 const { Client } = require('pg');
 
 //Searches for the UNION of all searchTerms 
-async function searchDatabaseUnion(searchTerms, rankThreshold, minSalaryLimit, maxSalaryLimit){
-    const client = new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-          rejectUnauthorized: false
-        }
-        // user: process.env.PGUSER,
-        // host: process.env.PGHOST,
-        // database: 'skillcheck',
-        // password: process.env.PGPASSWORD,
-        // port: process.env.PGPORT,
-      });
+async function searchDatabaseUnion(searchTerms, rankThreshold, minSalaryLimit, maxSalaryLimit, clientParams){
+    //Client object depen
+    const client = new Client(clientParams);
     try {
         await client.connect();
         console.log("Connected to db.")

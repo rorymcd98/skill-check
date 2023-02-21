@@ -46,6 +46,23 @@ async function collectQueries(termsList) {
   const minSalaryLimit = '15000'; //Minimum salary limit (£15 thousand)
   const maxSalaryLimit = '450000'; //Maximum salary limit (£450 thousand)
 
+  const productionClientParams = {
+    'connectionString': process.env.DATABASE_URL,
+    'ssl': {
+      'rejectUnauthorized': false
+    }
+  };
+
+  const devClientParams = {
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: 'skillcheck',
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
+  }
+
+  const clientParams = process.env.DATABASE_URL == 'production' ? productionClientParams : devClientParams;
+
   const jobQueries = {'unions': {},
                       'eaches': {}};
 
@@ -60,11 +77,11 @@ async function collectQueries(termsList) {
     if(terms.length == 0) continue;
 
     //Union queries e.g. [Javascript UNION React UNION ...]
-    const dbUnion = await searchDatabaseUnion(terms, rankThreshold, minSalaryLimit, maxSalaryLimit);
+    const dbUnion = await searchDatabaseUnion(terms, rankThreshold, minSalaryLimit, maxSalaryLimit, clientParams);
     jobQueries['unions'][searchName] = dbUnion.rows;
 
     //Each queries e.g. [Javascript, react, ...]
-    const dbEach = await searchDatabaseEach(terms, rankThreshold, minSalaryLimit, maxSalaryLimit);
+    const dbEach = await searchDatabaseEach(terms, rankThreshold, minSalaryLimit, maxSalaryLimit, clientParams);
     jobQueries['eaches'][searchName] = dbEach;
   }
 
@@ -74,5 +91,5 @@ async function collectQueries(termsList) {
 const server = require('http').Server(app)
 
 server.listen(PORT, () => {
-  console.log('Server running on http://localhost:' + PORT);
+  console.log('Server running on ' + PORT);
 }); 

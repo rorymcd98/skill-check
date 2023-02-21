@@ -116,7 +116,7 @@ function App() {
   function resetSkills(){
     
     setSkillElementObject(structuredClone(initialSkills));
-    setSearchLists(structuredClone(initialSearchLists));
+    setSearchLists(structuredClone([[""]]));
 
     localStorage.removeItem("storedSkillElementObject")
     localStorage.removeItem("storedSearchLists")
