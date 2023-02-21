@@ -40,6 +40,7 @@ function App() {
       });
   }, []);
 
+  //Populate the charts with dummy data
   const initialChartData = {
     'salaryDistributions' : {
       'distributionLabels' : ["£0k","£5k","£10k","£15k","£20k","£25k","£30k","£35k","£40k","£45k","£50k","£55k","£60k","£65k","£70k","£75k","£80k","£85k","£90k","£95k","£100k","£105k","£110k","£115k","£120k","£125k","£130k","£135k","£140k","£145k","£150k"],
@@ -102,7 +103,7 @@ function App() {
   //---Custom search list state---
   //Load local storage if available
   const localSearchLists = localStorage.getItem("storedSearchLists");
-  let initialSearchLists =  localSearchLists ? JSON.parse(localSearchLists) : [[""] , [""]];
+  let initialSearchLists =  localSearchLists ? JSON.parse(localSearchLists) : [[""]]; //Start with a single blank list
 
   const [searchLists, setSearchLists] = useState(structuredClone(initialSearchLists));
   

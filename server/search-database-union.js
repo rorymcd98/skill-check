@@ -4,11 +4,15 @@ const { Client } = require('pg');
 //Searches for the UNION of all searchTerms 
 async function searchDatabaseUnion(searchTerms, rankThreshold, minSalaryLimit, maxSalaryLimit){
     const client = new Client({
-        user: process.env.PGUSER,
-        host: process.env.PGHOST,
-        database: 'skillcheck',
-        password: process.env.PGPASSWORD,
-        port: process.env.PGPORT,
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+        // user: process.env.PGUSER,
+        // host: process.env.PGHOST,
+        // database: 'skillcheck',
+        // password: process.env.PGPASSWORD,
+        // port: process.env.PGPORT,
       });
     try {
         await client.connect();
