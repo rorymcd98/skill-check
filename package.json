@@ -20,7 +20,7 @@
   },
   "scripts": {
     "serve": "nodemon ./server/dev-server.js",
-    "start": "nodemon ./server/production-server.js",
+    "start": "node ./server/production-server.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
