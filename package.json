@@ -14,7 +14,7 @@
   },
   "scripts": {
     "serve": "nodemon ./server/dev-server.js",
-    "production": "nodemon ./server/production-server.js"
+    "start": "nodemon ./server/production-server.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
