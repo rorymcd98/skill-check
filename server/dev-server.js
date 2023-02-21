@@ -7,9 +7,6 @@ const {createSalaryDistributions} = require('./chart-creation/create-salary-dist
 const {createTimeSeries} = require('./chart-creation/create-time-series.js')
 const {createSkillsFrequency} = require('./chart-creation/create-skill-frequency')
 
-console.log(createTimeSeries)
-
-
 const app = express();
 
 app.use(cors({origin: 'http://localhost:5173'}));

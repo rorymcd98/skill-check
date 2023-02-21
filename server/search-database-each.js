@@ -3,7 +3,13 @@ const { Client } = require('pg');
 
 //Searches for the COUNT of each individual searchTerm
 async function searchDatabaseEach(searchTerms, rankThreshold, minSalaryLimit, maxSalaryLimit){
-    const client = new Client();
+    const client = new Client({
+        user: process.env.PGUSER,
+        host: process.env.PGHOST,
+        database: 'skillcheck',
+        password: process.env.PGPASSWORD,
+        port: process.env.PGPORT,
+      });
     try {
         await client.connect();
         console.log("Connected to db.")
