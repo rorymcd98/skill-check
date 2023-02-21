@@ -1,0 +1,10 @@
+server {
+    listen 80;
+    server_name example.com;  # Replace with your own domain name
+
+    root /../frontend/dist;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
