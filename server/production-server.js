@@ -61,7 +61,7 @@ async function collectQueries(termsList) {
     port: process.env.PGPORT,
   }
 
-  const clientParams = process.env.DATABASE_URL == 'production' ? productionClientParams : devClientParams;
+  const clientParams = process.env.NODE_ENV == 'production' ? productionClientParams : devClientParams;
 
   const jobQueries = {'unions': {},
                       'eaches': {}};
