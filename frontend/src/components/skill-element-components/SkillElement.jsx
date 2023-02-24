@@ -35,14 +35,14 @@ export default function SkillElement(props) {
               {props.name}
             </span>
             <span className='ArrowAndButtonContainer'>
-              <div className='SkillElementArrow'>
+              <span className='SkillElementArrow'>
                 {display === 'none' ? 'ᐳ' : 'ᐯ'}
-              </div>
-              <div className='HeaderButtonContainer'>
+              </span>
+              <span className='HeaderButtonContainer'>
                 <button className='SelectAllButton' id = {props.skillId + '-button'} onClick={props.onClick}>
                   <div>{props.selectedBool ? '-' : '+'}</div>
                 </button>
-              </div>
+              </span>
             </span>
           </span>
           

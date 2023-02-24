@@ -6,7 +6,7 @@ import SubSkillDropDownContainer from './SubSkillDropDownContainer';
 export default function SearchElement({skillId, searchLists, setSearchLists, idx}) {
   //Controls display of 'SubSkillDropDownContainer' and the drop down arrow
   const [display, setDisplay] = useState('block');
-  const elementText = 'Custom Search ' + (searchLists.length > 0 ? "" : idx);
+  const elementText = 'Search';
 
   function generateSearchChildren(){
     const list = searchLists[idx];
@@ -67,7 +67,7 @@ export default function SearchElement({skillId, searchLists, setSearchLists, idx
               </div>
 
               <div className='SearchButtonContainer' >
-                <button className='SelectAllButton' onClick={scrapSearch}>
+                <button className='DeleteSearchButton' onClick={scrapSearch}>
                   <div>{'🗑'}</div>
                 </button>
               </div>

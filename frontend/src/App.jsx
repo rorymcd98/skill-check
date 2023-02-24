@@ -11,20 +11,15 @@ import SalaryTimeseriesChart from './components/chart-components/SalaryTimeserie
 import SalaryDistributionChart from './components/chart-components/SalaryDistributionChart'
 import SkillElementPanel from './components/skill-element-components/SkillElementPanel'
 import SkillFrequencyChart from './components/chart-components/SkillFrequencyChart'
-import MultiRangeSlider from "multi-range-slider-react";
+
 
 import initialSkills from './components/component-resources/initialSkills'
+import SliderPanel from './components/skill-element-components/SliderPanel'
 
-//---Helper functions---
-//Returns a float for a given Date object (e.g. -> 2022.958)
+//Helper for the dates
 function dateToFloat(date){
   return date.getFullYear() + date.getMonth()/12 + date.getDate()/365;
 }
-
-function dateToLabel(date){
-  return date.toLocaleString('en-us', { month: 'short', year: 'numeric' });
-}
-
 
 function App() {  
   //On mount check if we're accessing the API
@@ -128,120 +123,70 @@ function App() {
 
   //---Salary Slider---
   const salaryDistributions = chartData.salaryDistributions;
-  const salarylabels = salaryDistributions.distributionLabels;
-  const salarySliderLabels = [salarylabels[0],,,,,,,,,salarylabels[salarylabels.length-1]]
+  const salaryLabels = salaryDistributions.distributionLabels;
 
   //Initial boundaries for distribution slider
   const initialMinSalary = 15000;
-  const initialMaxSalary = (salarylabels.length-1)*salaryBlockSize;
+  const initialMaxSalary = (salaryLabels.length-1)*salaryBlockSize;
 
   //States for distribution slider
   const [minSalary, setMinSalary] = useState(initialMinSalary);
   const [maxSalary, setMaxSalary] = useState(initialMaxSalary);
 
-  //Handle distribution sliding
-  const handleInputSalary = (e) => {
-    setMinSalary(e.minValue);
-    setMaxSalary(e.maxValue);
-  };
 
   //---Date Slider---
   //Initial boundaries for distribution slider
   const initialMinDate = dateToFloat(new Date(2022, 0, 0));
   const initialMaxDate = dateToFloat(new Date());
 
-  const initialMinDateLabel = dateToLabel(new Date(2020, 0, 1));
-  const initialMaxDateLabel = dateToLabel(new Date());
-
-  const dateSliderLabels = [initialMinDateLabel,,,,,,,,,,,,,,initialMaxDateLabel]
-
   //States for distribution slider
   const [minDate, setMinDate] = useState(initialMinDate);
   const [maxDate, setMaxDate] = useState(initialMaxDate);
 
-  //Handle date slider
-  const handleInputDate = (e) => {
-    setMinDate(e.minValue);
-    setMaxDate(e.maxValue);
-  };
 
   //Determine the axes for the timeseries and the salary distribution
   const sliderProps = {
     minSalary,
     maxSalary,
-    handleInputSalary,
 
     minDate,
     maxDate,
-    handleInputDate
   }
 
-  //Styling settings for charts
-  const chartSettings = {
-    'topChartWidth' : '60vh',
-    'topChartHeight' : '49vh',
-    'topChartMaxWidth' : '30vw',
-
-    'skillFrequencyChartWidth' : '55vh',
-    'skillFrequencyChartMaxWidth' : '28vw', 
-    
-    'timeseriesChartHeight' : '40vh',
-    'timeseriesChartWidth' : '126vh',
-    'timeseriesChartMaxWidth' : '126vh',//Unused
-  }
+  const SliderPanelComponent = <SliderPanel
+      minSalary={minSalary}
+      maxSalary={maxSalary}
+      setMinSalary={setMinSalary}
+      setMaxSalary={setMaxSalary}
+      initialMaxSalary={initialMaxSalary}
+      salaryBlockSize={salaryBlockSize}
+      salaryLabels={salaryLabels}
+      initialMaxDate={initialMaxDate}
+      minDate={minDate}
+      maxDate={maxDate}
+      setMinDate={setMinDate}
+      setMaxDate={setMaxDate}
+      resetSkills={resetSkills}
+      fetchApiOnClick={fetchApiOnClick}
+    />
 
   return (
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
-        <span id = 'top-charts-panel' style={{'display': 'inline-flex', height: chartSettings.topChartHeight}}>
-          <SalaryDistributionChart chartData={chartData} chartSettings={chartSettings} salaryBlockSize={salaryBlockSize} sliderProps={sliderProps}></SalaryDistributionChart>
-          <SkillFrequencyChart chartData={chartData} chartSettings={chartSettings}></SkillFrequencyChart>
+        <span id = 'top-charts-panel'>
+          <SalaryDistributionChart chartData={chartData}  salaryBlockSize={salaryBlockSize} sliderProps={sliderProps}></SalaryDistributionChart>
+          <SkillFrequencyChart chartData={chartData} ></SkillFrequencyChart>
         </span>
-        
-        <SalaryTimeseriesChart chartData={chartData} chartSettings={chartSettings} salaryBlockSize={salaryBlockSize} sliderProps={sliderProps}></SalaryTimeseriesChart>
-
-        <span id= 'slider-panel' >
-          <MultiRangeSlider
-            key='salary-slider'
-            id='salary-slider'
-            min={0}
-            max={initialMaxSalary}
-            step={salaryBlockSize}
-            minValue={minSalary}
-            maxValue={maxSalary}
-            label={true}
-            labels={salarySliderLabels}
-            onChange={(e) => {
-              handleInputSalary(e);
-            }}
-          />
-          <MultiRangeSlider
-            key='date-slider'
-            id='date-slider'
-            min={2020}
-            max={initialMaxDate}
-            step={0.0001}
-            minValue={minDate}
-            maxValue={maxDate}
-            label={true}
-            labels={dateSliderLabels}
-            onChange={(e) => {
-              handleInputDate(e);
-            }}
-          />
-          <span id='control-buttons-container'>
-            <button className='control-skills-buttons' id='analyze-skills-button' onClick={fetchApiOnClick}>Analyze 🔍</button>
-            <button className='control-skills-buttons' id='reset-skills-button' onClick={resetSkills}>Reset ↺</button>
-          </span>
-        </span>
-
+        <SalaryTimeseriesChart chartData={chartData}  salaryBlockSize={salaryBlockSize} sliderProps={sliderProps}></SalaryTimeseriesChart>
       </span>
+
       <SkillElementPanel 
         skillElementObject={skillElementObject} 
         setSkillElementObject={setSkillElementObject}
         searchLists={searchLists} 
-        setSearchLists={setSearchLists}>
-      </SkillElementPanel>
+        setSearchLists={setSearchLists}
+        SliderPanelComponent={SliderPanelComponent}  
+      />
     </div>
   )
 }

@@ -1,36 +1,72 @@
-.SkillElementPanel {
-  --size: 150px;
+.SkillElementPanel{
+  --size: 10.5rem;
+  --tab-grey: rgb(129, 129, 129);
+  --skill-element: rgba(216, 216, 216, 0.178);
+  --skill-element-background: rgb(88, 88, 88);
+  --skill-element-panel : rgb(58, 58, 58);
+  --slider-color : rgb(255, 185, 80);
 
   position: relative;
-  top: 0%;
-  bottom: 0%;
-  right: 0%;
-  min-width: 40vh;
-  max-width: 55vh;
+  background-color: var(--skill-element-panel);
   height: 100%;
+  width: clamp(350px, 20vw, 30rem);
+  max-width: 90%;
+
+  right: 0%;
 
   display: inline-flex;
+  flex-direction: column;
+
+  transition: width 0.4s ease-in-out;
 
   font-family: Arial, Helvetica, sans-serif;
+
+  z-index: 3;
+}
+
+#slide-tab{
+  display: block;
+  position: absolute;
+  left: 0%;
+  bottom: 10%;
+  transform: translate(-100%);
+  background-color: var(--tab-grey);
+  
+  height: 4rem;
+  width: 2rem;
+  
+  border-radius: 10px 0px 0px 10px;
+
+  z-index: 1;
+}
+
+
+.SkillElementPanel{
+  transform: translate(0%);
 }
 
 .SkillElementContainer{
-  background-color: rgb(48, 48, 48);
+  background-color: var(--skill-element-background);
   display: flex;  
   justify-content: flex-start;
   flex-direction: column;
-
-  min-width: 13vw;
-  width: 30vh;
-
-
-  position: relative;
-  top: 0%;
-  bottom: 0%;
   
-  margin-inline: 0px;
+  position: relative;
+  height: 43%;
+  width: 100%;
+  right: 0%;
+
   overflow: scroll;
   overflow-x: hidden;
+}
+
+#SkillSelected{
+  margin-bottom: 3px;
+  border-radius: 0px 0px 10px 10px;
+}
+
+#SkillDeselected{
+  border-radius: 10px 10px;
 }
 
 .SkillElement{
@@ -41,26 +77,30 @@
   position: relative;
   min-height: calc(var(--size)/3);
   width: 100%;
-  
+
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-top: 0.1vh;
-  margin-bottom: 0.1vh;
+  margin-top: 1px;
 }
+.SkillElementHead button{
+  border-radius: 10px !important;
+}
+
 
 .SkillElementImageContainer{
   position: relative;
-  left: 0.1vh;
+  left: 2px;
   
   height: calc(0.9*var(--size)/3);
   width: calc(0.9*var(--size)/3);
   min-height: calc(0.9*var(--size)/3);
   min-width: calc(0.9*var(--size)/3);
 
-  background: grey;
-  border-radius: 5px;
+  background: var(--skill-element);
+  border-radius: 10px;
 }
+
 .SkillElementImage{
   position: relative;
   max-height: 85%;
@@ -73,18 +113,19 @@
 .SkillElementText{
   position: relative;
   bottom: 0;
-  left: 0.5vh;
+  left: 6px;
 
   display: block;
+  width: 100%;
 
-  width: 50vh;
   height: calc(0.9*var(--size)/3);
 
-  background: grey;
-  border-radius: 5px 0px 0px 5px;
+  background: var(--skill-element);
+  border-radius: 10px;
 
   font-size: larger;
 }
+
 .SkillElementTextSpan{
   position: relative;
   display: block;
@@ -96,18 +137,22 @@
 /* Button references select all button */
 .ArrowAndButtonContainer{
   position: absolute;
-  display: block;
+  display: inline-flex;
   
-  right: 5%;
-  top: 5%;
-  bottom: 5%;
+  width: 6rem;
+  height: 100%;
+  top: 0%;
+  right: 1rem;
+
+  justify-content: space-around;
+  align-items: center;
 }
 
 .SkillElementArrow{
   position: relative;
-  display: block;
-  top: -10%;
-  right: -5%;
+
+  font-weight: 500;
+  font-size: 1.5rem;
 }
 
 /* SkillElement buttons (and SubSkillDropDownContainer) */
@@ -140,37 +185,68 @@
 
 .HeaderButtonContainer{
   position: relative;
-  height: 20px;
-  bottom: 25%;
-}
-.SelectAllButton div{
-  position: absolute;
-  transform: translate(-50%, -55%);
-  font-weight: bolder;
+  height: 2.2rem;
+  width: 2.2rem;
 }
 
-.AddCustomSearch{
-  background-color: var(--add-green) !important;
+.HeaderButtonContainer button{
+  display: flex;
+
+  height: 100%;
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
 }
-.AddCustomSearch div{
-  position: absolute;
-  transform: translate(-50%, -55%);
+
+.SelectAllButton div{
+  position: relative;
+
   font-weight: bolder;
+  height: 100%;
+  top: -42%;
+  font-size: 2rem;
+  text-align: center;
 }
+
+#SkillDeselected .SelectAllButton div{
+  top: -32%;
+}
+
 
 .SearchButtons{
   position: absolute;
-  display: block;
+  display: inline-flex;
   
-  right: 5%;
-  top: -6px;
-  bottom: 5%;
+  width: 6rem;
+  height: 100%;
+  top: 0%;
+  right: 1rem;
+
+  justify-content: space-around;
+  align-items: center;
+}
+.SearchButtonContainer{
+  position: relative;
+  height: 2.2rem;
+  width: 2.2rem;
 }
 
-.SearchButtonContainer{
-  height: 20px;
-  margin-bottom: 2px;
+.SearchButtonContainer .AddCustomSearch, .SearchButtonContainer .DeleteSearchButton{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  
+  font-weight: bolder;
+  font-size: 2rem;
+  text-align: center;
 }
+.AddCustomSearch{
+  background-color: var(--add-green) !important;
+}
+
 
 
 /* SubSkillDropDown */
@@ -181,7 +257,7 @@
 .SubSkill{
   background-color: #505050;
   border-top: solid #1a1a1a 1px;
-  transition: background-color 0.2s
+  transition: background-color 0.2s;
 }
 .SubSkill:hover {
   background-color: #dda234;
@@ -189,7 +265,7 @@
 
 .SubSkillText{
   position: relative;
-  left: 0.5vh;
+  left: 5px;
 }
 
 .SubSkillButton{
@@ -241,4 +317,119 @@
   margin: 0;
   left: -3.5px;
   top: -3.5px;
+}
+
+/* ---The slider panel--- */
+#slider-panel{
+  margin-top: 5px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  width: 100%;
+}
+
+
+/* Multi sliders */
+#slider-container{
+  width: 70%;
+  height: 100%;
+  min-height: 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-inline: 4%;
+}
+
+.multi-range-slider{
+  height: 40%;
+  padding: 0% !important;
+  padding-left: 0rem !important;
+  padding-right: 0rem !important;
+  padding-top: 0rem !important;
+  
+  margin-top: 2px;
+  margin-right: 0rem !important;
+
+  display: flex;
+  border: none !important;
+  box-shadow: none !important;
+  width: 100%;
+}
+
+.multi-range-slider .ruler{
+  height: 20%;
+  border-bottom: none !important;
+  border-top: solid 1px;
+}
+
+
+.multi-range-slider .bar-inner {
+  background-color: var(--slider-color) !important;
+  box-shadow: none !important;
+}
+
+.multi-range-slider .thumb{
+  position: relative;
+  top: -66%;
+}
+
+.multi-range-slider .thumb::before {
+  width: 0.4rem !important;
+  border-radius: 20% !important;
+  margin: 0% !important;
+  box-shadow: none !important;
+  /* transform: translateX(-50%) !important; */
+}
+
+
+.multi-range-slider .labels{
+  position: relative;
+  margin-top: 0px !important;
+  margin-bottom: -4.5rem !important;
+  height: 1rem;
+}
+
+.multi-range-slider .label{
+  position: relative;
+  top: 3px;
+  height: auto;
+  width: auto !important;
+}
+
+/* The control buttons */
+#control-buttons-container{
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+
+#slider-panel .control-skills-buttons{
+  position: relative;
+  width: 100%;
+  height: 50%;
+  margin-top: 2px;
+  margin-bottom: 2px;
+
+  border-radius: 5px;
+  border: solid grey 2px;
+  transition: filter 0.2s cubic-bezier(.54,0,.46,1.01);
+
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: small;
+}
+
+.control-skills-buttons{
+  filter: brightness(120%);
+}
+
+#analyze-skills-button{
+  background-color: var(--add-green);
+}
+#reset-skills-button{
+  background-color: var(--remove-red);
 }

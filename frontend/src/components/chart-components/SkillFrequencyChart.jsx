@@ -49,7 +49,7 @@ const options = {
 
 
 
-export default function SkillFrequencyChart({chartData, chartSettings}) {
+export default function SkillFrequencyChart({chartData}) {
   //State for scrolling between charts
   const [selectedChartNumber, setSelectedChartNumber] = useState(0);
 
@@ -107,8 +107,6 @@ export default function SkillFrequencyChart({chartData, chartSettings}) {
     style={{position: 'relative',
             opacity,
             zIndex,
-            height: chartSettings.topChartHeight,
-            width: chartSettings.skillFrequencyChartWidth,
             transition
           }}
   />
@@ -146,8 +144,6 @@ export default function SkillFrequencyChart({chartData, chartSettings}) {
       style={{position: 'relative',
               opacity,
               zIndex,
-              height: chartSettings.topChartHeight,
-              width: chartSettings.skillFrequencyChartWidth,
               transition
             }}
     />)
@@ -158,20 +154,16 @@ export default function SkillFrequencyChart({chartData, chartSettings}) {
 
 
   return (
-    <div className = 'SkillFrequencyChart' style={{width: chartSettings.topChartWidth,  maxWidth: chartSettings.topChartMaxWidth}}>
+    <div className = 'SkillFrequencyChart' >
       <button className='SkillFrequencyChartArrow' id='left-arrow' onClick={prevChart}/>
+      <button className='SkillFrequencyChartArrow' id='right-arrow' onClick={nextChart}/>
       <span className='BarComponentContainer' id = 'bar-component-container'  
         style={{
-          width: chartSettings.skillFrequencyChartWidth,
-          maxWidth: chartSettings.skillFrequencyChartMaxWidth,
-          height: chartSettings.topChartHeight,
-          transform: `translateX(-${100*selectedChartNumber}%)`,
-          transition: 'transform 0.4s cubic-bezier(.52,-0.01,.5,1)'
+          transform: `translateX(-${100*selectedChartNumber}%)`
         }}>
-        
         {barComponents}
       </span>
-      <button className='SkillFrequencyChartArrow' id='right-arrow' onClick={nextChart}/>
+      
     </div>  
   )
 }

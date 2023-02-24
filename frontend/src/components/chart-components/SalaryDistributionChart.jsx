@@ -37,18 +37,26 @@ const options = {
       position: 'top',
       align: 'start',
       fullSize: true,
-      font : {weight: 'bold', size: '20vh'},
+      font : {weight: 'bold', size: '20rem'},
       color: '#d1d1d1',
     }
   },
-  maintainAspectRatio: false
+  maintainAspectRatio: false,
+  scales: {
+    'y' : {
+      'title' : {
+        'display' : true,
+        'text' : 'Relative Job Frequency'
+      }
+    }
+  }
 };
 
 
 import { Line } from 'react-chartjs-2';
 
 
-export default function SalaryDistributionChart({chartData, chartSettings, salaryBlockSize, sliderProps}) {
+export default function SalaryDistributionChart({chartData, salaryBlockSize, sliderProps}) {
   const salaryDistributions = chartData.salaryDistributions;
   const labels = salaryDistributions.distributionLabels;
   const distributions = salaryDistributions.distributions;
@@ -90,8 +98,8 @@ export default function SalaryDistributionChart({chartData, chartSettings, salar
 
 
   return (
-  <div className = 'SalaryDistributionChart' style={{position: 'relative', width: chartSettings.topChartWidth, maxWidth: chartSettings.topChartMaxWidth}}>
-     <Line options={options} data={data} style={{position: 'relative', height: chartSettings.topChartHeight}}/>
+  <div className = 'SalaryDistributionChart'>
+     <Line options={options} data={data} />
   </div>);
 }
 

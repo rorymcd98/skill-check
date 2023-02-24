@@ -49,7 +49,7 @@ function floatToDate(float){
 }
 
 
-export default function SalaryTimeseriesChart({chartData, chartSettings, salaryBlockSize, sliderProps}) {
+export default function SalaryTimeseriesChart({chartData, salaryBlockSize, sliderProps}) {
   const salaryTimeSeries = chartData.salaryTimeSeries;
 
   //Create the dataset object for chart JS
@@ -147,7 +147,7 @@ export default function SalaryTimeseriesChart({chartData, chartSettings, salaryB
 
 
   return (
-    <div className='SalaryTimeSeries' id='salary-time-series' style={{width : chartSettings.timeseriesChartWidth, height : chartSettings.timeseriesChartHeight}}>
+    <div className='SalaryTimeSeries' id='salary-time-series'>
       <Scatter options={options} data={data} />
     </div>
 
