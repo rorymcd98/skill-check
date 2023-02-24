@@ -101,6 +101,9 @@ export default function SalaryTimeseriesChart({chartData, salaryBlockSize, slide
         type: 'time',
         min: floatToDate(sliderProps.minDate),
         max: floatToDate(sliderProps.maxDate),
+        time: {
+          unit: 'month'
+      }
       },
     },
     responsive: true,
