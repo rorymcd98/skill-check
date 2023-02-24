@@ -4,17 +4,21 @@ import axios from 'axios'
 import {Chart as ChartJS} from 'chart.js'
 
 //Globally change the color for chart text
-ChartJS.defaults.color = '#8f8f8f'
+ChartJS.defaults.color = '#8f8f8f';
+
+ChartJS.defaults.scale.grid.color = 'rgba(127, 127, 127, 0.34)';
+
+
 
 //Components
 import SalaryTimeseriesChart from './components/chart-components/SalaryTimeseriesChart'
 import SalaryDistributionChart from './components/chart-components/SalaryDistributionChart'
 import SkillElementPanel from './components/skill-element-components/SkillElementPanel'
 import SkillFrequencyChart from './components/chart-components/SkillFrequencyChart'
-
+import SliderPanel from './components/skill-element-components/SliderPanel'
 
 import initialSkills from './components/component-resources/initialSkills'
-import SliderPanel from './components/skill-element-components/SliderPanel'
+import initialChartData from './components/component-resources/initialChartData'
 
 //Helper for the dates
 function dateToFloat(date){
@@ -35,8 +39,8 @@ function App() {
       });
   }, []);
 
-  //Populate the charts with dummy data
-  const initialChartData = {
+  //Dummy data in case needed (old)
+  const emptyData = {
     'salaryDistributions' : {
       'distributionLabels' : ["£0k","£5k","£10k","£15k","£20k","£25k","£30k","£35k","£40k","£45k","£50k","£55k","£60k","£65k","£70k","£75k","£80k","£85k","£90k","£95k","£100k","£105k","£110k","£115k","£120k","£125k","£130k","£135k","£140k","£145k","£150k"],
       'distributions' : {'[No-data]' : []}

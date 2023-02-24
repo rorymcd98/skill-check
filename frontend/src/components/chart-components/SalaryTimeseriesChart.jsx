@@ -103,6 +103,7 @@ export default function SalaryTimeseriesChart({chartData, salaryBlockSize, slide
         max: floatToDate(sliderProps.maxDate),
       },
     },
+    responsive: true,
     maintainAspectRatio: false,
 
     //On click open a scatter point job in a URL (the first of many if a cluster is chosen)
@@ -137,7 +138,7 @@ export default function SalaryTimeseriesChart({chartData, salaryBlockSize, slide
         position: 'top',
         align: 'start',
         fullSize: true,
-        font : {weight: 'bold', size: '20vh'},
+        font : {weight: 'bold', size: '15rem'},
         color: '#d1d1d1',
       },
     },

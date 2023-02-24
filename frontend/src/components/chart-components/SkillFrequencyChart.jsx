@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,7 +32,7 @@ const options = {
       position: 'top',
       align: 'start',
       fullSize: true,
-      font : {weight: 'bold', size: '20vh'},
+      font : {weight: 'bold', size: '15rem'},
       color: '#d1d1d1',
     },
   },
@@ -62,6 +62,12 @@ export default function SkillFrequencyChart({chartData}) {
     const prev = Math.max(selectedChartNumber-1, 0);
     setSelectedChartNumber(prev)
   }
+
+  //Change the chart number if the number of charts shrinks
+  useEffect(()=>{
+    const bound = Math.min(selectedChartNumber, barComponents.length-1);
+    setSelectedChartNumber(bound);
+  }, [chartData])
 
   //Generate a bar chart component of skill frequency for each job query
   const barComponents = [];

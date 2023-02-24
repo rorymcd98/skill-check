@@ -16,7 +16,7 @@ function createSkillsFrequency(jobQueriesEaches, jobQueriesUnions){
 
     //Only add to the results if a query has been found
     if(queryResult.rows.length > 0){
-      const {sortedLabels, sortedCounts} = sortObject(queryResult.rows[0]);
+      const {sortedKeys: sortedLabels, sortedValues: sortedCounts} = sortObject(queryResult.rows[0]);
       resultObject.labels[jobQuery] = totalLabel.concat(sortedLabels);
       resultObject.counts[jobQuery] = totalCount.concat(sortedCounts);
     } 
@@ -26,23 +26,17 @@ function createSkillsFrequency(jobQueriesEaches, jobQueriesUnions){
 }
 
 function sortObject(obj) {
-  let keys = Object.keys(obj);
-  let values = Object.values(obj);
-  let sortedCounts = values.sort((a,b) => b-a);
-  let sortedLabels = [];
-  //Horrendously inefficient double loop
-  for(let i=0; i<sortedCounts.length; i++) {
-      for(let j=0; j<values.length; j++) {
-        if(sortedCounts[i] === values[j]) {
-          sortedLabels[i] = keys[j];
-      }
+  const sortedKeyValPairs = Object.entries(obj).sort(
+    ([_kA, valA], [_kB, valB]) => {
+      if (Number(valA) < Number(valB)) return 1;
+      else return -1;
     }
-  }
+  );
 
-  for(i in sortedCounts){
-    sortedCounts[i] = Number(sortedCounts[i])
-  }
-  return {sortedLabels, sortedCounts};
+  return {
+    sortedKeys: sortedKeyValPairs.map(([key]) => key),
+    sortedValues: sortedKeyValPairs.map(([_, val]) => val)
+  };
 }
 
 module.exports = {createSkillsFrequency};

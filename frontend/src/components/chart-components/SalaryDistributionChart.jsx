@@ -37,7 +37,7 @@ const options = {
       position: 'top',
       align: 'start',
       fullSize: true,
-      font : {weight: 'bold', size: '20rem'},
+      font : {weight: 'bold', size: '15rem'},
       color: '#d1d1d1',
     }
   },
@@ -52,9 +52,7 @@ const options = {
   }
 };
 
-
 import { Line } from 'react-chartjs-2';
-
 
 export default function SalaryDistributionChart({chartData, salaryBlockSize, sliderProps}) {
   const salaryDistributions = chartData.salaryDistributions;

@@ -1,5 +1,5 @@
 .SkillElementPanel{
-  --size: 10.5rem;
+  --size: clamp(7.5rem, 10vw, 10.5rem);
   --tab: rgba(240, 240, 240, 0.418);
   --skill-element: rgba(216, 216, 216, 0.178);
   --skill-element-background: rgb(88, 88, 88);
@@ -93,7 +93,7 @@
   margin-top: 1px;
 }
 .SkillElementHead button{
-  border-radius: 10px !important;
+  border-radius: clamp(3px, 0.4rem, 15px ) !important;
 }
 
 
@@ -194,11 +194,12 @@
 
 .HeaderButtonContainer{
   position: relative;
-  height: 2.2rem;
-  width: 2.2rem;
+  height: calc(var(--size)/4);
+  width: calc(var(--size)/4);
 }
 
 .HeaderButtonContainer button{
+  position: relative;
   display: flex;
 
   height: 100%;
@@ -209,17 +210,18 @@
 }
 
 .SelectAllButton div{
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  font-weight: bolder;
-  height: 100%;
-  top: -42%;
-  font-size: 2rem;
-  text-align: center;
+  font-weight: bold;
+  font-size: calc(var(--size)/3.5);
+
 }
 
-#SkillDeselected .SelectAllButton div{
-  top: -32%;
+#SkillSelected .SelectAllButton div{
+  top: 40%;
 }
 
 
@@ -279,7 +281,7 @@
 
 .SubSkillButton{
   position: relative;
-  left: 0.2vh;
+  left: 3px;
   top: -4px;
   z-index: 1;
 }
