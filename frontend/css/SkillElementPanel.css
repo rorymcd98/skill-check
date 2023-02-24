@@ -1,6 +1,6 @@
 .SkillElementPanel{
   --size: 10.5rem;
-  --tab-grey: rgb(129, 129, 129);
+  --tab: rgba(240, 240, 240, 0.418);
   --skill-element: rgba(216, 216, 216, 0.178);
   --skill-element-background: rgb(88, 88, 88);
   --skill-element-panel : rgb(58, 58, 58);
@@ -9,10 +9,12 @@
   position: relative;
   background-color: var(--skill-element-panel);
   height: 100%;
-  width: clamp(350px, 20vw, 30rem);
+  width: 30rem;
   max-width: 90%;
 
   right: 0%;
+
+  position: absolute;
 
   display: inline-flex;
   flex-direction: column;
@@ -28,16 +30,23 @@
   display: block;
   position: absolute;
   left: 0%;
-  bottom: 10%;
+  bottom: 0%;
   transform: translate(-100%);
-  background-color: var(--tab-grey);
+  background-color: var(--tab);
   
   height: 4rem;
   width: 2rem;
   
   border-radius: 10px 0px 0px 10px;
-
   z-index: 1;
+}
+
+#slide-tab-text{
+  position: absolute;
+  top: 50%;
+  transform: translate(0%,  -50%);
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 
@@ -406,7 +415,6 @@
   flex-direction: column;
   justify-content: stretch;
 }
-
 
 #slider-panel .control-skills-buttons{
   position: relative;

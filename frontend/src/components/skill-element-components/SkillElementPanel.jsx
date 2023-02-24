@@ -88,7 +88,11 @@ export default function SkillElementPanel({skillElementObject, setSkillElementOb
 
   return (
     <span className='SkillElementPanel' style={{width}}>
-      <div id='slide-tab' onClick={() => setSlideOut(!slideOut)}></div> 
+      <div id='slide-tab' onClick={() => setSlideOut(!slideOut)}>
+        <div id='slide-tab-text'>
+          🔍
+        </div> 
+      </div> 
       <SkillElementContainer  key = {idSelected} id={idSelected} children={selectedChildren} />
       <SkillElementContainer  key = {idDeselected} id={idDeselected} children={deselectedChildren}/>
       {SliderPanelComponent}
