@@ -18,7 +18,7 @@ Available at [skill-check.herokuapp.com](https://skill-check.herokuapp.com/)
 
 Utilises: 
 
-- A React frontend with annotated components
+- A React frontend with appropriate utilisation of components and hooks
 - PostgreSQL database, populated from the Reed job search API, in combination with Cheerio webscraping
 - Hosts a RESTful API (using Express) to allow the client to dynamically and easily query the database for job skills
 - Bundled with Vite for production and development with hot module replacement
@@ -52,7 +52,7 @@ npm run serve
 
 * Open your browser and visit http://localhost:3001/ (or your environment's specified port)
 
-<h3>Database pipeline (local)<h3/>
+<h3>Database pipeline (local)</h3>
 
 * Install PostgreSQL
 
