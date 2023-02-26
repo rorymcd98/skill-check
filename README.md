@@ -79,6 +79,8 @@ PGUSER=[your postgres username]
 PGDATABASE=skillcheck
 PGPASSWORD=[your postgres password]
 PGPORT=[your postgres port]
+
+PORT=[your optional express port]
 ```
 
 And for accessing the Reed API
