@@ -10,8 +10,11 @@ Available at [skill-check.herokuapp.com](https://skill-check.herokuapp.com/)
 
 <h2>Features</h2> 
 
-- Visualisations of the number of salary distributions, number of jobs, and salary trends for job skills
-- Ability to quickly select a number of pre-existing search queries, or to easily assemble new queries
+- Visualisations for a variety of programming languages & skills of:
+  * Distribution of salaries
+  * Number of job postings for that skill
+  * Timeseries for plotting trends in skill salaries
+- The ability to quickly select a number of pre-existing search queries, or to easily assemble new queries
 
 Utilises: 
 
