@@ -11,6 +11,8 @@
   text-align: left;
 
   flex-wrap: nowrap;
+
+  overflow: hidden;
 }
 
 #top-charts-panel{
@@ -88,7 +90,7 @@
 
 @media screen and (max-width: 1200px) {
   #ChartPanel{
-    overflow: scroll;
+    overflow-y: scroll;
   }
 
   .SalaryDistributionChart{

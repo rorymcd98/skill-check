@@ -18,17 +18,17 @@
 }
 
 html,
-body{
+body,
+#root{
+  position: relative;
   margin:0;
   padding:0;
   height:100%;
   overflow: hidden;
+  height: 100%;
 }
 
-#root, body{
-  position: relative;
-  min-height: 100%;
-}
+
 
 #MainContainer{
   position: absolute;
@@ -41,6 +41,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 /* ---Top left logo image--- */
