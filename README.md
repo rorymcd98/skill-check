@@ -1,6 +1,3 @@
-A single page application for visualising the market value of software skills.
-
-
 <h1 align="center">Skill Check</h1>
 
 > A single page application for visualising the market value of software skills.
@@ -9,7 +6,7 @@ Available at [skill-check.herokuapp.com](https://skill-check.herokuapp.com/)
 
 <h2>Preview</h2> 
 
-![text](image.png)
+![text](https://i.imgur.com/ROW89Hw.png)
 
 <h2>Features</h2> 
 
@@ -74,11 +71,11 @@ npm run start
 The following env variables are required for hosting
 
 ```
-PGHOST=localhost
-PGUSER=postgres
+PGHOST=[your postgres database]
+PGUSER=[your postgres username]
 PGDATABASE=skillcheck
 PGPASSWORD=[your postgres password]
-PGPORT=5432
+PGPORT=[your postgres port]
 ```
 
 And for accessing the Reed API
