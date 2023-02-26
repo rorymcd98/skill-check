@@ -48,6 +48,8 @@ export default function SliderPanel({minSalary, maxSalary, setMinSalary, setMaxS
           maxValue={maxSalary}
           label={true}
           labels={salarySliderLabels}
+          minCaption={'Min salary'}
+          maxCaption={'Max salary'}
           onChange={(e) => {
             handleInputSalary(e);
           }}
@@ -62,6 +64,8 @@ export default function SliderPanel({minSalary, maxSalary, setMinSalary, setMaxS
           maxValue={maxDate}
           label={true}
           labels={dateSliderLabels}
+          minCaption={'Start date'}
+          maxCaption={'End date'}
           onChange={(e) => {
             handleInputDate(e);
           }}

@@ -400,6 +400,10 @@
   top: -66%;
 }
 
+.multi-range-slider .thumb .caption * {
+  background-color: #c5963e !important;
+}
+
 .multi-range-slider .thumb::before {
   width: 0.4rem !important;
   border-radius: 20% !important;

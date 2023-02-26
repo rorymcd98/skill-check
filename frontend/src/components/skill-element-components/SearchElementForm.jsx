@@ -47,7 +47,7 @@ export default function SearchElementForm({searchLists, setSearchLists, j, idx, 
       <input
         type="text"
         className='SearchElementInput'
-        placeholder = {"Manually add a skill [enter]...."} 
+        placeholder = {"Manually add a skill, [enter], then analyze ...."} 
         value={searchTerm}
         id="search-input"
         onChange={setSearch}

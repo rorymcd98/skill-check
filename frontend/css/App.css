@@ -125,7 +125,7 @@ body,
 
   display: flex;
   flex-direction: column;
-
+  overflow: hidden;
 }
 
 #tutorial-panel-images{
