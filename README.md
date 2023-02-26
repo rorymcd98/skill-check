@@ -64,7 +64,7 @@ npm run serve
 
 1. node /populate-database/api-urls.js
 
-2. node /populate-database/scrape-urls.js
+2. node /populate-database/scrape-postings.js
 
 3. node /populate-database/populate-databse.js
 
