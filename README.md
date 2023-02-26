@@ -47,7 +47,7 @@ npm run start
 
 ```
 npm run dev
-npm run start
+npm run serve
 ```
 
 * Open your browser and visit http://localhost:3001/ (or your environment's specified port)
