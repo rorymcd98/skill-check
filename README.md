@@ -66,7 +66,7 @@ npm run serve
 
 2. node /populate-database/scrape-urls.js
 
-3. node /populate-database/store-json.js
+3. node /populate-database/populate-databse.js
 
 
 <h2>.ENV</h2>
