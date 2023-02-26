@@ -4,7 +4,7 @@ import SubSkillElement from './SubSkillElement'
 
 export default function SkillElement(props) {
   //Controls display of 'SubSkillDropDownContainer' and the drop down arrow
-  const [display, setDisplay] = useState(props.selectedBool ? 'block' : 'none');
+  const [display, setDisplay] = useState(props.selectedBool ? null : 'none');
 
   //Assemble the object into a list of subSkillElement chidlren - this is passed to each subSkillDropDownContainer child
   function objectToSubSkillList(skillElementObject, selectedBool){

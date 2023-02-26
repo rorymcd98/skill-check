@@ -5,9 +5,8 @@ import {Chart as ChartJS} from 'chart.js'
 
 //Globally change the color for chart text
 ChartJS.defaults.color = '#8f8f8f';
-
 ChartJS.defaults.scale.grid.color = 'rgba(127, 127, 127, 0.34)';
-
+ChartJS.defaults.scale.title.font = {'size' : '15rem'} 
 
 
 //Components
@@ -16,9 +15,11 @@ import SalaryDistributionChart from './components/chart-components/SalaryDistrib
 import SkillElementPanel from './components/skill-element-components/SkillElementPanel'
 import SkillFrequencyChart from './components/chart-components/SkillFrequencyChart'
 import SliderPanel from './components/skill-element-components/SliderPanel'
+import TutorialPanel from './components/TutorialPanel';
 
 import initialSkills from './components/component-resources/initialSkills'
 import initialChartData from './components/component-resources/initialChartData'
+
 
 //Helper for the dates
 function dateToFloat(date){
@@ -174,6 +175,27 @@ function App() {
       fetchApiOnClick={fetchApiOnClick}
     />
 
+    //State for determining if the user has seen and closed the tutorial panel
+    const storedDisplayTutorial = localStorage.getItem("storedDisplayTutorial");
+    const [displayTutorial, setDisplayTutorial] = useState(storedDisplayTutorial == false);
+
+    useEffect(()=>{
+      localStorage.setItem("storedDisplayTutorial", displayTutorial);
+    }, [displayTutorial])
+
+    //Toggle between null (default css) and a hidden tutorial panel
+    const toggleTutorialPanel = ()=>{
+      console.log(toggleTutorialPanel)
+      const nextDisplayTutorial = displayTutorial == null ? 'none' : null;
+      setDisplayTutorial(nextDisplayTutorial);
+    }
+    
+    const toggleDisplayTutorial = () => {setDisplayTutorial(!displayTutorial)}
+    const tutorialStyling = {
+      'visibility' : displayTutorial ? null : 'hidden',
+      'opacity' : displayTutorial ? null : '0%' 
+    }
+
   return (
     <div id={'MainContainer'}>
       <span id = 'ChartPanel'>
@@ -189,8 +211,11 @@ function App() {
         setSkillElementObject={setSkillElementObject}
         searchLists={searchLists} 
         setSearchLists={setSearchLists}
-        SliderPanelComponent={SliderPanelComponent}  
+        SliderPanelComponent={SliderPanelComponent}
+        toggleDisplayTutorial={toggleDisplayTutorial}
       />
+
+      <TutorialPanel tutorialStyling={tutorialStyling} toggleDisplayTutorial={toggleDisplayTutorial}></TutorialPanel>
     </div>
   )
 }

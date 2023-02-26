@@ -94,15 +94,28 @@ export default function SalaryTimeseriesChart({chartData, salaryBlockSize, slide
           max: sliderProps.maxSalary,
           'title' : {
             'display' : true,
-            'text' : 'Salary (£)'
-          }
+            'text' : 'Salary Range',
+          },
+          ticks: {
+            beginAtZero:true,
+            callback: function(value, index, values) {
+                    return '£' + Math.round(value/1000) +'k';
+            }
+        }
       },
       x: {
         type: 'time',
         min: floatToDate(sliderProps.minDate),
         max: floatToDate(sliderProps.maxDate),
         time: {
-          unit: 'month'
+          unit: 'month',
+          displayFormats: {
+            month: 'MMM YY'
+        }
+      },
+      'title' : {
+        'display' : true,
+        'text' : 'Date Range',
       }
       },
     },
@@ -137,11 +150,11 @@ export default function SalaryTimeseriesChart({chartData, salaryBlockSize, slide
       },
       title: {
         display: true,
-        text: 'Salary Timeseries',
+        text: 'Salary Timeseries - Line average and scatter',
         position: 'top',
         align: 'start',
         fullSize: true,
-        font : {weight: 'bold', size: '15rem'},
+        font : {weight: 'bold', size: '20rem'},
         color: '#d1d1d1',
       },
     },

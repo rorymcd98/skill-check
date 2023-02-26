@@ -32,7 +32,7 @@ const options = {
       position: 'top',
       align: 'start',
       fullSize: true,
-      font : {weight: 'bold', size: '15rem'},
+      font : {weight: 'bold', size: '20rem'},
       color: '#d1d1d1',
     },
   },
@@ -81,7 +81,7 @@ export default function SkillFrequencyChart({chartData}) {
 
   Object.keys(skillsFrequencies.counts).map((jobQuery)=>{
     const summaryData = [skillsFrequencies.counts[jobQuery][0]]; //0 index leads to the total
-    const summaryLabel = jobQuery.split(' ')[0];
+    const summaryLabel = jobQuery;
 
     summaryChartData.push(summaryData);
     summaryChartLabels.push(summaryLabel);

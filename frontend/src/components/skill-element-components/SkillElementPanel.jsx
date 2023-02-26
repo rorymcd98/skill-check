@@ -7,7 +7,7 @@ import SearchElement from './SearchElement';
 import initialSkills from '../component-resources/initialSkills';
 
 
-export default function SkillElementPanel({skillElementObject, setSkillElementObject, searchLists, setSearchLists, SliderPanelComponent}) {   
+export default function SkillElementPanel({skillElementObject, setSkillElementObject, searchLists, setSearchLists, SliderPanelComponent, toggleDisplayTutorial}) {   
 
     //Toggles all the sub skills of an Element
     function createToggleAll(skillId, selectAllBool){
@@ -88,9 +88,12 @@ export default function SkillElementPanel({skillElementObject, setSkillElementOb
 
   return (
     <span className='SkillElementPanel' style={{width}}>
-      <div id='slide-tab' onClick={() => setSlideOut(!slideOut)}>
-        <div id='slide-tab-text'>
-          🔍
+      <div className='SlideTab' id='slide-tab-tutorial' onClick={toggleDisplayTutorial}>
+        <div className='SlideTabText'>?
+        </div> 
+      </div> 
+      <div className='SlideTab' id='slide-tab-skills' onClick={() => setSlideOut(!slideOut)}>
+        <div className='SlideTabText'>🔍
         </div> 
       </div> 
       <SkillElementContainer  key = {idSelected} id={idSelected} children={selectedChildren} />

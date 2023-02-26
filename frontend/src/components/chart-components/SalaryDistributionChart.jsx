@@ -37,7 +37,7 @@ const options = {
       position: 'top',
       align: 'start',
       fullSize: true,
-      font : {weight: 'bold', size: '15rem'},
+      font : {weight: 'bold', size: '20rem'},
       color: '#d1d1d1',
     }
   },
@@ -47,6 +47,12 @@ const options = {
       'title' : {
         'display' : true,
         'text' : 'Relative Job Frequency'
+      }
+    },
+    'x' : {
+      'title' : {
+        'display' : true,
+        'text' : 'Salary Range',
       }
     }
   }

@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import SearchElementForm from './SearchElementForm';
 import SubSkillDropDownContainer from './SubSkillDropDownContainer';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function SearchElement({skillId, searchLists, setSearchLists, idx}) {
   //Controls display of 'SubSkillDropDownContainer' and the drop down arrow
   const [display, setDisplay] = useState('block');
-  const elementText = 'Search';
+  const elementText = 'Custom search' + (searchLists.length>1 ? ` ${idx+1}` : '');
 
   function generateSearchChildren(){
     const list = searchLists[idx];
@@ -52,7 +53,7 @@ export default function SearchElement({skillId, searchLists, setSearchLists, idx
     <div className='SearchElement' id = {skillId} >
         <div className='SkillElementHead' onClick={()=>{setDisplay(display === 'block' ? 'none' : 'block')}}>
           <span className='SkillElementImageContainer'>
-            <img className ='SkillElementImage' alt={elementText} src={`./skill-icon-small.png`}/>
+            <LazyLoadImage className ='SkillElementImage' alt={elementText} src={`./skill-icon-small.png`}/>
           </span>
           <span className='SkillElementText'>
             <span className='SkillElementTextSpan'>

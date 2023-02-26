@@ -65,7 +65,7 @@ export default function SliderPanel({minSalary, maxSalary, setMinSalary, setMaxS
           onChange={(e) => {
             handleInputDate(e);
           }}
-        />
+        ></MultiRangeSlider>
       </span>
       
       <span id='control-buttons-container'>
