@@ -179,7 +179,7 @@ function App() {
     const storedDisplayTutorial = localStorage.getItem("storedDisplayTutorial");
 
     //If this is the first session, show the panel (set to initial state to true)
-    const initialDisplayTutorial = storedDisplayTutorial === undefined ? true : JSON.parse(storedDisplayTutorial);
+    const initialDisplayTutorial = storedDisplayTutorial === null ? true : JSON.parse(storedDisplayTutorial);
     const [displayTutorial, setDisplayTutorial] = useState(initialDisplayTutorial);
 
     //Set the tutorial styling based on the bool displayTutorial
