@@ -177,24 +177,19 @@ function App() {
 
     //State for determining if the user has seen and closed the tutorial panel
     const storedDisplayTutorial = localStorage.getItem("storedDisplayTutorial");
-    const [displayTutorial, setDisplayTutorial] = useState(storedDisplayTutorial == false);
 
-    useEffect(()=>{
-      localStorage.setItem("storedDisplayTutorial", displayTutorial);
-    }, [displayTutorial])
+    //If this is the first session, show the panel (set to initial state to true)
+    const initialDisplayTutorial = storedDisplayTutorial === undefined ? true : JSON.parse(storedDisplayTutorial);
+    const [displayTutorial, setDisplayTutorial] = useState(initialDisplayTutorial);
+
+    //Set the tutorial styling based on the bool displayTutorial
+    const tutorialStyling = {
+      'visibility' : displayTutorial === true ? null : 'hidden',
+      'opacity' : displayTutorial === true ? null : '0%',
+    }
 
     //Toggle between null (default css) and a hidden tutorial panel
-    const toggleTutorialPanel = ()=>{
-      console.log(toggleTutorialPanel)
-      const nextDisplayTutorial = displayTutorial == null ? 'none' : null;
-      setDisplayTutorial(nextDisplayTutorial);
-    }
-    
-    const toggleDisplayTutorial = () => {setDisplayTutorial(!displayTutorial)}
-    const tutorialStyling = {
-      'visibility' : displayTutorial ? null : 'hidden',
-      'opacity' : displayTutorial ? null : '0%' 
-    }
+    const toggleDisplayTutorial = () => {localStorage.setItem("storedDisplayTutorial", !displayTutorial); setDisplayTutorial(!displayTutorial);}
 
   return (
     <div id={'MainContainer'}>

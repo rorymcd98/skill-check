@@ -2,7 +2,7 @@ import React from 'react'
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 export default function TutorialPanel({toggleDisplayTutorial, tutorialStyling}) {
-  console.log(tutorialStyling)
+
   return (
   <div id='tutorial-panel-backdrop' style={tutorialStyling}>
     <div id='tutorial-panel' >
