@@ -33,6 +33,6 @@
     "vite": "^4.0.0"
   },
   "name": "skill-check",
-  "private": true,
-  "version": "0.0.0"
+  "private": false,
+  "version": "1.0.0"
 }
