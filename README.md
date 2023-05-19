@@ -4,6 +4,8 @@
 
 Available at [skill-check.herokuapp.com](https://skill-check.herokuapp.com/)
 
+Update: Upon reflection, this app is potentially suscetible to SQL injections, the site will be down until I decide to fix these.
+
 <h2>Preview</h2> 
 
 ![text](https://i.imgur.com/ROW89Hw.png)
