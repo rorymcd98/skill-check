@@ -16,6 +16,7 @@ async function populatePostgresDatabase(loadWord) {
   const listings = loadedListingObject.results;
 
   const baseSqlQuery = `
+  SET datestyle = dmy;
   CREATE TABLE IF NOT EXISTS job_listing (
         job_id INTEGER PRIMARY KEY,
         employer_name VARCHAR(255),
