@@ -54,7 +54,7 @@ async function main(loadWord) {
   const limit = pLimit(1);
   let scrapePromises = scrapeUrls.map((scrapeObj) => {
     return limit(() =>
-      scrapeDescription(scrapeObj.listingUrl, scrapeObj.jobId),
+      scrapeDescription(scrapeObj.listingUrl, scrapeObj.jobId)
     );
   });
 

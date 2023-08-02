@@ -7,7 +7,12 @@ function saveToFile(obj, saveWord) {
 
   const objString = JSON.stringify(obj);
 
-  fs.writeFile(savePath, objString, (err) => {
+  //Check if the savepath exists - if not, create it
+  if (!fs.existsSync(path.resolve(__dirname, "saved-searches"))) {
+    fs.mkdirSync(path.resolve(__dirname, "saved-searches"));
+  }
+
+  fs.writeFileSync(savePath, objString, (err) => {
     if (err) {
       console.error(err);
       return;
@@ -20,7 +25,7 @@ function loadFromFile(loadWord) {
   const loadPath = path.resolve(
     __dirname,
     "saved-searches",
-    loadWord + ".json",
+    loadWord + ".json"
   );
   let obj = {};
   try {

@@ -16,7 +16,8 @@ async function main(loadWord) {
   const loadedListingObject = loadFromFile(loadWord);
   const listings = loadedListingObject.results;
 
-  const baseSqlQuery = `CREATE TABLE IF NOT EXISTS job_listing (
+  const baseSqlQuery = `
+  CREATE TABLE IF NOT EXISTS job_listing (
         job_id INTEGER PRIMARY KEY,
         employer_name VARCHAR(255),
         job_title VARCHAR(255),
@@ -38,6 +39,14 @@ async function main(loadWord) {
         new.search_vector := setweight(to_tsvector(coalesce(new.job_title, '')), 'A') ||
             setweight(to_tsvector(coalesce(new.job_description, '')), 'B');
         return new;
+    END
+    $$ LANGUAGE plpgsql;
+
+    CREATE OR REPLACE FUNCTION update_job_content() RETURNS trigger AS $$
+    BEGIN
+      new.search_vector := setweight(to_tsvector(coalesce(new.job_title, '')), 'A') ||
+          setweight(to_tsvector(coalesce(new.job_description, '')), 'B');
+      return new;
     END
     $$ LANGUAGE plpgsql;
 
@@ -79,7 +88,7 @@ async function main(loadWord) {
 
     // Use template literals to build the INSERT statement
     const insertSqlQuery = `INSERT INTO job_listing (job_id, employer_name, job_title, location_name, minimum_salary, maximum_salary, currency, published_date, job_description, applications, job_url) VALUES (${parseInt(
-      jobId,
+      jobId
     )}, '${employerName}', '${jobTitle}', '${locationName}', ${minimumSalary}, ${maximumSalary}, '${currency}', '${date}', '${jobDescription}', ${applications}, '${jobUrl}') ON CONFLICT (job_id) DO UPDATE SET employer_name='${employerName}', job_title='${jobTitle}', location_name='${locationName}', minimum_salary=${minimumSalary}, maximum_salary=${maximumSalary}, currency='${currency}', published_date='${date}', job_description='${jobDescription}', applications=${applications}, job_url='${jobUrl}'; `;
     sqlQuery += insertSqlQuery;
   }

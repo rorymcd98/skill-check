@@ -3,18 +3,23 @@ const { saveToFile, loadFromFile } = require("./store-json"); //Helper functions
 const pLimit = require("p-limit"); //'Pooling' for get requests - only a few requests at a time
 require("dotenv").config({ path: __dirname + "../../.env" }); //dotenv - used for API_KEY (reed API key)
 
-main("software engineer", "software");
+main("software", "software");
 
 async function main(searchTerm, saveWord) {
   let saveObj = loadFromFile(saveWord); //Returns past search results (or an empty object if one doesn't exist)
 
   //If a new file is loaded, create a default save object with metadata and results
-  if (saveObj.meta === undefined) {
+  if (saveObj.results === undefined) {
     saveObj.results = {};
-    saveObj.meta = {
-      searchTerm,
-      seenDescription: {},
-    };
+  }
+  if (saveObj.meta === undefined) {
+    saveObj.meta = {};
+  }
+  if (saveObj.meta.searchTerm === undefined) {
+    saveObj.meta.searchTerm = searchTerm;
+  }
+  if (saveObj.meta.descriptionSeen === undefined) {
+    saveObj.meta.descriptionSeen = {};
   }
 
   //Figure out how many results we have -> how many pages to search (results/100)
@@ -25,7 +30,7 @@ async function main(searchTerm, saveWord) {
     console.log(
       "Number of listings: ",
       searchLength,
-      "\nAdding new listings...",
+      "\nAdding new listings..."
     );
   } catch {
     console.log("couldn't fetch page 0");
@@ -85,7 +90,7 @@ async function resultsForPage(pageNum, searchTerm) {
     100 * pageNum
   ).toString()}`;
   const token = Buffer.from(`${process.env.API_KEY}:`, "utf8").toString(
-    "base64",
+    "base64"
   );
 
   const headers = {
