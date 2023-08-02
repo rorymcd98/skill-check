@@ -6,19 +6,19 @@ Available at [skill-check.herokuapp.com](https://skill-check.herokuapp.com/)
 
 Update: Upon reflection, this app is potentially susceptible to SQL injections, the site will be down until I decide to fix these.
 
-<h2>Preview</h2> 
+<h2>Preview</h2>
 
 ![text](https://i.imgur.com/ROW89Hw.png)
 
-<h2>Features</h2> 
+<h2>Features</h2>
 
 - Visualisations for a variety of programming languages & skills of:
-  * Distribution of salaries
-  * Number of job postings for that skill
-  * Timeseries for plotting trends in skill salaries
+  - Distribution of salaries
+  - Number of job postings for that skill
+  - Timeseries for plotting trends in skill salaries
 - The ability to quickly select a number of pre-existing search queries, or to easily assemble new queries
 
-Utilises: 
+Utilises:
 
 - A React frontend with appropriate utilisation of components and hooks
 - PostgreSQL database, populated from the Reed job search API, in combination with Cheerio webscraping
@@ -28,48 +28,47 @@ Utilises:
 
 <h2></h2>
 
-<h2>Instructions:</h2> 
+<h2>Instructions:</h2>
 
 <h3>Hosting</h3>
 
-* Install Node.js
+- Install Node.js
 
-* Clone this repoistory 
+- Clone this repoistory
 
-* Install: `npm install .`
+- Install: `npm install .`
 
-* For production run:
+- For production run:
 
 ```
 npm run build
 npm run start
 ```
 
-* For development run (in separate terminals):
+- For development run (in separate terminals):
 
 ```
 npm run dev
 npm run serve
 ```
 
-* Open your browser and visit http://localhost:3001/ (or your environment's specified port)
+- Open your browser and visit http://localhost:3001/ (or your environment's specified port)
 
 <h3>Database pipeline (local)</h3>
 
-* Install PostgreSQL
+- Install PostgreSQL
 
-* Create a database called `skillcheck`
+- Create a database called `skillcheck`
 
-* Set the `.env` variables (see below)
+- Set the `.env` variables (see below)
 
-* Execute the scripts from populate-database (future versions will automate this):
+- Execute the scripts from populate-database (future versions will automate this):
 
 1. node /populate-database/api-urls.js
 
 2. node /populate-database/scrape-postings.js
 
 3. node /populate-database/populate-databse.js
-
 
 <h2>.ENV</h2>
 

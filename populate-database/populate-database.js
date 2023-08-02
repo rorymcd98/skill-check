@@ -1,22 +1,22 @@
-require('dotenv').config({ path: __dirname + '../../.env' });
-const { Client } = require('pg');
-const {loadFromFile} = require('./store-json');
+require("dotenv").config({ path: __dirname + "../../.env" });
+const { Client } = require("pg");
+const { loadFromFile } = require("./store-json");
 
-main('software');
+main("software");
 
-async function main(loadWord){
-    const client = new Client();
-    try {
-        await client.connect();
-        console.log("Connected to db.")
-    } catch (err) {
-        console.log("Error connectint to db.", err)
-    }
-    
-    const loadedListingObject = loadFromFile(loadWord);
-    const listings = loadedListingObject.results;
+async function main(loadWord) {
+  const client = new Client();
+  try {
+    await client.connect();
+    console.log("Connected to db.");
+  } catch (err) {
+    console.log("Error connectint to db.", err);
+  }
 
-    const baseSqlQuery = `CREATE TABLE IF NOT EXISTS job_listing (
+  const loadedListingObject = loadFromFile(loadWord);
+  const listings = loadedListingObject.results;
+
+  const baseSqlQuery = `CREATE TABLE IF NOT EXISTS job_listing (
         job_id INTEGER PRIMARY KEY,
         employer_name VARCHAR(255),
         job_title VARCHAR(255),
@@ -47,48 +47,57 @@ async function main(loadWord){
     BEFORE INSERT OR UPDATE
     ON job_listing
     FOR EACH ROW EXECUTE PROCEDURE update_job_content();
-    `
+    `;
 
-    
+  let sqlQuery = baseSqlQuery;
 
-    let sqlQuery = baseSqlQuery;
+  for (jobId in listings) {
+    const lst = listings[jobId];
 
-    for (jobId in listings){
-        const lst = listings[jobId];
+    let {
+      employerName,
+      jobTitle,
+      locationName,
+      minimumSalary,
+      maximumSalary,
+      currency,
+      date,
+      jobDescription,
+      applications,
+      jobUrl,
+    } = lst;
 
-        let {employerName, jobTitle, locationName, minimumSalary, maximumSalary, currency, date, jobDescription, applications, jobUrl } = lst;
+    //Treat edge cases
+    //Turn empty salaries into integers (-1)
+    minimumSalary = minimumSalary ? minimumSalary : -1;
+    maximumSalary = maximumSalary ? maximumSalary : -1;
+    //Remove apostrophes as these can cause issues with sql queries
+    employerName = deApostrophe(employerName);
+    locationName = deApostrophe(locationName);
+    jobTitle = deApostrophe(jobTitle);
+    jobDescription = deApostrophe(jobDescription);
 
-        //Treat edge cases 
-        //Turn empty salaries into integers (-1)
-        minimumSalary = minimumSalary ? minimumSalary : -1; 
-        maximumSalary = maximumSalary ? maximumSalary : -1;
-        //Remove apostrophes as these can cause issues with sql queries
-        employerName = deApostrophe(employerName);
-        locationName = deApostrophe(locationName);
-        jobTitle = deApostrophe(jobTitle);
-        jobDescription = deApostrophe(jobDescription);
-        
+    // Use template literals to build the INSERT statement
+    const insertSqlQuery = `INSERT INTO job_listing (job_id, employer_name, job_title, location_name, minimum_salary, maximum_salary, currency, published_date, job_description, applications, job_url) VALUES (${parseInt(
+      jobId,
+    )}, '${employerName}', '${jobTitle}', '${locationName}', ${minimumSalary}, ${maximumSalary}, '${currency}', '${date}', '${jobDescription}', ${applications}, '${jobUrl}') ON CONFLICT (job_id) DO UPDATE SET employer_name='${employerName}', job_title='${jobTitle}', location_name='${locationName}', minimum_salary=${minimumSalary}, maximum_salary=${maximumSalary}, currency='${currency}', published_date='${date}', job_description='${jobDescription}', applications=${applications}, job_url='${jobUrl}'; `;
+    sqlQuery += insertSqlQuery;
+  }
 
+  try {
+    const res = await client.query(sqlQuery);
+    console.log(res);
+    console.log("Successful query!");
+  } catch (err) {
+    console.error(err);
+    console.log("Query error!");
+  }
 
-        // Use template literals to build the INSERT statement
-        const insertSqlQuery = `INSERT INTO job_listing (job_id, employer_name, job_title, location_name, minimum_salary, maximum_salary, currency, published_date, job_description, applications, job_url) VALUES (${parseInt(jobId)}, '${employerName}', '${jobTitle}', '${locationName}', ${minimumSalary}, ${maximumSalary}, '${currency}', '${date}', '${jobDescription}', ${applications}, '${jobUrl}') ON CONFLICT (job_id) DO UPDATE SET employer_name='${employerName}', job_title='${jobTitle}', location_name='${locationName}', minimum_salary=${minimumSalary}, maximum_salary=${maximumSalary}, currency='${currency}', published_date='${date}', job_description='${jobDescription}', applications=${applications}, job_url='${jobUrl}'; `;
-        sqlQuery += insertSqlQuery;
-    }
-    
-    try {
-        const res = await client.query(sqlQuery);
-        console.log(res);
-        console.log('Successful query!')
-    } catch (err) {
-        console.error(err)
-        console.log('Query error!')
-    }
-
-    await client.end();
+  await client.end();
 }
 
-function deApostrophe(string){
-    if(typeof(string) == "string"){
-        return string.replace(/'/g, '');
-    }
+function deApostrophe(string) {
+  if (typeof string == "string") {
+    return string.replace(/'/g, "");
+  }
 }

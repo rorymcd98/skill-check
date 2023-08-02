@@ -1,32 +1,36 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-function saveToFile(obj, saveWord){ 
-    const fileName = saveWord + '.json'
-    const savePath = path.resolve(__dirname, 'saved-searches', fileName);
-    
-    const objString = JSON.stringify(obj);
+function saveToFile(obj, saveWord) {
+  const fileName = saveWord + ".json";
+  const savePath = path.resolve(__dirname, "saved-searches", fileName);
 
-    fs.writeFile(savePath, objString, (err)=>{
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.log('Saved to:' + savePath);
-    })
-}
+  const objString = JSON.stringify(obj);
 
-function loadFromFile(loadWord){
-    const loadPath = path.resolve(__dirname, 'saved-searches', loadWord +'.json');
-    let obj = {};
-    try{
-        const jsonString = fs.readFileSync(loadPath, 'utf8');
-        obj = JSON.parse(jsonString);
-        console.log('Loaded file: ' + loadPath)
-    } catch {
-        console.log("There was an error, returning empty object.")
+  fs.writeFile(savePath, objString, (err) => {
+    if (err) {
+      console.error(err);
+      return;
     }
-    return obj;
+    console.log("Saved to:" + savePath);
+  });
 }
 
-module.exports = {saveToFile, loadFromFile};
+function loadFromFile(loadWord) {
+  const loadPath = path.resolve(
+    __dirname,
+    "saved-searches",
+    loadWord + ".json",
+  );
+  let obj = {};
+  try {
+    const jsonString = fs.readFileSync(loadPath, "utf8");
+    obj = JSON.parse(jsonString);
+    console.log("Loaded file: " + loadPath);
+  } catch {
+    console.log("There was an error, returning empty object.");
+  }
+  return obj;
+}
+
+module.exports = { saveToFile, loadFromFile };

@@ -1,127 +1,178 @@
-import { useState, useEffect} from 'react'
-import '../css/App.css'
-import axios from 'axios'
-import {Chart as ChartJS} from 'chart.js'
+import { useState, useEffect } from "react";
+import "../css/App.css";
+import axios from "axios";
+import { Chart as ChartJS } from "chart.js";
 
 //Globally change the color for chart text
-ChartJS.defaults.color = '#8f8f8f';
-ChartJS.defaults.scale.grid.color = 'rgba(127, 127, 127, 0.34)';
-ChartJS.defaults.scale.title.font = {'size' : '15rem'} 
-
+ChartJS.defaults.color = "#8f8f8f";
+ChartJS.defaults.scale.grid.color = "rgba(127, 127, 127, 0.34)";
+ChartJS.defaults.scale.title.font = { size: "15rem" };
 
 //Components
-import SalaryTimeseriesChart from './components/chart-components/SalaryTimeseriesChart'
-import SalaryDistributionChart from './components/chart-components/SalaryDistributionChart'
-import SkillElementPanel from './components/skill-element-components/SkillElementPanel'
-import SkillFrequencyChart from './components/chart-components/SkillFrequencyChart'
-import SliderPanel from './components/skill-element-components/SliderPanel'
-import TutorialPanel from './components/TutorialPanel';
+import SalaryTimeseriesChart from "./components/chart-components/SalaryTimeseriesChart";
+import SalaryDistributionChart from "./components/chart-components/SalaryDistributionChart";
+import SkillElementPanel from "./components/skill-element-components/SkillElementPanel";
+import SkillFrequencyChart from "./components/chart-components/SkillFrequencyChart";
+import SliderPanel from "./components/skill-element-components/SliderPanel";
+import TutorialPanel from "./components/TutorialPanel";
 
-import initialSkills from './components/component-resources/initialSkills'
-import initialChartData from './components/component-resources/initialChartData'
-
+import initialSkills from "./components/component-resources/initialSkills";
+import initialChartData from "./components/component-resources/initialChartData";
 
 //Helper for the dates
-function dateToFloat(date){
-  return date.getFullYear() + date.getMonth()/12 + date.getDate()/365;
+function dateToFloat(date) {
+  return date.getFullYear() + date.getMonth() / 12 + date.getDate() / 365;
 }
 
-function App() {  
+function App() {
   //On mount check if we're accessing the API
   useEffect(() => {
     axios
-      .get('/api/v1')
-      .then(res => {
+      .get("/api/v1")
+      .then((res) => {
         //Confirm connection
         console.log(res.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, []);
 
   //Dummy data in case needed (old)
   const emptyData = {
-    'salaryDistributions' : {
-      'distributionLabels' : ["£0k","£5k","£10k","£15k","£20k","£25k","£30k","£35k","£40k","£45k","£50k","£55k","£60k","£65k","£70k","£75k","£80k","£85k","£90k","£95k","£100k","£105k","£110k","£115k","£120k","£125k","£130k","£135k","£140k","£145k","£150k"],
-      'distributions' : {'[No-data]' : []}
-    }, 
-    'salaryTimeSeries' : {
-      '[No-data]' : {'scatterPoints': [], 'averageLine': [],}
+    salaryDistributions: {
+      distributionLabels: [
+        "£0k",
+        "£5k",
+        "£10k",
+        "£15k",
+        "£20k",
+        "£25k",
+        "£30k",
+        "£35k",
+        "£40k",
+        "£45k",
+        "£50k",
+        "£55k",
+        "£60k",
+        "£65k",
+        "£70k",
+        "£75k",
+        "£80k",
+        "£85k",
+        "£90k",
+        "£95k",
+        "£100k",
+        "£105k",
+        "£110k",
+        "£115k",
+        "£120k",
+        "£125k",
+        "£130k",
+        "£135k",
+        "£140k",
+        "£145k",
+        "£150k",
+      ],
+      distributions: { "[No-data]": [] },
     },
-    'skillsFrequencies' :{
-      'counts' : {'[No-data]' : []},
-      'labels' : {'[No-data]': []}
-    }
-  }
+    salaryTimeSeries: {
+      "[No-data]": { scatterPoints: [], averageLine: [] },
+    },
+    skillsFrequencies: {
+      counts: { "[No-data]": [] },
+      labels: { "[No-data]": [] },
+    },
+  };
 
   //chartData state passed to Chart component
   const [chartData, setChartData] = useState(initialChartData);
 
-  const fetchApiOnClick = ()=>{
+  const fetchApiOnClick = () => {
     const queriesArray = [];
 
     //Add the custom search list to the query
-    searchLists.map((searchList)=>{
-      if(searchList.length > 0) queriesArray.push(searchList);
-    })
-      
+    searchLists.map((searchList) => {
+      if (searchList.length > 0) queriesArray.push(searchList);
+    });
+
     //Iterate through the skillElementObject for selected sub-skills
-    for(let skill in skillElementObject){
+    for (let skill in skillElementObject) {
       const curSkill = skillElementObject[skill];
       const skillArray = [];
-      
-      curSkill.selectedSubSkills.forEach((subSkill)=>{
-        skillArray.push(subSkill);
-      })
 
-      if(skillArray.length > 0) queriesArray.push(skillArray);
+      curSkill.selectedSubSkills.forEach((subSkill) => {
+        skillArray.push(subSkill);
+      });
+
+      if (skillArray.length > 0) queriesArray.push(skillArray);
     }
 
-
-    axios.get('/api/v1/data', {'params': queriesArray})
-      .then((res)=>{
-        if(!(Object.keys(res.data).length) > 0) {console.error('Empty object returned from API'); return}
-        if(!(Object.keys(res.data.salaryDistributions.distributionLabels).length) > 0) {console.error('No distribution data found from API'); return}
-        if(!(Object.keys(res.data.salaryTimeSeries).length) > 0) {console.error('No timeseries returned from API'); return}
-        setChartData(res.data);
-      })
-    };
+    axios.get("/api/v1/data", { params: queriesArray }).then((res) => {
+      if (!Object.keys(res.data).length > 0) {
+        console.error("Empty object returned from API");
+        return;
+      }
+      if (
+        !Object.keys(res.data.salaryDistributions.distributionLabels).length > 0
+      ) {
+        console.error("No distribution data found from API");
+        return;
+      }
+      if (!Object.keys(res.data.salaryTimeSeries).length > 0) {
+        console.error("No timeseries returned from API");
+        return;
+      }
+      setChartData(res.data);
+    });
+  };
 
   //---De/selected skill state---
   //Load local storage if available
-  const localSkillElementObject = localStorage.getItem("storedSkillElementObject");
-  let initialSkillElementObject =  localSkillElementObject ? JSON.parse(localSkillElementObject) : initialSkills;
+  const localSkillElementObject = localStorage.getItem(
+    "storedSkillElementObject",
+  );
+  let initialSkillElementObject = localSkillElementObject
+    ? JSON.parse(localSkillElementObject)
+    : initialSkills;
 
-  const [skillElementObject, setSkillElementObject] = useState(structuredClone(initialSkillElementObject))  
+  const [skillElementObject, setSkillElementObject] = useState(
+    structuredClone(initialSkillElementObject),
+  );
 
   //Set local storage when skills are selected
-  useEffect(()=>{
-  localStorage.setItem("storedSkillElementObject", JSON.stringify(skillElementObject))
-  }, [skillElementObject])
+  useEffect(() => {
+    localStorage.setItem(
+      "storedSkillElementObject",
+      JSON.stringify(skillElementObject),
+    );
+  }, [skillElementObject]);
 
   //---Custom search list state---
   //Load local storage if available
   const localSearchLists = localStorage.getItem("storedSearchLists");
-  let initialSearchLists =  localSearchLists ? JSON.parse(localSearchLists) : [[""]]; //Start with a single blank list
+  let initialSearchLists = localSearchLists
+    ? JSON.parse(localSearchLists)
+    : [[""]]; //Start with a single blank list
 
-  const [searchLists, setSearchLists] = useState(structuredClone(initialSearchLists));
-  
+  const [searchLists, setSearchLists] = useState(
+    structuredClone(initialSearchLists),
+  );
+
   //Set local storage when new search terms are made
-  useEffect(()=>{
-    localStorage.setItem("storedSearchLists", JSON.stringify(searchLists))
-  }, [searchLists])
+  useEffect(() => {
+    localStorage.setItem("storedSearchLists", JSON.stringify(searchLists));
+  }, [searchLists]);
 
   //Reset the skill states and the local storage
-  function resetSkills(){
-    
+  function resetSkills() {
     setSkillElementObject(structuredClone(initialSkills));
     setSearchLists(structuredClone([[""]]));
 
-    localStorage.removeItem("storedSkillElementObject")
-    localStorage.removeItem("storedSearchLists")
+    localStorage.removeItem("storedSkillElementObject");
+    localStorage.removeItem("storedSearchLists");
   }
-  
+
   //---Block Size--- (granularity of the salary ranges e.g. 5k, 10k, 15k vs 1k, 2k, 3k)
   //Salary block size
   const [salaryBlockSize, setSalaryBlockSize] = useState(5000);
@@ -132,12 +183,11 @@ function App() {
 
   //Initial boundaries for distribution slider
   const initialMinSalary = 15000;
-  const initialMaxSalary = (salaryLabels.length-1)*salaryBlockSize;
+  const initialMaxSalary = (salaryLabels.length - 1) * salaryBlockSize;
 
   //States for distribution slider
   const [minSalary, setMinSalary] = useState(initialMinSalary);
   const [maxSalary, setMaxSalary] = useState(initialMaxSalary);
-
 
   //---Date Slider---
   //Initial boundaries for distribution slider
@@ -148,7 +198,6 @@ function App() {
   const [minDate, setMinDate] = useState(initialMinDate);
   const [maxDate, setMaxDate] = useState(initialMaxDate);
 
-
   //Determine the axes for the timeseries and the salary distribution
   const sliderProps = {
     minSalary,
@@ -156,9 +205,10 @@ function App() {
 
     minDate,
     maxDate,
-  }
+  };
 
-  const SliderPanelComponent = <SliderPanel
+  const SliderPanelComponent = (
+    <SliderPanel
       minSalary={minSalary}
       maxSalary={maxSalary}
       setMinSalary={setMinSalary}
@@ -174,45 +224,63 @@ function App() {
       resetSkills={resetSkills}
       fetchApiOnClick={fetchApiOnClick}
     />
+  );
 
-    //State for determining if the user has seen and closed the tutorial panel
-    const storedDisplayTutorial = localStorage.getItem("storedDisplayTutorial");
+  //State for determining if the user has seen and closed the tutorial panel
+  const storedDisplayTutorial = localStorage.getItem("storedDisplayTutorial");
 
-    //If this is the first session, show the panel (set to initial state to true)
-    const initialDisplayTutorial = storedDisplayTutorial === null ? true : JSON.parse(storedDisplayTutorial);
-    const [displayTutorial, setDisplayTutorial] = useState(initialDisplayTutorial);
+  //If this is the first session, show the panel (set to initial state to true)
+  const initialDisplayTutorial =
+    storedDisplayTutorial === null ? true : JSON.parse(storedDisplayTutorial);
+  const [displayTutorial, setDisplayTutorial] = useState(
+    initialDisplayTutorial,
+  );
 
-    //Set the tutorial styling based on the bool displayTutorial
-    const tutorialStyling = {
-      'visibility' : displayTutorial === true ? null : 'hidden',
-      'opacity' : displayTutorial === true ? null : '0%',
-    }
+  //Set the tutorial styling based on the bool displayTutorial
+  const tutorialStyling = {
+    visibility: displayTutorial === true ? null : "hidden",
+    opacity: displayTutorial === true ? null : "0%",
+  };
 
-    //Toggle between null (default css) and a hidden tutorial panel
-    const toggleDisplayTutorial = () => {localStorage.setItem("storedDisplayTutorial", !displayTutorial); setDisplayTutorial(!displayTutorial);}
+  //Toggle between null (default css) and a hidden tutorial panel
+  const toggleDisplayTutorial = () => {
+    localStorage.setItem("storedDisplayTutorial", !displayTutorial);
+    setDisplayTutorial(!displayTutorial);
+  };
 
   return (
-    <div id={'MainContainer'}>
-      <span id = 'ChartPanel'>
-        <span id = 'top-charts-panel'>
-          <SalaryDistributionChart chartData={chartData}  salaryBlockSize={salaryBlockSize} sliderProps={sliderProps}></SalaryDistributionChart>
-          <SkillFrequencyChart chartData={chartData} ></SkillFrequencyChart>
+    <div id={"MainContainer"}>
+      <span id="ChartPanel">
+        <span id="top-charts-panel">
+          <SalaryDistributionChart
+            chartData={chartData}
+            salaryBlockSize={salaryBlockSize}
+            sliderProps={sliderProps}
+          ></SalaryDistributionChart>
+          <SkillFrequencyChart chartData={chartData}></SkillFrequencyChart>
         </span>
-        <SalaryTimeseriesChart chartData={chartData}  salaryBlockSize={salaryBlockSize} sliderProps={sliderProps}></SalaryTimeseriesChart>
+        <SalaryTimeseriesChart
+          chartData={chartData}
+          salaryBlockSize={salaryBlockSize}
+          sliderProps={sliderProps}
+        ></SalaryTimeseriesChart>
       </span>
 
-      <SkillElementPanel 
-        skillElementObject={skillElementObject} 
+      <SkillElementPanel
+        skillElementObject={skillElementObject}
         setSkillElementObject={setSkillElementObject}
-        searchLists={searchLists} 
+        searchLists={searchLists}
         setSearchLists={setSearchLists}
         SliderPanelComponent={SliderPanelComponent}
         toggleDisplayTutorial={toggleDisplayTutorial}
       />
 
-      <TutorialPanel tutorialStyling={tutorialStyling} toggleDisplayTutorial={toggleDisplayTutorial}></TutorialPanel>
+      <TutorialPanel
+        tutorialStyling={tutorialStyling}
+        toggleDisplayTutorial={toggleDisplayTutorial}
+      ></TutorialPanel>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

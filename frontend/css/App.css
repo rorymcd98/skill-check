@@ -19,7 +19,7 @@
 
 html,
 body,
-#root{
+#root {
   position: relative;
   margin: 0;
   padding: 0;
@@ -31,9 +31,7 @@ body,
   overflow: hidden;
 }
 
-
-
-#MainContainer{
+#MainContainer {
   position: absolute;
 
   top: 0%;
@@ -48,7 +46,7 @@ body,
 }
 
 /* ---Top left logo image--- */
-#logo-image-container{
+#logo-image-container {
   display: block;
   position: absolute;
   margin: 0.1rem;
@@ -64,7 +62,7 @@ body,
   bottom: 0%;
 }
 
-#logo-image{
+#logo-image {
   position: relative;
   max-width: 94%;
   top: 50%;
@@ -72,24 +70,21 @@ body,
   transform: translate(-50%, -50%);
 }
 
-@media  screen and (max-width: 1300px) {
-  #logo-image-container{
+@media screen and (max-width: 1300px) {
+  #logo-image-container {
     display: none;
   }
 
-  #MainContainer{
+  #MainContainer {
     overflow-x: hidden;
   }
 }
 
-
-
-
 /* Tutorial panel */
-#tutorial-panel-backdrop{
+#tutorial-panel-backdrop {
   position: absolute;
   top: 0%;
-  background-color: rgba(0, 0, 0, 0.750);
+  background-color: rgba(0, 0, 0, 0.75);
 
   height: 100%;
   width: 100%;
@@ -104,17 +99,18 @@ body,
 
   opacity: 100%;
   visibility: visible;
-  transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    visibility 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
 
-
-#tutorial-panel{
+#tutorial-panel {
   --border-color: rgb(177, 152, 121);
   --tutorial-size: 2000px;
 
   position: absolute;
 
-  height: clamp(30%, calc(var(--tutorial-size)/3), 90%);
+  height: clamp(30%, calc(var(--tutorial-size) / 3), 90%);
   width: clamp(30%, var(--tutorial-size), 90%);
   background-color: rgb(44, 43, 43);
   border: solid var(--border-color) 2px;
@@ -128,7 +124,7 @@ body,
   overflow: hidden;
 }
 
-#tutorial-panel-images{
+#tutorial-panel-images {
   flex: 1;
   display: inline-flex;
   flex-direction: row;
@@ -137,7 +133,7 @@ body,
   overflow: auto;
 }
 
-#tutorial-panel-footer{
+#tutorial-panel-footer {
   position: relative;
   bottom: 0%;
   height: 0.5rem;
@@ -145,13 +141,13 @@ body,
   width: 100%;
 }
 
-.TutorialPanelNumber{
+.TutorialPanelNumber {
   position: absolute;
   top: 2%;
   left: 2%;
 }
 
-.TutorialImageContainer{
+.TutorialImageContainer {
   position: relative;
   display: inline-flex;
   width: 33.33%;
@@ -162,32 +158,32 @@ body,
   align-items: center;
 }
 
-@media  screen and (max-width: 1300px) {
-  .TutorialImageContainer{
+@media screen and (max-width: 1300px) {
+  .TutorialImageContainer {
     width: 50%;
   }
 
-  #tutorial-panel{
-    height: clamp(30%, calc(var(--tutorial-size)/1.1), 90%);
+  #tutorial-panel {
+    height: clamp(30%, calc(var(--tutorial-size) / 1.1), 90%);
   }
 }
 
-@media  screen and (max-width: 800px) {
-  .TutorialImageContainer{
+@media screen and (max-width: 800px) {
+  .TutorialImageContainer {
     width: 100%;
   }
 
-  #tutorial-panel{
-    height: clamp(30%, calc(var(--tutorial-size)*3), 90%);
+  #tutorial-panel {
+    height: clamp(30%, calc(var(--tutorial-size) * 3), 90%);
   }
 }
 
-.TutorialImage{
-    position: relative;
-    max-width: 94%;
+.TutorialImage {
+  position: relative;
+  max-width: 94%;
 }
 
-#tutorial-close-button{
+#tutorial-close-button {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -202,7 +198,7 @@ body,
   z-index: 3;
 }
 
-#tutorial-close-button-text{
+#tutorial-close-button-text {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -216,7 +212,7 @@ body,
   text-justify: center;
 }
 
-#tutorial-close-button:hover{
+#tutorial-close-button:hover {
   filter: brightness(130%);
   transition: filter 0.2s;
 }

@@ -19,13 +19,12 @@ $ npm install @programming-languages-logos/swift
 
 You can then import the badges from `./node_modules/@programming-languages-logos/swift`, for example `./node_modules/@programming-languages-logos/swift/swift.svg`.
 
- Use the hosted version on
- [**jsdelivr**](https://www.jsdelivr.com/package/npm/@programming-languages-logos/swift).
+Use the hosted version on
+[**jsdelivr**](https://www.jsdelivr.com/package/npm/@programming-languages-logos/swift).
 
 [Download the zip](https://github.com/abranhe/programming-languages-logos/releases/latest) from Github.
 
-
-*I recommend to install it as a developer dependency*:  `--save-dev`
+_I recommend to install it as a developer dependency_: `--save-dev`
 
 ```
 $ npm install @programming-languages-logos/swift --save-dev
@@ -37,11 +36,12 @@ $ npm install @programming-languages-logos/swift --save-dev
 
 ### Team
 
-|[![Carlos Abraham Logo][abranhe-img]][abranhe]|
-| :-: |
-| [Carlos Abraham][abranhe] |
+| [![Carlos Abraham Logo][abranhe-img]][abranhe] |
+| :--------------------------------------------: |
+|           [Carlos Abraham][abranhe]            |
 
 <!------------- Some links ----------------->
+
 [abranhe]: https://github.com/abranhe
 [abranhe-img]: https://avatars3.githubusercontent.com/u/21347264?s=50
 [all]: https://github.com/abranhe/programming-languages-logos
