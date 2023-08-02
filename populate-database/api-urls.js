@@ -1,7 +1,8 @@
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 const axios = require("axios"); //Promise based HTTP requests
 const { saveToFile, loadFromFile } = require("./store-json"); //Helper functions for saving and loading
 const pLimit = require("p-limit"); //'Pooling' for get requests - only a few requests at a time
-require("dotenv").config({ path: __dirname + "../../.env" }); //dotenv - used for API_KEY (reed API key)
 
 async function storeApiUrls(searchTerm, saveWord) {
   let saveObj = loadFromFile(saveWord); //Returns past search results (or an empty object if one doesn't exist)
@@ -30,8 +31,9 @@ async function storeApiUrls(searchTerm, saveWord) {
       searchLength,
       "\nAdding new listings..."
     );
-  } catch {
+  } catch (error) {
     console.log("couldn't fetch page 0");
+    console.error(error);
     return;
   }
 

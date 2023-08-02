@@ -1,4 +1,5 @@
-require("dotenv").config({ path: __dirname + "../../.env" });
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 const { Client } = require("pg");
 
 //Searches for the COUNT of each individual searchTerm

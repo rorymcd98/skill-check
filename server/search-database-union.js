@@ -1,4 +1,5 @@
-require("dotenv").config({ path: __dirname + "../../.env" });
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 const { Client } = require("pg");
 
 //Searches for the UNION of all searchTerms
@@ -7,7 +8,7 @@ async function searchDatabaseUnion(
   rankThreshold,
   minSalaryLimit,
   maxSalaryLimit,
-  clientParams,
+  clientParams
 ) {
   //Client object depen
   const client = new Client(clientParams);
@@ -22,7 +23,7 @@ async function searchDatabaseUnion(
     searchTerms,
     rankThreshold,
     minSalaryLimit,
-    maxSalaryLimit,
+    maxSalaryLimit
   );
 
   try {
@@ -46,7 +47,7 @@ function assembleQuery(
   searchTerms,
   rankThreshold,
   minSalaryLimit,
-  maxSalaryLimit,
+  maxSalaryLimit
 ) {
   const subQueryArray = [];
 
