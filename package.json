@@ -19,6 +19,7 @@
     "vite": "^4.0.4"
   },
   "scripts": {
+    "scrape": "node ./populate-database/main.js",
     "serve": "nodemon ./server/dev-server.js",
     "start": "node ./server/production-server.js",
     "dev": "vite",

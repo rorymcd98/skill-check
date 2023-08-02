@@ -7,7 +7,7 @@ async function searchDatabaseEach(
   rankThreshold,
   minSalaryLimit,
   maxSalaryLimit,
-  clientParams,
+  clientParams
 ) {
   //Client object depen
   const client = new Client(clientParams);
@@ -23,7 +23,7 @@ async function searchDatabaseEach(
     searchTerms,
     rankThreshold,
     minSalaryLimit,
-    maxSalaryLimit,
+    maxSalaryLimit
   );
 
   try {
@@ -41,13 +41,15 @@ async function searchDatabaseEach(
     return { rows: [] };
   }
 }
+// Dev note: This is really bad code, why am I using 'i' to index an object? I can get SQL injected about 100 different ways here. I should be using a prepared statement. I should be using a library to do this for me. I should be using a different language. I should be using a different database. I should be using a different computer. I should be using a different planet. I should be using a different universe. I should be using a different dimension. I should be using a different timeline. I should be using a different reality. I should be using a different existence!
+// Ok co-pilot wrote the rest of the prior line, what a journey.
 
 //Accepts an array of search terms, and returns a query which selects the UNION of all the search terms
 function assembleQuery(
   searchTerms,
   rankThreshold,
   minSalaryLimit,
-  maxSalaryLimit,
+  maxSalaryLimit
 ) {
   const subQueryArray = [];
 

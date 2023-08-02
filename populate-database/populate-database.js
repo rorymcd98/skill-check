@@ -2,9 +2,7 @@ require("dotenv").config({ path: __dirname + "../../.env" });
 const { Client } = require("pg");
 const { loadFromFile } = require("./store-json");
 
-main("software");
-
-async function main(loadWord) {
+async function populatePostgresDatabase(loadWord) {
   const client = new Client();
   try {
     await client.connect();
@@ -104,7 +102,7 @@ async function main(loadWord) {
 
   await client.end();
 }
-
+module.exports.default = populatePostgresDatabase;
 function deApostrophe(string) {
   if (typeof string == "string") {
     return string.replace(/'/g, "");

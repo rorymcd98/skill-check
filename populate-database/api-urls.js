@@ -3,9 +3,7 @@ const { saveToFile, loadFromFile } = require("./store-json"); //Helper functions
 const pLimit = require("p-limit"); //'Pooling' for get requests - only a few requests at a time
 require("dotenv").config({ path: __dirname + "../../.env" }); //dotenv - used for API_KEY (reed API key)
 
-main("software", "software");
-
-async function main(searchTerm, saveWord) {
+async function storeApiUrls(searchTerm, saveWord) {
   let saveObj = loadFromFile(saveWord); //Returns past search results (or an empty object if one doesn't exist)
 
   //If a new file is loaded, create a default save object with metadata and results
@@ -75,6 +73,7 @@ async function main(searchTerm, saveWord) {
 
   saveToFile(saveObj, saveWord);
 }
+module.exports.default = storeApiUrls;
 
 //Returns a list (of 100) job listings at pageNum for a given searchTerm
 async function resultsForPage(pageNum, searchTerm) {

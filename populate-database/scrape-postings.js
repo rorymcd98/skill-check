@@ -5,8 +5,6 @@ const pLimit = require("p-limit");
 
 const testUrl = "https://www.reed.co.uk/jobs/test-engineer/48842861";
 
-main("software");
-
 async function scrapeDescription(url, id) {
   try {
     console.log("Scraping Job ID: " + id);
@@ -28,8 +26,7 @@ async function scrapeDescription(url, id) {
     console.error(error);
   }
 }
-
-async function main(loadWord) {
+async function scrapePostingDescriptions(loadWord) {
   let listings = loadFromFile(loadWord);
   const saveWord = loadWord;
 
@@ -77,3 +74,5 @@ async function main(loadWord) {
 
   saveToFile(saveObj, saveWord);
 }
+
+module.exports.default = scrapePostingDescriptions;
