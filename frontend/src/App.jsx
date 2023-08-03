@@ -28,7 +28,7 @@ function App() {
   //On mount check if we're accessing the API
   useEffect(() => {
     axios
-      .get("/api/v1")
+      .get("/skillcheck/api/v1")
       .then((res) => {
         //Confirm connection
         console.log(res.data);
@@ -108,43 +108,46 @@ function App() {
       if (skillArray.length > 0) queriesArray.push(skillArray);
     }
 
-    axios.get("/api/v1/data", { params: queriesArray }).then((res) => {
-      if (!Object.keys(res.data).length > 0) {
-        console.error("Empty object returned from API");
-        return;
-      }
-      if (
-        !Object.keys(res.data.salaryDistributions.distributionLabels).length > 0
-      ) {
-        console.error("No distribution data found from API");
-        return;
-      }
-      if (!Object.keys(res.data.salaryTimeSeries).length > 0) {
-        console.error("No timeseries returned from API");
-        return;
-      }
-      setChartData(res.data);
-    });
+    axios
+      .get("/skillcheck/api/v1/data", { params: queriesArray })
+      .then((res) => {
+        if (!Object.keys(res.data).length > 0) {
+          console.error("Empty object returned from API");
+          return;
+        }
+        if (
+          !Object.keys(res.data.salaryDistributions.distributionLabels).length >
+          0
+        ) {
+          console.error("No distribution data found from API");
+          return;
+        }
+        if (!Object.keys(res.data.salaryTimeSeries).length > 0) {
+          console.error("No timeseries returned from API");
+          return;
+        }
+        setChartData(res.data);
+      });
   };
 
   //---De/selected skill state---
   //Load local storage if available
   const localSkillElementObject = localStorage.getItem(
-    "storedSkillElementObject",
+    "storedSkillElementObject"
   );
   let initialSkillElementObject = localSkillElementObject
     ? JSON.parse(localSkillElementObject)
     : initialSkills;
 
   const [skillElementObject, setSkillElementObject] = useState(
-    structuredClone(initialSkillElementObject),
+    structuredClone(initialSkillElementObject)
   );
 
   //Set local storage when skills are selected
   useEffect(() => {
     localStorage.setItem(
       "storedSkillElementObject",
-      JSON.stringify(skillElementObject),
+      JSON.stringify(skillElementObject)
     );
   }, [skillElementObject]);
 
@@ -156,7 +159,7 @@ function App() {
     : [[""]]; //Start with a single blank list
 
   const [searchLists, setSearchLists] = useState(
-    structuredClone(initialSearchLists),
+    structuredClone(initialSearchLists)
   );
 
   //Set local storage when new search terms are made
@@ -233,7 +236,7 @@ function App() {
   const initialDisplayTutorial =
     storedDisplayTutorial === null ? true : JSON.parse(storedDisplayTutorial);
   const [displayTutorial, setDisplayTutorial] = useState(
-    initialDisplayTutorial,
+    initialDisplayTutorial
   );
 
   //Set the tutorial styling based on the bool displayTutorial

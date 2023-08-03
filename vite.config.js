@@ -9,7 +9,7 @@ export default defineConfig({
   root: "frontend",
   server: {
     proxy: {
-      "/api/v1": "http://localhost:3001",
+      "/skillcheck": "http://localhost:3001",
     },
   },
 });

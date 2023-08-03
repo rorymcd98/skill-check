@@ -15,11 +15,11 @@ const app = express();
 
 app.use(cors({ origin: "http://localhost:5173" }));
 
-app.get("/api/v1", (req, res) => {
+app.get("/skillcheck/api/v1", (req, res) => {
   res.send("Connected to backend on port: " + PORT);
 });
 
-app.get("/api/v1/data", (req, res) => {
+app.get("/skillcheck/api/v1/data", (req, res) => {
   //Collect queries from the SQL database and parse the results
   const queries = [];
   for (q in req.query) {
@@ -30,12 +30,12 @@ app.get("/api/v1/data", (req, res) => {
     //Create salary a salary distributions
     const salaryDistributions = createSalaryDistributions(
       jobQueries.unions,
-      5000,
+      5000
     );
     const salaryTimeSeries = createTimeSeries(jobQueries.unions);
     const skillsFrequencies = createSkillsFrequency(
       jobQueries.eaches,
-      jobQueries.unions,
+      jobQueries.unions
     );
 
     //Send the collected data (becomes chartData when received by front end)
@@ -74,7 +74,7 @@ async function collectQueries(termsList) {
       terms,
       rankThreshold,
       minSalaryLimit,
-      maxSalaryLimit,
+      maxSalaryLimit
     );
     jobQueries["unions"][searchName] = dbUnion.rows;
 
@@ -83,7 +83,7 @@ async function collectQueries(termsList) {
       terms,
       rankThreshold,
       minSalaryLimit,
-      maxSalaryLimit,
+      maxSalaryLimit
     );
     jobQueries["eaches"][searchName] = dbEach;
   }
