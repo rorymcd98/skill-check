@@ -7,9 +7,10 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 export default defineConfig({
   plugins: [react()],
   root: "frontend",
+  base: "/skillcheck/",
   server: {
     proxy: {
-      "/skillcheck": "http://localhost:3001",
+      "/skillcheck/api/v1": "http://localhost:3001/skillcheck",
     },
   },
 });

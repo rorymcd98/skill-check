@@ -14,7 +14,7 @@ const {
 const app = express();
 
 const pathToDist = path.resolve(__dirname, "..", "frontend", "dist");
-app.use(express.static(pathToDist));
+app.use("/skillcheck", express.static(pathToDist));
 
 app.get("/skillcheck/api/v1", (req, res) => {
   res.send("Connected to API on port: " + PORT);
