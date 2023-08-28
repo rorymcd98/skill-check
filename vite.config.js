@@ -6,8 +6,9 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: "frontend",
+  root: "./src",
   base: "/skillcheck/",
+  publicDir: "../public",
   server: {
     proxy: {
       "/skillcheck/api/v1": "http://localhost:3001/skillcheck",

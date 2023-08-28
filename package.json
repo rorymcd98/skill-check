@@ -17,7 +17,7 @@
     "react-dom": "^18.2.0",
     "react-js-multi-range-sliders": "^0.1.6",
     "react-lazy-load-image-component": "^1.5.6",
-    "vite": "^4.0.4"
+    "vite": "^4.4.9"
   },
   "scripts": {
     "scrape": "node ./populate-database/main.js",
@@ -32,8 +32,7 @@
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
-    "nodemon": "^2.0.22",
-    "vite": "^4.0.0"
+    "nodemon": "^2.0.22"
   },
   "name": "skill-check",
   "private": false,

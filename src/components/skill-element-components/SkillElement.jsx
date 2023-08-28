@@ -25,10 +25,10 @@ export default function SkillElement(props) {
           onClick={props.createToggleSubSkill(
             skillId,
             subSkillName,
-            !selectedBool,
+            !selectedBool
           )}
           selectedBool={selectedBool}
-        />,
+        />
       );
     });
 
@@ -37,7 +37,7 @@ export default function SkillElement(props) {
 
   const subSkillChildren = objectToSubSkillList(
     props.skillElementObject,
-    props.selectedBool,
+    props.selectedBool
   );
 
   return (
@@ -52,7 +52,7 @@ export default function SkillElement(props) {
           <img
             className="SkillElementImage"
             alt={props.alt}
-            src={`./skillIcons/${props.skillId}/${props.skillId}.svg`}
+            src={`../public/skillicons/${props.skillId}/${props.skillId}.svg`}
           />
         </span>
         <span className="SkillElementText">

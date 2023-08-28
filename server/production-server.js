@@ -13,7 +13,7 @@ const {
 
 const app = express();
 
-const pathToDist = path.resolve(__dirname, "..", "frontend", "dist");
+const pathToDist = path.resolve(__dirname, "..", "dist");
 app.use("/skillcheck", express.static(pathToDist));
 
 app.get("/skillcheck/api/v1", (req, res) => {
