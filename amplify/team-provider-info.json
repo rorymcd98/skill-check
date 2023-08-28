@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-skillcheck-dev-173046-authRole",
+      "UnauthRoleArn": "arn:aws:iam::857919056815:role/amplify-skillcheck-dev-173046-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::857919056815:role/amplify-skillcheck-dev-173046-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-skillcheck-dev-173046-deployment",
+      "UnauthRoleName": "amplify-skillcheck-dev-173046-unauthRole",
+      "StackName": "amplify-skillcheck-dev-173046",
+      "StackId": "arn:aws:cloudformation:us-east-1:857919056815:stack/amplify-skillcheck-dev-173046/3f0f78c0-45c0-11ee-a2d1-12256357c821",
+      "AmplifyAppId": "dbae2des3y9nd"
+    },
+    "categories": {
+      "function": {
+        "skillcheck7a9beda8": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/skillcheck": {
+      "name": "/skillcheck",
+      "lambdaFunction": "skillcheck7a9beda8",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

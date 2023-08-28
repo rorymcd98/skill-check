@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "aws-amplify": "^5.3.10",
     "axios": "^1.2.0",
     "chart.js": "^4.2.0",
     "chartjs-adapter-moment": "^1.0.1",
